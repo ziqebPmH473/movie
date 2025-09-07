@@ -182,7 +182,7 @@ const App = {
                 buttonData: [
                     { category: "【分析】（上場時資料から4ファイル+企業ページの業績予想を読み込む）", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "text_ipo_analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "音声生成", copyId: "text_ipo_voice" }] }] },
-                    { category: "【プレゼン資料】(レポートを使用/スライド：15)", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "text_ipo_gamma" }] }] },
+                    { category: "【プレゼン資料】(レポートを使用/スライド：20)", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "text_ipo_gamma" }] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "サムネイル", copyId: "text200" }, { label: "動画タイトル", copyId: "text201" }, { label: "概要欄", copyId: "text202" }, { label: "X告知", copyId: "text203" }] }] }
                 ],
                 copyTexts: {
