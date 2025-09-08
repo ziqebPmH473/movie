@@ -273,34 +273,36 @@ const App = {
                      const stockPriceCheck = App.dom.newsStockPriceCheck.checked;
                      const performanceCheck = App.dom.newsPerformanceCheck.checked;
                      const direction = document.querySelector('input[name="stock-direction"]:checked')?.value || '';
+                     const name = App.dom.inputName.value.trim();
+                     const ticker = App.dom.inputTicker.value.trim();
 
                      let reasonPart = '';
-                     if (reasonCheck && direction) {
-                         const name = App.dom.inputName.value.trim();
-                         const ticker = App.dom.inputTicker.value.trim();
-                         const period = App.dom.inputPeriod.value.trim();
+                     let analysisPart = ''; 
 
+                     if (stockPriceCheck && performanceCheck) {
+                         analysisPart = '今後の株価や業績への影響を分析';
+                     } else if (stockPriceCheck) {
+                         analysisPart = '今後の株価への影響を分析';
+                     } else if (performanceCheck) {
+                         analysisPart = '今後の業績への影響を分析';
+                     } else {
+                         analysisPart = '今後の影響を分析';
+                     }
+
+                     if (reasonCheck && direction) {
+                         const period = App.dom.inputPeriod.value.trim();
                          const brandname = (name && ticker) ? `${name}（${ticker}）の` : '';
                          const brandInfo = (name && ticker) ? `${name}（${ticker}）の株価が` : '';
                          const dateText = period || App.state.today;
                          const dateSuffix = period ? '' : 'に';
-                         
                          const afterHours = App.dom.afterHoursCheck.checked;
                          const emarket = document.querySelector('input[name="emarket"]:checked')?.value || 'jp';
                          const afterHoursText = afterHours ? (emarket === 'jp' ? 'PTSで' : '時間外取引で') : '';
                          
                          reasonPart = `${brandInfo}${dateText}${dateSuffix}${afterHoursText}${direction}理由と、${brandname}`;
-                     }
-
-                     let analysisPart = '';
-                     if (stockPriceCheck && performanceCheck) {
-                         analysisPart = '株価や業績への今後の影響を分析';
-                     } else if (stockPriceCheck) {
-                         analysisPart = '株価への今後の影響を分析';
-                     } else if (performanceCheck) {
-                         analysisPart = '業績への今後の影響を分析';
-                     } else {
-                         analysisPart = '今後の影響を分析';
+                     } else if (name && ticker) {
+                         const brandname = `${name}（${ticker}）の`;
+                         analysisPart = `${brandname}${analysisPart}`;
                      }
                      
                      return [contentPart, reasonPart, analysisPart].filter(Boolean).join(' ');
