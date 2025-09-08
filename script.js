@@ -289,18 +289,18 @@ const App = {
                          const emarket = document.querySelector('input[name="emarket"]:checked')?.value || 'jp';
                          const afterHoursText = afterHours ? (emarket === 'jp' ? 'PTSで' : '時間外取引で') : '';
                          
-                         reasonPart = `${brandInfo}${dateText}${dateSuffix}${afterHoursText}${direction}理由と、`;
+                         reasonPart = `${brandInfo}${dateText}${dateSuffix}${afterHoursText}${direction}理由と、${brand}`;
                      }
 
                      let analysisPart = '';
                      if (stockPriceCheck && performanceCheck) {
-                         analysisPart = '${brandInfo}株価や業績への今後の影響を分析';
+                         analysisPart = '株価や業績への今後の影響を分析';
                      } else if (stockPriceCheck) {
-                         analysisPart = '${brandInfo}株価への今後の影響を分析';
+                         analysisPart = '株価への今後の影響を分析';
                      } else if (performanceCheck) {
                          analysisPart = '業績への今後の影響を分析';
                      } else {
-                         analysisPart = '${brandInfo}今後の影響を分析';
+                         analysisPart = '今後の影響を分析';
                      }
                      
                      return [contentPart, reasonPart, analysisPart].filter(Boolean).join(' ');
