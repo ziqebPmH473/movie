@@ -280,7 +280,7 @@ const App = {
                          const ticker = App.dom.inputTicker.value.trim();
                          const period = App.dom.inputPeriod.value.trim();
 
-                         const brand = (name && ticker) ? `${name}（${ticker}）の株価が` : '';
+                         const brandname = (name && ticker) ? `${name}（${ticker}）の` : '';
                          const brandInfo = (name && ticker) ? `${name}（${ticker}）の株価が` : '';
                          const dateText = period || App.state.today;
                          const dateSuffix = period ? '' : 'に';
@@ -289,7 +289,7 @@ const App = {
                          const emarket = document.querySelector('input[name="emarket"]:checked')?.value || 'jp';
                          const afterHoursText = afterHours ? (emarket === 'jp' ? 'PTSで' : '時間外取引で') : '';
                          
-                         reasonPart = `${brandInfo}${dateText}${dateSuffix}${afterHoursText}${direction}理由と、${brand}`;
+                         reasonPart = `${brandInfo}${dateText}${dateSuffix}${afterHoursText}${direction}理由と、${brandname}`;
                      }
 
                      let analysisPart = '';
