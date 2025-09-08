@@ -280,6 +280,7 @@ const App = {
                          const ticker = App.dom.inputTicker.value.trim();
                          const period = App.dom.inputPeriod.value.trim();
 
+                         const brand = (name && ticker) ? `${name}（${ticker}）の株価が` : '';
                          const brandInfo = (name && ticker) ? `${name}（${ticker}）の株価が` : '';
                          const dateText = period || App.state.today;
                          const dateSuffix = period ? '' : 'に';
@@ -293,13 +294,13 @@ const App = {
 
                      let analysisPart = '';
                      if (stockPriceCheck && performanceCheck) {
-                         analysisPart = '株価や業績への今後の影響を分析';
+                         analysisPart = '${brandInfo}株価や業績への今後の影響を分析';
                      } else if (stockPriceCheck) {
-                         analysisPart = '株価への今後の影響を分析';
+                         analysisPart = '${brandInfo}株価への今後の影響を分析';
                      } else if (performanceCheck) {
                          analysisPart = '業績への今後の影響を分析';
                      } else {
-                         analysisPart = '今後の影響を分析';
+                         analysisPart = '${brandInfo}今後の影響を分析';
                      }
                      
                      return [contentPart, reasonPart, analysisPart].filter(Boolean).join(' ');
