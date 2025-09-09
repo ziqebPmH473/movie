@@ -107,7 +107,8 @@ const App = {
             market_buy_analysis: {
                 intro: () => {
                     const period = App.dom.inputPeriod.value;
-                    const direction = App.dom.stockDirection.value || '下落した';
+                    // FIX: Changed to get the currently selected value instead of the cached one.
+                    const direction = document.querySelector('input[name="stock-direction"]:checked')?.value || '下落した';
                     const baseSentence = `{{name}}（{{ticker}}）の株価が{{period}}${direction}`;
                     const buyOpportunityType = (direction === '上昇した') ? 'どこまで上昇するか' : '底値がどこになるか';
                     return `${baseSentence}が、${buyOpportunityType}分析`;
@@ -145,7 +146,8 @@ const App = {
             },
             market_earnings: {
                 intro: () => {
-                    const direction = App.dom.stockDirection.value || '';
+                    // FIX: Changed to get the currently selected value instead of the cached one.
+                    const direction = document.querySelector('input[name="stock-direction"]:checked')?.value || '';
                     const isAfterHours = App.dom.afterHoursCheck.checked;
                     if (direction === '') {
                         return "{{formattedEarningsDate}}{{timing}}に発表された{{name}}（{{ticker}}）の決算資料を分析し、今後の見通しを考察";
