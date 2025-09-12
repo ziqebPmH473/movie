@@ -184,7 +184,7 @@ IFRS: イファース
                     text002: "{{intro}}してください。{{audioNote}}{{upDownCorrectionNote}}{{readingNote}}",
                     text004: `{{intro}}する{{reportKk}}`,
                     text005: `{{name}}（{{ticker}}）の決算資料を分析する{{reportKk}}`,
-                    text100: "{{intro}}する{{reportSs}}{{reportGc}}\n・株価が" + direction + "理由をまとめるスライドも作成して",
+                    text100: "{{intro}}する{{reportSs}}{{reportGc}}",
                     text101: "{{name}}（{{ticker}}）の決算資料を分析する{{reportSs}}{{reportGc}}",
                     text200: "{{intro}}する{{thumbnail}}",
                     text201: "{{formattedEarningsDate}}に発表された{{name}}（{{ticker}}）の決算資料を分析し、今後の見通しを考察する{{titleBf}}先頭に「【{{name}}({{ticker}})】」、後ろに「｜AI決算分析」をつけてください。{{titleAf}}",
