@@ -533,7 +533,8 @@ const App = {
         today: '',
         prevBizDay: '',
         thisWeekFriday: '',
-        lastWeekFriday: ''
+        lastWeekFriday: '',
+        savedFormValues: {}
     },
 
     // ---------------------------------------------------------------------------
@@ -658,10 +659,48 @@ const App = {
     // UI Update Logic
     // ---------------------------------------------------------------------------
     handleAnalysisChange: function() {
+        this.saveFormValues();
+        // 描写過程を非表示に
+        this.dom.dynamicInputContainer.style.visibility = 'hidden';
         this.updateUiVisibility();
         this.renderButtons();
-        // スマートフォンでの表示を確実にする
-        setTimeout(() => this.forceShowContent(), 50);
+        // 復元後に表示
+        this.restoreFormValues();
+        this.forceShowContent();
+        this.dom.dynamicInputContainer.style.visibility = 'visible';
+    },
+
+    saveFormValues: function() {
+        const inputs = document.querySelectorAll('input[type="text"], input[type="date"], textarea');
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]:not([id^="movie_info"])');
+        const radios = document.querySelectorAll('input[type="radio"]:checked');
+        
+        inputs.forEach(input => {
+            if (input.value) this.state.savedFormValues[input.id] = input.value;
+        });
+        
+        checkboxes.forEach(checkbox => {
+            this.state.savedFormValues[checkbox.id] = checkbox.checked;
+        });
+        
+        radios.forEach(radio => {
+            this.state.savedFormValues[radio.name] = radio.value;
+        });
+    },
+
+    restoreFormValues: function() {
+        Object.keys(this.state.savedFormValues).forEach(key => {
+            const element = document.getElementById(key) || document.querySelector(`input[name="${key}"][value="${this.state.savedFormValues[key]}"]`);
+            if (element) {
+                if (element.type === 'checkbox') {
+                    element.checked = this.state.savedFormValues[key];
+                } else if (element.type === 'radio') {
+                    element.checked = true;
+                } else {
+                    element.value = this.state.savedFormValues[key];
+                }
+            }
+        });
     },
 
     updateUiVisibility: function() {

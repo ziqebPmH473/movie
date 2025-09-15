@@ -309,6 +309,10 @@ button:active {
   padding: 0.4em 0.8em;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* ティッカー・銘柄名・読みがなの横並びレイアウト */
 .ticker-name-row {
   display: flex;
