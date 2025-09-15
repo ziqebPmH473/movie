@@ -503,8 +503,20 @@ const App = {
                 ],
                 copyTexts: {
                     urls: (vars) => {
-                         const codes = vars.largeTextbox1.split('\n').map(line => line.trim()).filter(line => line !== '');
-                         return vars.emarket === 'jp'
+                        const codes = [];
+                        // 大きなテキストボックスから証券コードを取得
+                        if (vars.textbox) {
+                            const lines = vars.textbox.split('\n').map(line => line.trim()).filter(line => line !== '');
+                            codes.push(...lines);
+                        }
+                        // ティッカーテキストボックスからも取得
+                        if (vars.ticker) {
+                            codes.push(vars.ticker);
+                        }
+                        
+                        if (codes.length === 0) return '';
+                        
+                        return vars.emarket === 'jp'
                             ? codes.map(code => `https://kabutan.jp/stock/chart?code=${code}\nhttps://kabutan.jp/stock/finance?code=${code}`).join('\n')
                             : codes.map(code => `https://us.kabutan.jp/stocks/${code}/\nhttps://us.kabutan.jp/stocks/${code}/finance`).join('\n');
                     },
