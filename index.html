@@ -14,89 +14,13 @@
             <div id="date-area"></div>
         </div>
 
-        <div class="select-area">
-            <label><input type="radio" name="analysis" value="market_todayjp"><span>日次</span></label>
-            <label><input type="radio" name="analysis" value="market_term_rank"><span>週間</span></label>
-            <label><input type="radio" name="analysis" value="news"><span>ニュース</span></label>
-            <label><input type="radio" name="analysis" value="market_stock"><span>個別銘柄</span></label>
-            <label><input type="radio" name="analysis" value="market_buy_analysis"><span>株価分析</span></label>
-            <label><input type="radio" name="analysis" value="market_earnings"><span>決算</span></label>
-            <label><input type="radio" name="analysis" value="ipo"><span>IPO</span></label>
-            <label><input type="radio" name="analysis" value="theme_analysis"><span>テーマ</span></label>
+        <div class="select-area" id="select-area">
+            <!-- カテゴリラジオボタンはJSで動的に生成 -->
         </div>
 
-        <div id="input-area" class="control-section hidden">
-            <div id="earnings-market-area" class="hidden">
-                <label><input type="radio" name="emarket" value="jp" checked> 国内</label>
-                <label><input type="radio" name="emarket" value="us"> 米国</label>
-            </div>
-            <div id="ticker-name-area" class="input-group">
-                <label>ティッカー: <input type="text" id="input-ticker" placeholder="例：7203"></label>
-                <label>銘柄名: <input type="text" id="input-name" placeholder="例：トヨタ自動車"></label>
-                <label>読みがな: <input type="text" id="input-reading" placeholder="例：とよたじどうしゃ"></label>
-                <button id="ir-search-btn" type="button">IR情報</button>
-                <button id="kabutan-search-btn" type="button">株探</button>
-                <button id="jpx-search-btn" type="button">上場時資料</button>
-            </div>
-        </div>
+        <!-- 選択されたカテゴリのUIを動的に挿入するコンテナ -->
+        <div id="dynamic-input-container"></div>
         
-        <div id="news-input-section" class="control-section hidden">
-            <div class="input-group">
-                <label>日時:</label>
-                <input type="date" id="news-date">
-                <input type="text" id="news-time" placeholder="HH:mm" style="max-width: 80px;">
-                <label><input type="checkbox" id="news-no-date-check"> 指定なし</label>
-            </div>
-            <div class="input-group" style="margin-top: 0.8em;">
-                <label>提供元:</label>
-                <input type="text" id="news-source" placeholder="例：日本経済新聞">
-                <label>内容:</label>
-                <input type="text" id="news-content" placeholder="ニュースのヘッドライン" style="flex-grow: 1; max-width: none;">
-            </div>
-            <div class="input-group" style="margin-top: 0.8em;">
-                <label>分析内容:</label>
-                <label><input type="checkbox" id="news-reason-check" checked> 変動理由</label>
-                <label><input type="checkbox" id="news-stock-price-check" checked> 株価</label>
-                <label><input type="checkbox" id="news-performance-check" checked> 業績</label>
-            </div>
-        </div>
-        
-        <div id="theme-input-section" class="control-section hidden">
-            <div id="theme-input-area" class="input-group">
-                <label>テーマ: <input type="text" id="input-theme" placeholder="例：EV関連"></label>
-            </div>
-        </div>
-
-        <div id="term-direction-area" class="control-section hidden">
-            <strong>騰落:</strong>
-            <label><input type="radio" name="term-direction" value="up"> 上昇率</label>
-            <label><input type="radio" name="term-direction" value="down" checked> 下落率</label>
-        </div>
-
-        <div id="stock-direction-area" class="control-section hidden">
-            <div id="period-input-container" class="input-group" style="margin-bottom: 0.8em;">
-                    <label>期間: <input type="text" id="input-period" placeholder="例：8月からの1か月間で大幅に"></label>
-            </div>
-            <label id="direction-up-label"><input type="radio" name="stock-direction" value="上昇した"> 上昇</label>
-            <label id="direction-down-label"><input type="radio" name="stock-direction" value="下落した"> 下落</label>
-            <label id="direction-s-high-label"><input type="radio" name="stock-direction" value="ストップ高となった"> ストップ高</label>
-            <label id="direction-s-low-label"><input type="radio" name="stock-direction" value="ストップ安となった"> ストップ安</label>
-            <label id="direction-none-label"><input type="radio" name="stock-direction" value="" checked> 指定なし</label>
-            <label id="direction-after-hours-label"><input type="checkbox" id="after-hours-check"> 時間外</label>
-            <label id="direction-no-price-label"><input type="checkbox" id="no-price-check"> 株価なし</label>
-        </div>
-
-        <div id="earnings-timing-area" class="control-section hidden">
-            <input type="date" id="earnings-date" style="margin-left: 5px;">
-            <label><input type="radio" id="earnings-timing-hike" name="earnings-timing" value="の引け後"> 引け後</label>
-            <label><input type="radio" id="earnings-timing-bachu" name="earnings-timing" value="の場中"> 場中</label>
-            <label><input type="radio" id="earnings-timing-no" name="earnings-timing" value="" checked> 指定なし</label>
-        </div>
-
-        <div id="textbox-area" class="control-section hidden">
-            <textarea id="large-textbox1" class="large-textbox" placeholder="ここにテキストを入力してください"></textarea>
-        </div>
-
         <div id="button-area"></div>
     </div>
     <script src="script.js"></script>
