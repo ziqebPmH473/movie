@@ -543,21 +543,45 @@ const App = {
     // Initialization
     // ---------------------------------------------------------------------------
     init: function() {
-        this.cacheDom();
-        this.bindEvents();
-        this.updateDates();
-        this.renderCategoryRadios();
+        console.log('App.init() started');
+        try {
+            this.cacheDom();
+            this.bindEvents();
+            this.updateDates();
+            this.renderCategoryRadios();
+            
+            // 複数回試行して確実に初期化
+            this.ensureInitialization();
+        } catch (error) {
+            console.error('Init error:', error);
+        }
+    },
+
+    ensureInitialization: function() {
+        let attempts = 0;
+        const maxAttempts = 5;
         
-        // スマートフォンでの表示を確実にするため、少し遅延させて初期化
-        setTimeout(() => {
+        const tryInit = () => {
+            attempts++;
+            console.log(`Initialization attempt ${attempts}`);
+            
             const firstRadio = document.querySelector('input[name="analysis"]');
-            if(firstRadio) {
+            if (firstRadio) {
                 firstRadio.checked = true;
                 this.handleAnalysisChange();
-                // 強制的に表示状態を更新
                 this.forceShowContent();
+                console.log('Initialization successful');
+                return;
             }
-        }, 100);
+            
+            if (attempts < maxAttempts) {
+                setTimeout(tryInit, 200 * attempts);
+            } else {
+                console.error('Failed to initialize after', maxAttempts, 'attempts');
+            }
+        };
+        
+        setTimeout(tryInit, 50);
     },
 
     cacheDom: function() {
@@ -1036,17 +1060,25 @@ const App = {
 // ===================================================================================
 // Start Application
 // ===================================================================================
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
+    console.log('DOM ready, initializing app');
     App.init();
-      // ② イベント委譲をここに追記
-  document.addEventListener('click', (e) => {
-    const t = e.target;
-    if (t.id === 'kabutan-search-btn') {
-      // 株探ボタンが押されたときの処理
-    } else if (t.id === 'ir-search-btn') {
-      // IR情報ボタンが押されたときの処理
-    } else if (t.id === 'jpx-search-btn') {
-      // 上場時資料ボタンが押されたときの処理
-    }
-  });
-});
+    
+    // イベント委譲
+    document.addEventListener('click', (e) => {
+        const t = e.target;
+        if (t.id === 'kabutan-search-btn') {
+            // 株探ボタンが押されたときの処理
+        } else if (t.id === 'ir-search-btn') {
+            // IR情報ボタンが押されたときの処理
+        } else if (t.id === 'jpx-search-btn') {
+            // 上場時資料ボタンが押されたときの処理
+        }
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
