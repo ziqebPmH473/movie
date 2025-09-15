@@ -887,7 +887,7 @@ const App = {
         const audioLength = settings.audioLength || '5分から7分';
         
         const readingNote = (form.reading.trim() !== '') ?
-            `\n・「${form.name}」は「${form.reading}」と読みます。社名の間違いは許されませんので、間違いないようチェックしてください。\n(読むときは「${form.name} ${form.reading}」ではなく「${form.reading}」のように、下記の読みがなの読み方で一度だけ発音してください)` : '';
+            `\n・「${form.name}」は「${form.reading}」と読みます。社名の間違いは許されませんので、間違いないようチェックしてください。\n(読むときは「${form.name} ${form.reading}」ではなく「${form.reading}」のように、読みがなを一度だけ発音してください)` : '';
 
         let formattedEarningsDate = '';
         const earningsDateToUse = form.earningsDate || this.state.today;
