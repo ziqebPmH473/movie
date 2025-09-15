@@ -595,16 +595,19 @@ const App = {
     },
 
     bindEvents: function() {
-        this.dom.baseDateInput.addEventListener('change', (e) => {
-            this.updateDates(e.target.value);
-            // 基準日変更後にコンテンツを再表示
-            setTimeout(() => this.forceShowContent(), 100);
-        });
-        this.dom.selectArea.addEventListener('change', (e) => {
-            if (e.target.name === 'analysis') {
-                this.handleAnalysisChange();
-            }
-        });
+        if (this.dom.baseDateInput) {
+            this.dom.baseDateInput.addEventListener('change', (e) => {
+                this.updateDates(e.target.value);
+                setTimeout(() => this.forceShowContent(), 100);
+            });
+        }
+        if (this.dom.selectArea) {
+            this.dom.selectArea.addEventListener('change', (e) => {
+                if (e.target.name === 'analysis') {
+                    this.handleAnalysisChange();
+                }
+            });
+        }
     },
 
     renderCategoryRadios: function() {
