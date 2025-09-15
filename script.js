@@ -71,15 +71,12 @@ const App = {
                     <div class="search-buttons">
                         <button id="ir-search-btn" type="button">IR情報</button>
                         <button id="kabutan-search-btn" type="button">株探</button>
+                        <button id="jpx-search-btn" type="button">上場時資料</button>
                     </div>
                 </div>
             `,
             'ir-kabutan-buttons': ``,
-            'jpx-button': `
-                <div class="jpx-button-row">
-                    <button id="jpx-search-btn" type="button">上場時資料</button>
-                </div>
-            `,
+            'jpx-button': ``,
             'earnings-market-area': `
                 <div id="earnings-market-area">
                     <label><input type="radio" name="emarket" value="jp" checked> 国内</label>
