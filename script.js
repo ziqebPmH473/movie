@@ -791,9 +791,7 @@ const App = {
                     b.addEventListener("click", () => {
                         const copyText = App.getCopyText(analysis, btn.copyId);
                         if (copyText) {
-                            navigator.clipboard.writeText(copyText).then(() => {
-                                alert("コピーしました: " + btn.label);
-                            });
+                            navigator.clipboard.writeText(copyText);
                         }
                     });
                     buttonRow.appendChild(b);
@@ -878,7 +876,7 @@ const App = {
             textbox: this.dom.largeTextbox1?.value || '',
             afterHoursChecked: this.dom.afterHoursCheck?.checked || false,
             noPriceChecked: this.dom.noPriceCheck?.checked || false,
-            earningsDate: this.dom.earningsDate?.value || '',
+            earningsDate: this.dom.earningsDate?.value || this.state.today,
             earningsTiming: this.dom.earningsTiming?.value || '',
             movieInfoFinancial: this.dom.movieInfoFinancial?.checked || false
         };
@@ -892,9 +890,14 @@ const App = {
             `\n・「${form.name}」は「${form.reading}」と読みます。社名の間違いは許されませんので、間違いないようチェックしてください。\n(読むときは「${form.name} ${form.reading}」ではなく「${form.reading}」のように、下記の読みがなの読み方で一度だけ発音してください)` : '';
 
         let formattedEarningsDate = '';
-        if (form.earningsDate) {
-            const dateObj = new Date(form.earningsDate + 'T00:00:00Z');
-            formattedEarningsDate = `${dateObj.getUTCFullYear()}年${dateObj.getUTCMonth() + 1}月${dateObj.getUTCDate()}日`;
+        const earningsDateToUse = form.earningsDate || this.state.today;
+        if (earningsDateToUse) {
+            if (earningsDateToUse.includes('年')) {
+                formattedEarningsDate = earningsDateToUse;
+            } else {
+                const dateObj = new Date(earningsDateToUse + 'T00:00:00Z');
+                formattedEarningsDate = `${dateObj.getUTCFullYear()}年${dateObj.getUTCMonth() + 1}月${dateObj.getUTCDate()}日`;
+            }
         }
 
         const afterHours = form.afterHoursChecked ? (form.emarket === 'jp' ? 'PTSで' : '時間外取引で') : '';
@@ -991,13 +994,16 @@ const App = {
 
         this.dom.dateArea.innerHTML = `<b>基準日:</b> ${this.state.today}<br><b>分析期間:</b> ${this.state.lastWeekFriday} ～ ${this.state.thisWeekFriday}`;
         
+        // 基準日入力がない場合は営業日ベースの基準日を使用
+        const dateToUse = baseDateStr ? baseDate : todayDate;
+        
         const earningsDate = document.getElementById('earnings-date');
         if (earningsDate) {
-             earningsDate.value = todayDate.toISOString().slice(0, 10);
+             earningsDate.value = dateToUse.toISOString().slice(0, 10);
         }
         const newsDate = document.getElementById('news-date');
         if (newsDate) {
-             newsDate.value = todayDate.toISOString().slice(0, 10);
+             newsDate.value = dateToUse.toISOString().slice(0, 10);
         }
     },
     
@@ -1073,6 +1079,37 @@ const App = {
             console.error('コピーに失敗しました。', err);
         }
         document.body.removeChild(dummy);
+    },
+
+    getCopyText: function(analysisKey, copyId) {
+        const settings = this.CONFIG.analysisSettings[analysisKey];
+        if (!settings) return '';
+
+        const variables = this.getTemplateVariables(analysisKey);
+        let textTemplate = settings.copyTexts[copyId] || '';
+
+        if (analysisKey === 'market_buy_analysis' && copyId === 'analysis') {
+            const mode = variables.direction === '上昇した' ? 'up' : 'down';
+            const modeVariables = settings.copyTexts.analysisModes[mode];
+            textTemplate = this.replaceVariables(settings.copyTexts.corePromptTemplate, modeVariables);
+        }
+        
+        if (typeof textTemplate === 'function') {
+            textTemplate = textTemplate(variables);
+        }
+
+        let finalText = this.replaceVariables(textTemplate, variables);
+        
+        if (['market_stock', 'market_earnings', 'market_buy_analysis', 'news'].includes(analysisKey)) {
+             if ((copyId === 'voice') && variables.noPriceChecked) {
+                 finalText += '\n・株価の具体的な数字は発言しないでください。ただし、上昇や下落、ストップ高、ストップ安、大幅などという表現であれば可。';
+             }
+             if ((copyId === 'reportKk' || copyId === 'reportKkEarningsOnly') && variables.noPriceChecked) {
+                 finalText += '\n・株価の情報（具体的な数字や変動率）は記載しないでください。';
+             }
+        }
+        
+        return finalText;
     }
 };
 
