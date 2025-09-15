@@ -545,7 +545,12 @@ const App = {
     init: function() {
         console.log('App.init() started');
         try {
-            this.cacheDom();
+            if (!this.cacheDom()) {
+                console.log('DOM elements not ready, retrying...');
+                setTimeout(() => this.init(), 100);
+                return;
+            }
+            
             this.bindEvents();
             this.updateDates();
             this.renderCategoryRadios();
@@ -592,6 +597,20 @@ const App = {
             dateArea: document.getElementById('date-area'),
             buttonArea: document.getElementById('button-area'),
         };
+        
+        // DOM要素の存在確認
+        const missingElements = [];
+        Object.keys(this.dom).forEach(key => {
+            if (!this.dom[key]) {
+                missingElements.push(key);
+            }
+        });
+        
+        if (missingElements.length > 0) {
+            console.error('Missing DOM elements:', missingElements);
+            return false;
+        }
+        return true;
     },
 
     bindEvents: function() {
