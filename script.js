@@ -994,8 +994,13 @@ const App = {
     },
 
     openSearchWindow: function(type) {
-        const name = this.dom.inputName?.value.trim();
-        const ticker = this.dom.inputTicker?.value.trim();
+        // ボタンクリック時に最新の値を取得
+        const nameInput = document.getElementById('input-name');
+        const tickerInput = document.getElementById('input-ticker');
+        const emarketRadio = document.querySelector('input[name="emarket"]:checked');
+        
+        const name = nameInput?.value.trim() || '';
+        const ticker = tickerInput?.value.trim() || '';
         let url;
 
         switch(type) {
@@ -1004,7 +1009,7 @@ const App = {
                 break;
             case 'kabutan':
                  if (ticker) {
-                     const emarket = this.dom.emarket?.value || 'jp';
+                     const emarket = emarketRadio?.value || 'jp';
                      url = (emarket === "jp") 
                          ? `https://kabutan.jp/stock/news?code=${ticker}` 
                          : `https://us.kabutan.jp/stocks/${ticker}/news`;
