@@ -317,9 +317,9 @@ const App = {
                     analysis: "{{intro}}を分析して",
                     voice: "{{intro}}を分析してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください。",
                     reportKk: `{{intro}}についての{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
-                    reportKkEarningsOnly: `{{name}}（{{ticker}}）の決算資料を分析する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
+                    reportKkEarningsOnly: `{{name}}（{{ticker}}）の決算内容を分析する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
                     presentation: "{{intro}}についての{{reportSs}}{{reportGc}}",
-                    presentationEarningsOnly: "{{name}}（{{ticker}}）の決算資料を分析する{{reportSs}}{{reportGc}}",
+                    presentationEarningsOnly: "{{name}}（{{ticker}}）の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}についての{{thumbnail}}",
                     titleBf: "{{intro}}についての{{titleBf}}先頭に「【{{name}}({{ticker}})】」、後ろに「｜AI市場分析」をつけてください。{{titleAf}}",
                     gaiyo: `{{intro}}についての{{gaiyoNote}}`,
@@ -363,9 +363,9 @@ const App = {
                     urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/`,
                     analysis: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください.",
                     reportKk: `{{intro}}する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
-                    reportKkEarningsOnly: `{{name}}（{{ticker}}）の決算資料を分析する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
+                    reportKkEarningsOnly: `{{name}}（{{ticker}}）の決算内容を分析する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
                     presentation: "{{intro}}する{{reportSs}}",
-                    presentationEarningsOnly: "{{name}}（{{ticker}}）の決算資料を分析する{{reportSs}}{{reportGc}}",
+                    presentationEarningsOnly: "{{name}}（{{ticker}}）の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}する{{thumbnail}}",
                     titleBf: "{{intro}}する{{titleBf}}先頭に「【{{name}}({{ticker}})】」、後ろに「｜AI株価分析」をつけてください。{{titleAf}}",
                     gaiyo: `{{intro}}する{{gaiyoNote}}`,
@@ -378,12 +378,12 @@ const App = {
                     const direction = App.dom.stockDirection?.value || '';
                     const isAfterHours = App.dom.afterHoursCheck?.checked;
                     if (direction === '') {
-                        return "{{formattedEarningsDate}}{{timing}}に発表された{{name}}（{{ticker}}）の決算資料を分析し、今後の見通しを考察";
+                        return "{{formattedEarningsDate}}{{timing}}に発表された{{name}}（{{ticker}}）の決算内容を分析し、今後の見通しを考察";
                     }
                     if (isAfterHours) {
-                        return "{{formattedEarningsDate}}{{timing}}に発表された決算資料を分析し、{{name}}（{{ticker}}）の株価が{{formattedEarningsDate}}の{{afterHours}}" + direction + "理由と今後の見通しを考察";
+                        return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{name}}（{{ticker}}）の株価が{{formattedEarningsDate}}の{{afterHours}}" + direction + "理由と今後の見通しを考察";
                     }
-                    return "{{formattedEarningsDate}}{{timing}}に発表された決算資料を分析し、{{name}}（{{ticker}}）の{{today}}の株価が" + direction + "理由と今後の見通しを考察";
+                    return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{name}}（{{ticker}}）の{{today}}の株価が" + direction + "理由と今後の見通しを考察";
                 },
                 audioLength: "8分から12分",
                 checkboxDefaults: {'movie_info_financial': true, 'movie_info_kabutan': true},
@@ -408,12 +408,12 @@ const App = {
                     urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
                     voice: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}",
                     reportKk: `{{intro}}する{{reportKk}}`,
-                    reportKkEarningsOnly: `{{name}}（{{ticker}}）の決算資料を分析する{{reportKk}}`,
+                    reportKkEarningsOnly: `{{name}}（{{ticker}}）の決算内容を分析する{{reportKk}}`,
                     presentation: "{{intro}}する{{reportSs}}{{reportGc}}",
-                    presentationEarningsOnly: "{{name}}（{{ticker}}）の決算資料を分析する{{reportSs}}{{reportGc}}",
+                    presentationEarningsOnly: "{{name}}（{{ticker}}）の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}する{{thumbnail}}",
-                    titleBf: "{{formattedEarningsDate}}に発表された{{name}}（{{ticker}}）の決算資料を分析し、今後の見通しを考察する{{titleBf}}先頭に「【{{name}}({{ticker}})】」、後ろに「｜AI決算分析」をつけてください。{{titleAf}}",
-                    gaiyo: `{{formattedEarningsDate}}に発表された{{name}}（{{ticker}}）の決算資料を分析し、今後の見通しを考察する{{gaiyoNote}}`,
+                    titleBf: "{{formattedEarningsDate}}に発表された{{name}}（{{ticker}}）の決算内容を分析し、今後の見通しを考察する{{titleBf}}先頭に「【{{name}}({{ticker}})】」、後ろに「｜AI決算分析」をつけてください。{{titleAf}}",
+                    gaiyo: `{{formattedEarningsDate}}に発表された{{name}}（{{ticker}}）の決算内容を分析し、今後の見通しを考察する{{gaiyoNote}}`,
                     xNotify: "{{intro}}する{{xNotifyText}}"
                 }
             },
