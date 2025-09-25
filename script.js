@@ -308,8 +308,8 @@ const App = {
                 intro: () => {
                     const period = App.dom.inputPeriod?.value;
                     return (period.trim() !== '')
-                        ? "{{name}}（{{ticker}}）の株価が{{period}}{{direction}}理由と今後の見通し"
-                        : "{{name}}（{{ticker}}）の{{today}}の株価が{{afterHours}}{{direction}}理由と今後の見通し";
+                        ? "{{companyName}}の株価が{{period}}{{direction}}理由と今後の見通し"
+                        : "{{companyName}}の{{today}}の株価が{{afterHours}}{{direction}}理由と今後の見通し";
                 },
                 audioLength: "8分から10分",
                 checkboxDefaults: {'movie_info_report': true, 'movie_info_kabutan': true},
@@ -325,9 +325,9 @@ const App = {
                     analysis: "{{intro}}を分析して{{CommonNote_source}}",
                     voice: "{{intro}}を分析してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください。",
                     reportKk: `{{intro}}についての{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
-                    reportKkEarningsOnly: `{{companyName}}）の決算内容を分析する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
+                    reportKkEarningsOnly: `{{companyName}}の決算内容を分析する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
                     presentation: "{{intro}}についての{{reportSs}}{{reportGc}}",
-                    presentationEarningsOnly: "{{companyName}}）の決算内容を分析する{{reportSs}}{{reportGc}}",
+                    presentationEarningsOnly: "{{companyName}}の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}についての{{thumbnail}}",
                     titleBf: "{{intro}}についての{{titleBf}}{{companyNamePrefix}}後ろに「｜AI市場分析」をつけてください。{{CommonNote_source}}",
                     gaiyo: `{{intro}}についての{{gaiyoNote}}`,
@@ -339,7 +339,7 @@ const App = {
                 intro: () => {
                     const period = App.dom.inputPeriod?.value;
                     const direction = App.dom.stockDirection?.value || '下落した';
-                    const baseSentence = `{{name}}（{{ticker}}）の株価が{{period}}${direction}`;
+                    const baseSentence = `{{companyName}}の株価が{{period}}${direction}`;
                     const buyOpportunityType = (direction === '上昇した') ? 'どこまで上昇するか' : '底値がどこになるか';
                     return `${baseSentence}が、${buyOpportunityType}分析`;
                 },
@@ -371,9 +371,9 @@ const App = {
                     urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/`,
                     voice: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください.",
                     reportKk: `{{intro}}する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
-                    reportKkEarningsOnly: `{{companyName}}）の決算内容を分析する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
+                    reportKkEarningsOnly: `{{companyName}}の決算内容を分析する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
                     presentation: "{{intro}}する{{reportSs}}",
-                    presentationEarningsOnly: "{{companyName}}）の決算内容を分析する{{reportSs}}{{reportGc}}",
+                    presentationEarningsOnly: "{{companyName}}の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}する{{thumbnail}}",
                     titleBf: "{{intro}}する{{titleBf}}{{companyNamePrefix}}後ろに「｜AI株価分析」をつけてください。{{CommonNote_source}}",
                     gaiyo: `{{intro}}する{{gaiyoNote}}`,
@@ -386,12 +386,12 @@ const App = {
                     const direction = App.dom.stockDirection?.value || '';
                     const isAfterHours = App.dom.afterHoursCheck?.checked;
                     if (direction === '') {
-                        return "{{formattedEarningsDate}}{{timing}}に発表された{{companyName}}）の決算内容を分析し、今後の見通しを考察";
+                        return "{{formattedEarningsDate}}{{timing}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察";
                     }
                     if (isAfterHours) {
-                        return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}）の株価が{{formattedEarningsDate}}の{{afterHours}}" + direction + "理由と今後の見通しを考察";
+                        return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の株価が{{formattedEarningsDate}}の{{afterHours}}" + direction + "理由と今後の見通しを考察";
                     }
-                    return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}）の{{today}}の株価が" + direction + "理由と今後の見通しを考察";
+                    return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の{{today}}の株価が" + direction + "理由と今後の見通しを考察";
                 },
                 audioLength: "8分から12分",
                 checkboxDefaults: {'movie_info_financial': true, 'movie_info_kabutan': true},
@@ -416,18 +416,18 @@ const App = {
                     urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
                     voice: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}",
                     reportKk: `{{intro}}する{{reportKk}}`,
-                    reportKkEarningsOnly: `{{companyName}}）の決算内容を分析する{{reportKk}}`,
+                    reportKkEarningsOnly: `{{companyName}}の決算内容を分析する{{reportKk}}`,
                     presentation: "{{intro}}する{{reportSs}}{{reportGc}}",
-                    presentationEarningsOnly: "{{companyName}}）の決算内容を分析する{{reportSs}}{{reportGc}}",
+                    presentationEarningsOnly: "{{companyName}}の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}する{{thumbnail}}",
-                    titleBf: "{{formattedEarningsDate}}に発表された{{companyName}}）の決算内容を分析し、今後の見通しを考察する{{titleBf}}{{companyNamePrefix}}後ろに「｜AI決算分析」をつけてください。{{CommonNote_source}}",
-                    gaiyo: `{{formattedEarningsDate}}に発表された{{companyName}}）の決算内容を分析し、今後の見通しを考察する{{gaiyoNote}}`,
+                    titleBf: "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する{{titleBf}}{{companyNamePrefix}}後ろに「｜AI決算分析」をつけてください。{{CommonNote_source}}",
+                    gaiyo: `{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する{{gaiyoNote}}`,
                     xNotify: "{{intro}}する{{xNotifyText}}"
                 }
             },
             ipo: {
                 label: 'IPO',
-                intro: "{{companyName}}）のIPOに関する資料・レポートを基にIPO上場後の初値予想について解説",
+                intro: "{{companyName}}のIPOに関する資料・レポートを基にIPO上場後の初値予想について解説",
                 audioLength: "9分から12分",
                 checkboxDefaults: {'movie_info_report': true, 'movie_info_kabutan': true},
                 ui: { dynamicInputs: ['movie-information','ticker-name-area', 'ir-kabutan-buttons', 'jpx-button', 'earnings-market-area'], searchBtns: ['jpx'], directionOptions: { default: '' } },
@@ -465,7 +465,7 @@ const App = {
     * （5段階評価などでブックビルディングへの参加スタンスを記載）\n    * 初値予想：0,000円（想定価格+0.00%）\n* **評価のポイント**:\
     * **ポジティブ要因**: （箇条書きで要約）\n    * **ネガティブ要因**: （箇条書きで要約）\n\n---`,
                     voice: `{{intro}}してください。\nIPOに参加するかを判断する参考情報にするつもりです。\nなお、解説は必ず以下の【構成】の流れに沿って行ってください。\n## **【構成】**\n\n1. 事業と市場\n事業内容、市場の将来性、競合優位性、課題・懸念材料\n\n2. 業績・財務状況\n業績の推移と現状、財務状況の分析\n\n3. 需給環境\n需給に関するプラス要因とマイナス要因\n\n4. 株価の妥当性\n類似企業比較による価格の割安・割高の評価\n（PERやPBR、PSRの算出方法について説明する必要はありません。想定の各指標で他社と比較してください）\n\n5. 基本情報\nIPOの基本データと主要スケジュール\n\n6. 結論\n分析の総括と最終的な評価・投資スタンス\n{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}\n## 最重要命令：実行の最終確認\n上記すべての指示を踏まえた上で、以下の点を絶対に守ってください。\n構成のテーマを完全遵守: 「# 構成」で指定された7つのテーマの内容を、記述通りの順番で、省略せずに必ず解説してください。ただし、スクリプト内では「4. 需給環境」のように番号や見出し自体を読み上げるのではなく、自然な話し言葉で次のテーマに移ってください。`,
-                    presentation: `{{companyName}}）の上場時の初値予想する動画に使用する投影資料を作成してください
+                    presentation: `{{companyName}}の上場時の初値予想する動画に使用する投影資料を作成してください
 ・表紙:
 表題と、内容を4行程度の文章
 「この資料は」などとプレゼン資料自体の事を書かない
@@ -482,7 +482,7 @@ const App = {
 ・スライド構成:
 表紙、企業概要、事業内容、企業の特長・強み、課題・懸念材料、市場の将来性、業績（直近実績）、業績（累積実績）、業績（次期予想）、業績推移、財務状況、需給環境、株価の妥当性、IPOの基本情報、投資判断、ポジティブ要因、ネガティブ要因、まとめ`,
                     thumbnail: "{{intro}}についての{{thumbnail}}",
-                    titleBf: `{{intro}}するYouTube動画を作成します。\n見たくなるようなYouTubeタイトル案を5パターン考えてください。\nターゲットは{{companyName}}）のIPOに参加するか迷っている人です。\n※「株価下落の真相は？」「今後どうなる？」「意外な理由が…」など、視聴者に疑問や興味を持たせる内容にしてください。先頭に「【{{companyName}}）】」、後ろに「｜AI初値分析」をつけてください。\n※企業の特徴と「ついに上場」のような文章を加えるのがいいと思います。\n※出典・カッコ・番号などは入れず、文章だけを提示してください。`,
+                    titleBf: `{{intro}}するYouTube動画を作成します。\n見たくなるようなYouTubeタイトル案を5パターン考えてください。\nターゲットは{{companyName}}のIPOに参加するか迷っている人です。\n※「株価下落の真相は？」「今後どうなる？」「意外な理由が…」など、視聴者に疑問や興味を持たせる内容にしてください。先頭に「【{{companyName}}】」、後ろに「｜AI初値分析」をつけてください。\n※企業の特徴と「ついに上場」のような文章を加えるのがいいと思います。\n※出典・カッコ・番号などは入れず、文章だけを提示してください。`,
                     gaiyo: `{{intro}}する{{gaiyoNote}}`,
                     xNotify: "{{intro}}する{{xNotifyText}}",
                 }
