@@ -601,10 +601,12 @@ const App = {
                     }
                 ],
                 copyTexts: {
-                    factCheck: "{{textbox2}}\n\n上記の内容についてファクトチェックを行ってください。",
-                    correction: "{{textbox2}}\n\n上記の内容を修正してください。",
-                    articleCreation: "{{textbox2}}\n\n上記の内容を基にnote記事を作成してください。",
-                    youtubeDescription: "{{textbox3}}\n\n上記の内容を基にYouTube動画の概要欄を作成してください。"
+                    factCheck: "以下のレポートは、以下の指示文でAIが生成したものです。\nレポートのファクトチェックを行い、誤っている個所と指示に沿っていない箇所のみを指摘してください。\n\n--指示文--\n{{textbox2}}\n\n\n--レポート--\n{{textbox3}}",
+                    correction: "その指摘箇所を指示文に沿って修正し、全文出力してください。\nただし、指摘箇所以外は一切変更しないでください。",
+                    youtubeDescription: `📄 動画の内容をテキストで読みたい方はこちら  
+👉 note記事： {{textbox2}}
+
+動画で触れきれなかった補足や要点をまとめています。通勤中やあとで振り返るときにぜひご利用ください。`
                 }
             },
         }
