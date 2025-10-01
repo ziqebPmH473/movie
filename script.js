@@ -591,6 +591,15 @@ const App = {
                         }] 
                     },
                     { 
+                        category: "【note記事】", 
+                        services: [{ 
+                            service: "notebookLM", 
+                            buttons: [
+                                { label: "記事作成", copyId: "articleCreation" }
+                            ] 
+                        }] 
+                    },
+                    { 
                         category: "【YouTube】", 
                         services: [{ 
                             service: "youtube", 
@@ -601,12 +610,10 @@ const App = {
                     }
                 ],
                 copyTexts: {
-                    factCheck: "以下のレポートは、以下の指示文でAIが生成したものです。\nレポートのファクトチェックを行い、誤っている個所と指示に沿っていない箇所のみを指摘してください。\n\n--指示文--\n{{textbox2}}\n\n\n--レポート--\n{{textbox3}}",
-                    correction: "その指摘箇所を指示文に沿って修正し、全文出力してください。\nただし、指摘箇所以外は一切変更しないでください。",
-                    youtubeDescription: `📄 動画の内容をテキストで読みたい方はこちら  
-👉 note記事： {{textbox2}}
-
-動画で触れきれなかった補足や要点をまとめています。通勤中やあとで振り返るときにぜひご利用ください。`
+                    factCheck: "以下のレポートは、以下の指示でAIが生成したものです。\nレポートのファクトチェックを行い、誤っている個所と指示に沿っていない箇所のみを指摘してください。\n\n--指示--\n{{textbox2}}\n\n--レポート--\n{{textbox3}}",
+                    correction: "指摘箇所を支持の内容に沿って修正し、全文出力してください。\nただし、指摘していない箇所は一切変更しないでください。",
+                    articleCreation: "{{textbox2}}\n\n上記の内容を基にnote記事を作成してください。",
+                    youtubeDescription: "{{textbox3}}\n\n上記の内容を基にYouTube動画の概要欄を作成してください。"
                 }
             },
         }
@@ -767,7 +774,13 @@ const App = {
         const radios = document.querySelectorAll('input[type="radio"]:checked');
         
         inputs.forEach(input => {
-            if (input.value) this.state.savedFormValues[input.id] = input.value;
+            if (input.id) {
+                if (input.id === 'large-textbox1' || input.id === 'large-textbox2' || input.id === 'large-textbox3') {
+                    localStorage.setItem(input.id, input.value);
+                } else {
+                    this.state.savedFormValues[input.id] = input.value;
+                }
+            }
         });
         
         checkboxes.forEach(checkbox => {
@@ -788,10 +801,18 @@ const App = {
                 } else if (element.type === 'radio') {
                     element.checked = true;
                 } else {
-                    element.value = this.state.savedFormValues[key];
+                    element.value = this.state.savedFormValues[key] || '';
                 }
             }
         });
+        
+        // textbox1、2、3はlocalStorageから復元
+        const textbox1 = document.getElementById('large-textbox1');
+        const textbox2 = document.getElementById('large-textbox2');
+        const textbox3 = document.getElementById('large-textbox3');
+        if (textbox1) textbox1.value = localStorage.getItem('large-textbox1') || '';
+        if (textbox2) textbox2.value = localStorage.getItem('large-textbox2') || '';
+        if (textbox3) textbox3.value = localStorage.getItem('large-textbox3') || '';
     },
 
     updateUiVisibility: function() {
