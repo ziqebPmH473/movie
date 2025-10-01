@@ -12,7 +12,9 @@ const App = {
         serviceUrls: {
             gemini: 'https://gemini.google.com/',
             notebookLM: 'https://notebooklm.google.com/',
-            gamma: 'https://gamma.app/'
+            gamma: 'https://gamma.app/',
+            chatGPT: 'https://chat.openai.com/',
+            youtube: 'https://www.youtube.com/'
         },
         holidays: [
             '2025-07-21', '2025-08-11', '2025-09-15', '2025-09-23',
@@ -48,6 +50,7 @@ const App = {
             reportKk: `資料を10000文字以上で作成してください\n・根拠資料として使用するため、引用やカッコつきの番号は記載しないでください\n・企業概要は記載しないでください。`,
             reportSs: `YouTube動画を作成するので、動画内で使用する投影資料を作成してください。\n・表紙は、表題と、内容を4行程度の文章でまとめてください。\nただし、「この資料は」などとプレゼン資料自体の事を書かないでください\nまた、資料・動画の視聴意欲がなくならないように、結論や最も重要な内容は書かないでください。\n・最後のページは「まとめ」のページにしてください\n・目次、企業概要のスライドは作成しないでください`,
             reportGc: `\n・決算の結果、業績予想は大きな数字のレイアウトで作成してください\n数字の単位（百万円など）は数字の後ろに付けず、見出し（売上高、営業利益など）の後ろに付加し「売上高(百万円)」の形式で表示してください\n・グラフに使用する金額はドルではなく数値扱いとしてください\n・業績予想の修正をした場合は、表で前回発表、今回修正、増減額、増減率をまとめてください`,
+            reportNote: `note記事を3000文字程度で作成してください\n・１行目にタイトルを記載してください。\n・資料として使用するため、引用やカッコつきの番号は記載しないでください`,
         },
         // UIの各入力項目を定義
         uiTemplates: {
@@ -66,6 +69,7 @@ const App = {
                 <label><input type="radio" name="analysis" value="market_earnings"><span>決算</span></label>
                 <label><input type="radio" name="analysis" value="ipo"><span>IPO</span></label>
                 <label><input type="radio" name="analysis" value="theme_analysis"><span>テーマ</span></label>
+                <label><input type="radio" name="analysis" value="content_creation"><span>コンテンツ作成</span></label>
             `,
             'ticker-name-area': `
                 <div class="ticker-name-row">
@@ -150,6 +154,12 @@ const App = {
                 <div id="textbox-area">
                     <textarea id="large-textbox1" class="large-textbox" placeholder="ここにテキストを入力してください"></textarea>
                 </div>
+            `,
+            'dual-textbox-area': `
+                <div id="dual-textbox-area">
+                    <textarea id="large-textbox2" class="large-textbox" placeholder="テキストボックス2"></textarea>
+                    <textarea id="large-textbox3" class="large-textbox" placeholder="テキストボックス3"></textarea>
+                </div>
             `
         },
 
@@ -165,7 +175,7 @@ const App = {
                     { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "TOP10理由・ニュース", copyId: "top10ReasonNews" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     urls: `https://quote.nomura.co.jp/nomura/cgi-bin/quote.cgi?template=nomura_tp_index_01\nhttps://s.kabutan.jp/warnings/nk225_contrib/?direction=desc&order=contrib_price\nhttps://s.kabutan.jp/warnings/nk225_contrib/?direction=asc&order=contrib_price\nhttps://kabutan.jp/warning/?mode=2_1&market=1&dispmode=normal\nhttps://kabutan.jp/warning/?mode=2_2&market=1&dispmode=normal\nhttps://s.kabutan.jp/warnings/sector_stocks_ranking/\nhttps://s.kabutan.jp/warnings/sector_stocks_ranking/?direction=asc&order=prev_price_ratio\nhttp://kabutan.jp/warning/trading_value_ranking`,
@@ -178,7 +188,8 @@ const App = {
                     gaiyo: `{{intro}}{{gaiyoNote}}`,
                     xNotify: "{{intro}}{{xNotifyText}}",
                     shortTitle: "2分で{{intro}}{{titleSBf}}先頭に「【2分で東証マーケット振り返り】」、後ろに「【{{today}}】｜AI市場分析」をつけてください。{{CommonNote_source}}",
-                    shortGaiyo: `2分で{{intro}}{{SgaiyoNote}}`
+                    shortGaiyo: `2分で{{intro}}{{SgaiyoNote}}`,
+                    noteArticle: `{{intro}}{{reportNote}}`
                 }
             },
             market_term_rank: {
@@ -191,7 +202,7 @@ const App = {
                     { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "注目銘柄分析", copyId: "analysis" }, { label: "銘柄分析(ランクNG)", copyId: "analysisRankNg" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "ランキング生成", copyId: "rank" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】（スライド：6+銘柄数）", services: [{ service: "gamma", buttons: [{ label: "*プレゼン生成", copyId: "presentation" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "*概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "*概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     urls: `{{weeklyRankUrl}}\n{{monthlyRankUrl}}`,
@@ -206,7 +217,8 @@ const App = {
                     gaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{gaiyoNote}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`,
                     xNotify: `{{intro}}する{{xNotifyText}}`,
                     shortTitle: `{{intro}}{{titleSBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}`,
-                    shortGaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{SgaiyoNote}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`
+                    shortGaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{SgaiyoNote}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`,
+                    noteArticle: `{{intro}}する{{reportNote}}`
                 }
             },
             news: {
@@ -291,7 +303,7 @@ const App = {
                     { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
@@ -305,6 +317,7 @@ const App = {
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: "2分で{{intro}}する{{titleSBf}}{{companyNamePrefix}}後ろに「｜2分でニュース分析」をつけてください。{{CommonNote_source}}",
                     shortGaiyo: `2分で{{intro}}する{{SgaiyoNote}}`,
+                    noteArticle: `{{intro}}する{{reportNote}}`,
                 }
             },
             market_stock: {
@@ -322,7 +335,7 @@ const App = {
                     { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
@@ -338,6 +351,7 @@ const App = {
                     xNotify: "{{intro}}についての{{xNotifyText}}",
                     shortTitle: "2分で{{intro}}についての{{titleSBf}}{{companyNamePrefix}}後ろに「｜2分で市場分析」をつけてください。{{CommonNote_source}}",
                     shortGaiyo: `2分で{{intro}}についての{{SgaiyoNote}}`,
+                    noteArticle: `{{intro}}についての{{reportNote}}`,
                 }
             },
             market_buy_analysis: {
@@ -366,7 +380,7 @@ const App = {
                      { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     corePromptTemplate: `# 命令書\n\n## あなたの役割\nあなたは、分析対象の企業ごとに、最も合理的で重要な分析項目や指標を自ら選定できる、トップクラスの株式アナリストです。あなたの仕事は、短期的な株価の動きを追うだけでなく、その背景にある企業の永続的な競争力や経営の質といった、本質的な価値を見抜くことです。\n\n## 私の目的\n株価が {{period}}{現在のトレンド} している {{companyName}} について、12ヶ月（1年）程度の時間軸を基本とし、投資家が「{投資家のゴール}」を自己判断するための、客観的で深い洞察に満ちた分析レポートを作成すること。\n\n## 分析における重要な視点\nレポート全体の分析は、以下のマクロな視点を必ず考慮に入れてください。\n* マクロ経済環境: 現在の金利、景気動向、金融政策などが、この企業にどう影響するか。\n* 業界トレンド: 当該銘柄が属する業界全体の成長性、技術革新、規制の変更などの追い風・向かい風。\n* 競合他社の動向: 競合他社と比較して、この企業の業績や株価パフォーマンスはどのような位置づけにあるか。\n\n## 分析における「3つの必須回答項目」\n分析のアプローチや構成は全てあなたに一任しますが、レポートには以下の 3つの問いに対する明確な答え を必ず含めてください。\n\n1.  なぜ{現在のトレンド}しているのか？（企業の永続的な強さ、あるいは弱さはあるか？）\n    * 現在の株価{現在のトレンド}を牽引している要因を特定するだけでなく、その背景にある「企業の永続的な強さ・弱さ」についても分析してください。具体的には、競合他社に対する競争優位性（事業のMoat）と、経営陣の能力や信頼性についても評価に含めてください。\n\n2.  どこまで{現在のトレンド}する可能性があるのか？\n    * 今後の{将来のポテンシャル}について、具体的な目標株価を複数のシナリオとして提示してください。\n\n3.  トレンドの転換点（{転換点の意味}）を判断するための「株価以外のモノサシ」は何か？\n    * 多くの投資家がトレンドの転換点を判断する際に使うであろう、この銘柄に特有の、株価以外の定量的な判断材料を複数特定してください。そして、その指標が「どのくらいの数値」になったら転換の可能性が高まるか、具体的な目安を示してください。\n\n## レポートの構成\n・上記の「3つの必須回答項目」に対する答えを、以下の大きな枠組みの中で、あなたが最適と判断する構成（小見出しなど）で記述してください。\n・レポートに出典番号は記載しないでください。\n\n---\n\n### {{companyName}}株価分析レポート：{分析タイトル}\n\n#### 1. 企業の基本情報\n（分析の前提となる、客観的な現在のデータを共有します。現在の株価、時価総額、PER、PBR、配当利回りなどを、簡潔な表や箇条書きで提示してください。）\n\n#### 2. 現状分析：{現在のトレンド}の要因と企業の本質的価値\n（このセクションでは、必須回答項目1「なぜ{現在のトレンド}しているのか？」に対する答えを、詳細かつ論理的に記述してください。株価が動く短期的な要因だけでなく、その背景にある事業の質（競争優位性）や経営陣の評価といった、企業の長期的・本質的な価値についても深く掘り下げてください。）\n\n#### 3. 将来予測：市場コンセンサスと独自のポテンシャル分析\n（このセクションでは、必須回答項目2と3に対する答えを記述します。\nまず、市場のコンセンサスとしてアナリストのレーティングや目標株価平均を提示してください。\nその上で、あなた独自の分析による「どこまで{現在のトレンド}する可能性があるのか？」と「トレンドの転換点を判断するための『株価以外のモノサシ』は何か？」に対する答えを、市場コンセンサスとの比較も交えながら具体的かつ分かりやすく記述してください。）\n\n#### 4. シナリオとリスク\n（分析の前提となるシナリオと、投資家が注意すべき最大のリスク、つまり「{リスクシナリオ}」について具体的に記述してください。）`,
@@ -386,6 +400,7 @@ const App = {
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: "{{intro}}する{{titleBf}}{{companyNamePrefix}}後ろに「｜AI株価分析」をつけてください。{{CommonNote_source}}",
                     shortGaiyo: `{{intro}}する{{gaiyoNote}}`,
+                    noteArticle: `{{intro}}する{{reportNote}}`,
                 }
             },
             market_earnings: {
@@ -418,7 +433,7 @@ const App = {
                 buttonData: [
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
@@ -432,7 +447,8 @@ const App = {
                     gaiyo: `{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する{{gaiyoNote}}`,
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを2分で考察する{{titleSBf}}{{companyNamePrefix}}後ろに「｜AI決算分析」をつけてください。{{CommonNote_source}}",
-                    shortGaiyo: `{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを2分で考察する{{SgaiyoNote}}`
+                    shortGaiyo: `{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを2分で考察する{{SgaiyoNote}}`,
+                    noteArticle: `{{intro}}する{{reportNote}}`
                 }
             },
             ipo: {
@@ -445,7 +461,7 @@ const App = {
                     { category: "【分析】（上場時資料から4ファイル+企業ページの業績予想を読み込む）", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "音声生成", copyId: "voice" }] }] },
                     { category: "【プレゼン資料】(レポートを使用/スライド：20)", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "動画タイトル", copyId: "titleBf" }, { label: "概要欄", copyId: "gaiyo" }, { label: "X告知", copyId: "xNotify" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "動画タイトル", copyId: "titleBf" }, { label: "概要欄", copyId: "gaiyo" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     analysis: `あなたはIPO市場を専門とするリサーチャーです。\n上場予定の「{{name}}({{ticker}})」について、後述する【投資評価の基準】に基づいて、最終的な投資判断レポートを【レポートフォーマット】に厳密に従って作成してください。\n仮条件・公募価格発表前の場合は、想定価格を用いてIPOに参加すべきか判断してください。\n公募価格決定前のPER、PBR、規模、上昇率などの算出には仮条件の上限価格（仮条件の価格がなければ想定価格）を使用してください。\n・根拠資料として使用するため、引用やカッコつきの番号は記載しないでください\n・参考資料はアップロードした添付資料を基本とし、投資評価の判断に必要な情報が不足する場合のみインターネット上から情報を集めてください。\n・アナリスト、主要サイトの初値予想については、参考程度にし、重要な指標として用いないでください\n・以下のフォーマットに記載がなく、IPOの投資判断に必要な特出すべき内容がある場合には「IPOの基本情報とスケジュール」の後ろに章を追加し、記載してください。\n---\n\n### 【投資評価の基準】\n\n最終的な投資妙味（★評価）は、以下の初値上昇率の期待値を基準として5段階で評価してください。\n\n* **★★★★★ (星5つ)**: 初値が公募価格の**2倍以上 (+100%以上)**となる可能性が非常に高い。\n* **★★★★☆ (星4つ)**: 初値が公募価格の**1.5倍〜2倍未満 (+50%〜+100%)**となる可能性が高い。\n* **★★★☆☆ (星3つ)**: 初値が公募価格の**1.1倍〜1.5倍未満 (+10%〜+50%)**のリターンが期待できる。\n* **★★☆☆☆ (星2つ)**: 初値が公募価格近辺**（-10%〜+10%）**に留まる可能性がある。\n* **★☆☆☆☆ (星1つ)**: 公募割れ**（-10%以下）**となるリスクが相応にある。\n\n---\n### **IPO分析レポートフォーマット**\n\nこのフォーマットは、上場承認日に公開される「新規上場申請のための有価証券報告書（Ⅰの部）」と、同時に発表される各種資料を基に、ブックビルディング参加を判断するために作成するものです。\n\n### **1. 事業内容と市場の将来性**\n* **企業名**: {{name}}\n* **証券コード**: {{ticker}}\n* **事業内容**:\
@@ -497,6 +513,7 @@ const App = {
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: `{{intro}}するYouTube動画を作成します。\n見たくなるようなYouTubeタイトル案を5パターン考えてください。\nターゲットは{{companyName}}のIPOに参加するか迷っている人です。\n※「株価下落の真相は？」「今後どうなる？」「意外な理由が…」など、視聴者に疑問や興味を持たせる内容にしてください。先頭に「【{{companyName}}】」、後ろに「｜AI初値分析」をつけてください。\n※企業の特徴と「ついに上場」のような文章を加えるのがいいと思います。\n※出典・カッコ・番号などは入れず、文章だけを提示してください。`,
                     shortGaiyo: `{{intro}}する{{gaiyoNote}}`,
+                    noteArticle: `{{intro}}する{{reportNote}}`,
                 }
             },
             theme_analysis: {
@@ -519,7 +536,7 @@ const App = {
                     { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     urls: (vars) => {
@@ -549,7 +566,45 @@ const App = {
                     gaiyo: `{{intro}}する{{gaiyoNote}}`,
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: "2分で{{intro}}する{{titleSBf}}{{companyNamePrefix}}後ろに「｜AIテーマ分析」をつけてください。{{CommonNote_source}}",
-                    shortGaiyo: `2分で{{intro}}する{{SgaiyoNote}}`
+                    shortGaiyo: `2分で{{intro}}する{{SgaiyoNote}}`,
+                    noteArticle: `{{intro}}する{{reportNote}}`
+                }
+            },
+            content_creation: {
+                label: 'コンテンツ作成',
+                intro: "コンテンツ作成",
+                audioLength: "8分から10分",
+                checkboxDefaults: {},
+                ui: { 
+                    dynamicInputs: ['dual-textbox-area'], 
+                    searchBtns: [] 
+                },
+                buttonData: [
+                    { 
+                        category: "【分析】", 
+                        services: [{ 
+                            service: "chatGPT", 
+                            buttons: [
+                                { label: "ファクトチェック", copyId: "factCheck" },
+                                { label: "修正", copyId: "correction" }
+                            ] 
+                        }] 
+                    },
+                    { 
+                        category: "【YouTube】", 
+                        services: [{ 
+                            service: "youtube", 
+                            buttons: [
+                                { label: "概要欄", copyId: "youtubeDescription" }
+                            ] 
+                        }] 
+                    }
+                ],
+                copyTexts: {
+                    factCheck: "{{textbox2}}\n\n上記の内容についてファクトチェックを行ってください。",
+                    correction: "{{textbox2}}\n\n上記の内容を修正してください。",
+                    articleCreation: "{{textbox2}}\n\n上記の内容を基にnote記事を作成してください。",
+                    youtubeDescription: "{{textbox3}}\n\n上記の内容を基にYouTube動画の概要欄を作成してください。"
                 }
             },
         }
@@ -954,6 +1009,8 @@ const App = {
         this.dom.inputPeriod = document.getElementById('input-period');
         this.dom.earningsDate = document.getElementById('earnings-date');
         this.dom.largeTextbox1 = document.getElementById('large-textbox1');
+        this.dom.largeTextbox2 = document.getElementById('large-textbox2');
+        this.dom.largeTextbox3 = document.getElementById('large-textbox3');
         this.dom.earningsTiming = document.querySelector('input[name="earnings-timing"]:checked');
         this.dom.emarket = document.querySelector('input[name="emarket"]:checked');
         this.dom.termDirection = document.querySelector('input[name="term-direction"]:checked');
@@ -982,6 +1039,8 @@ const App = {
             termDirection: this.dom.termDirection?.value || 'up',
             emarket: this.dom.emarket?.value || 'jp',
             textbox: this.dom.largeTextbox1?.value || '',
+            textbox2: this.dom.largeTextbox2?.value || '',
+            textbox3: this.dom.largeTextbox3?.value || '',
             afterHoursChecked: this.dom.afterHoursCheck?.checked || false,
             noPriceChecked: this.dom.noPriceCheck?.checked || false,
             earningsDate: this.dom.earningsDate?.value || this.state.today,

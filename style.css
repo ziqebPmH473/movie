@@ -124,9 +124,22 @@ input[type="date"],
 
 /* 横幅いっぱいの入力フィールド */
 #input-theme,
-#large-textbox1 {
+#large-textbox1,
+#large-textbox2,
+#large-textbox3 {
     width: 100%;
     flex: 1;
+}
+
+/* デュアルテキストボックスエリア */
+#dual-textbox-area {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+#dual-textbox-area textarea {
+    min-height: 120px;
 }
 
 input:focus,
