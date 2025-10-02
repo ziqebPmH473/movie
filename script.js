@@ -153,12 +153,19 @@ const App = {
             'textbox-area': `
                 <div id="textbox-area">
                     <textarea id="large-textbox1" class="large-textbox" placeholder="ここにテキストを入力してください"></textarea>
+                    <button type="button" onclick="App.clearTextbox('large-textbox1')" style="margin-top: 5px; font-size: 0.8em;">クリア</button>
                 </div>
             `,
             'dual-textbox-area': `
                 <div id="dual-textbox-area">
-                    <textarea id="large-textbox2" class="large-textbox" placeholder="テキストボックス2"></textarea>
-                    <textarea id="large-textbox3" class="large-textbox" placeholder="テキストボックス3"></textarea>
+                    <div style="position: relative;">
+                        <textarea id="large-textbox2" class="large-textbox" placeholder="テキストボックス2"></textarea>
+                        <button type="button" onclick="App.clearTextbox('large-textbox2')" style="margin-top: 5px; font-size: 0.8em;">クリア</button>
+                    </div>
+                    <div style="position: relative;">
+                        <textarea id="large-textbox3" class="large-textbox" placeholder="テキストボックス3"></textarea>
+                        <button type="button" onclick="App.clearTextbox('large-textbox3')" style="margin-top: 5px; font-size: 0.8em;">クリア</button>
+                    </div>
                 </div>
             `
         },
@@ -591,15 +598,6 @@ const App = {
                         }] 
                     },
                     { 
-                        category: "【note記事】", 
-                        services: [{ 
-                            service: "notebookLM", 
-                            buttons: [
-                                { label: "記事作成", copyId: "articleCreation" }
-                            ] 
-                        }] 
-                    },
-                    { 
                         category: "【YouTube】", 
                         services: [{ 
                             service: "youtube", 
@@ -612,8 +610,10 @@ const App = {
                 copyTexts: {
                     factCheck: "以下のレポートは、以下の指示でAIが生成したものです。\nレポートのファクトチェックを行い、誤っている個所と指示に沿っていない箇所のみを指摘してください。\n\n--指示--\n{{textbox2}}\n\n--レポート--\n{{textbox3}}",
                     correction: "指摘箇所を支持の内容に沿って修正し、全文出力してください。\nただし、指摘していない箇所は一切変更しないでください。",
-                    articleCreation: "{{textbox2}}\n\n上記の内容を基にnote記事を作成してください。",
-                    youtubeDescription: "{{textbox3}}\n\n上記の内容を基にYouTube動画の概要欄を作成してください。"
+                    youtubeDescription: `📄 動画の内容をテキストで読みたい方はこちら  
+👉 note記事： {{textbox2}}
+
+動画で触れきれなかった補足や要点をまとめています。通勤中やあとで振り返るときにぜひご利用ください。`
                 }
             },
         }
@@ -1327,6 +1327,14 @@ const App = {
         }
         
         return finalText;
+    },
+
+    clearTextbox: function(textboxId) {
+        const textbox = document.getElementById(textboxId);
+        if (textbox) {
+            textbox.value = '';
+            localStorage.removeItem(textboxId);
+        }
     }
 };
 
