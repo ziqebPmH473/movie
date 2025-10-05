@@ -225,7 +225,7 @@ const App = {
                     xNotify: `{{intro}}する{{xNotifyText}}`,
                     shortTitle: `{{intro}}{{titleSBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}`,
                     shortGaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{SgaiyoNote}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`,
-                    noteArticle: `{{intro}}する{{reportNote}}\n・はじめに、ニュース、ランキングTOP10、分析内容（全銘柄の 下落要因、逆張り戦略への示唆など）、まとめの構成で記載してください\n・分析内容は、レポートのように１銘柄ずつ羅列してください\n・表は使用しないでください`
+                    noteArticle: `{{intro}}する{{reportNote}}\n・はじめに、ニュース、ランキングTOP10、分析内容（全銘柄の 変動要因、戦略への示唆など）、まとめの構成で記載してください\n・分析内容は、レポートのように１銘柄ずつ羅列してください。また、各銘柄は----で区切ってください。\n・表は使用しないでください`
                 }
             },
             news: {
