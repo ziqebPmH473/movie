@@ -588,12 +588,22 @@ const App = {
                 },
                 buttonData: [
                     { 
-                        category: "【分析】", 
+                        category: "【ファクトチェック】", 
                         services: [{ 
                             service: "chatGPT", 
                             buttons: [
                                 { label: "ファクトチェック", copyId: "factCheck" },
                                 { label: "修正", copyId: "correction" }
+                            ] 
+                        }] 
+                    },
+                    { 
+                        category: "【上場廃止チェック】", 
+                        services: [{ 
+                            service: "chatGPT", 
+                            buttons: [
+                                { label: "上場廃止CK", copyId: "delistingCheck" },
+                                { label: "修正", copyId: "delistingCorrection" }
                             ] 
                         }] 
                     },
@@ -609,7 +619,9 @@ const App = {
                 ],
                 copyTexts: {
                     factCheck: "以下のレポートは、以下の指示でAIが生成したものです。\nレポートのファクトチェックを行い、誤っている個所と指示に沿っていない箇所のみを指摘してください。\n\n--指示--\n{{textbox2}}\n\n--レポート--\n{{textbox3}}",
-                    correction: "指摘箇所を支持の内容に沿って修正し、全文出力してください。\nただし、指摘していない箇所は一切変更しないでください。",
+                    correction: "指摘箇所を指示の内容に沿って修正し、全文出力してください。\nただし、指摘していない箇所は一切変更しないでください。",
+                    delistingCheck: "以下の内容に記載されている個別銘柄について、上場廃止もしくは上場廃止になることがほぼ確定している銘柄がないかチェックしてください。\n該当する銘柄がある場合は、銘柄名・証券コード・上場廃止の理由・時期を具体的に指摘してください。\n該当する銘柄がない場合は「該当なし」と回答してください。\n\n--チェック対象--\n{{textbox2}}",
+                    delistingCorrection: "指摘した上場廃止銘柄に関する記述を削除し、関係する箇所についても修正し、全文出力してください。\nただし、指摘していない箇所は一切変更しないでください。",
                     youtubeDescription: `\n\n\n📄 動画の内容をテキストで読みたい方はこちら  
 👉 note記事： {{textbox2}}
 
