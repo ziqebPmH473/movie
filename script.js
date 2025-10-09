@@ -1334,7 +1334,7 @@ const App = {
                  finalText += '\n・株価の具体的な数字は発言しないでください。ただし、上昇や下落、ストップ高、ストップ安、大幅などという表現であれば可。';
              }
              if ((actualCopyId === 'reportKk' || actualCopyId === 'reportKkEarningsOnly') && variables.noPriceChecked) {
-                 finalText += '\n・株価の情報（具体的な数字や変動率）は記載しないでください。';
+                 finalText += '\n・株価の情報（株価、株価変動率、株価指標）は記載しないでください。';
              }
         }
         
