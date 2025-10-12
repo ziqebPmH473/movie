@@ -980,24 +980,48 @@ const App = {
                     svcDiv.textContent = service.service;
                 }
                 
-                // ショート動画チェックボックスを追加（notebookLMサービスのみ）
+                // 音声長さ選択とオプションを追加（notebookLMサービスのみ）
                 if (service.service === 'notebookLM') {
-                    const shortCheckbox = document.createElement("input");
-                    shortCheckbox.type = "checkbox";
-                    shortCheckbox.id = `short-${analysis}-${category.category}`;
-                    shortCheckbox.style.marginLeft = "8px";
-                    
-                    const shortLabel = document.createElement("label");
-                    shortLabel.htmlFor = shortCheckbox.id;
-                    shortLabel.textContent = "ショート";
-                    shortLabel.style.fontSize = "0.7rem";
-                    shortLabel.style.cursor = "pointer";
-                    
-                    svcDiv.appendChild(shortCheckbox);
-                    svcDiv.appendChild(shortLabel);
-                    
-                    // 優先公開チェックボックスを追加（音声生成後カテゴリのみ）
-                    if (category.category.includes('音声生成後')) {
+                    // 音声生成前カテゴリの場合はラジオボタン
+                    if (category.category.includes('音声生成前')) {
+                        const radioName = `voice-length-${analysis}-${category.category}`;
+                        
+                        ['ショート', '短め', 'デフォルト'].forEach((option, index) => {
+                            const radio = document.createElement("input");
+                            radio.type = "radio";
+                            radio.name = radioName;
+                            radio.value = option;
+                            radio.id = `${radioName}-${option}`;
+                            radio.style.marginLeft = "8px";
+                            if (option === '短め') radio.checked = true; // 初期値
+                            
+                            const label = document.createElement("label");
+                            label.htmlFor = radio.id;
+                            label.textContent = option;
+                            label.style.fontSize = "0.7rem";
+                            label.style.cursor = "pointer";
+                            
+                            svcDiv.appendChild(radio);
+                            svcDiv.appendChild(label);
+                        });
+                    }
+                    // 音声生成後カテゴリの場合はチェックボックス
+                    else if (category.category.includes('音声生成後')) {
+                        const shortCheckbox = document.createElement("input");
+                        shortCheckbox.type = "checkbox";
+                        shortCheckbox.id = `short-${analysis}-${category.category}`;
+                        shortCheckbox.style.marginLeft = "8px";
+                        
+                        const shortLabel = document.createElement("label");
+                        shortLabel.htmlFor = shortCheckbox.id;
+                        shortLabel.textContent = "ショート";
+                        shortLabel.style.fontSize = "0.7rem";
+                        shortLabel.style.cursor = "pointer";
+                        
+                        svcDiv.appendChild(shortCheckbox);
+                        svcDiv.appendChild(shortLabel);
+                        
+                        // 優先公開チェックボックス
                         const priorityCheckbox = document.createElement("input");
                         priorityCheckbox.type = "checkbox";
                         priorityCheckbox.id = `priority-${analysis}-${category.category}`;
@@ -1024,9 +1048,23 @@ const App = {
                     const b = document.createElement("button");
                     b.textContent = btn.label;
                     b.addEventListener("click", () => {
-                        const isShort = service.service === 'notebookLM' && document.getElementById(`short-${analysis}-${category.category}`)?.checked;
-                        const isPriority = service.service === 'notebookLM' && document.getElementById(`priority-${analysis}-${category.category}`)?.checked;
-                        const copyText = App.getCopyText(analysis, btn.copyId, isShort, isPriority);
+                        let isShort = false;
+                        let voiceLength = 'default';
+                        let isPriority = false;
+                        
+                        if (service.service === 'notebookLM') {
+                            if (category.category.includes('音声生成前')) {
+                                const radioName = `voice-length-${analysis}-${category.category}`;
+                                const selectedRadio = document.querySelector(`input[name="${radioName}"]:checked`);
+                                voiceLength = selectedRadio?.value || '短め';
+                                isShort = voiceLength === 'ショート';
+                            } else if (category.category.includes('音声生成後')) {
+                                isShort = document.getElementById(`short-${analysis}-${category.category}`)?.checked || false;
+                                isPriority = document.getElementById(`priority-${analysis}-${category.category}`)?.checked || false;
+                            }
+                        }
+                        
+                        const copyText = App.getCopyText(analysis, btn.copyId, isShort, isPriority, voiceLength);
                         if (copyText) {
                             navigator.clipboard.writeText(copyText);
                         }
@@ -1345,13 +1383,20 @@ const App = {
         document.body.removeChild(dummy);
     },
 
-    getCopyText: function(analysisKey, copyId, isShort = false, isPriority = false) {
+    getCopyText: function(analysisKey, copyId, isShort = false, isPriority = false, voiceLength = 'default') {
         const settings = this.CONFIG.analysisSettings[analysisKey];
         if (!settings) return '';
 
         const variables = this.getTemplateVariables(analysisKey);
         variables.isPriorityChecked = isPriority;
         variables.priorityText = isPriority ? this.CONFIG.commonTemplates.priorityText : '';
+        
+        // VoiceNote_Sizeは「短め」の場合のみ追加
+        if (voiceLength === '短め') {
+            variables.VoiceNote_Size = this.CONFIG.commonTemplates.VoiceNote_Size;
+        } else {
+            variables.VoiceNote_Size = '';
+        }
         
         // ショート版の場合はcopyIdを変更
         let actualCopyId = copyId;
