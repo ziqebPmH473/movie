@@ -41,11 +41,21 @@ const App = {
             VoiceNote_Ks3: `\n・ビジネス数値の読み替え\n「〇百万円」という表記は、計算・変換後の数値で読むこと。\n例）\n- 「45百万円」→「4500万円」（読み方：よんせんごひゃくまんえん）\n- 「120百万円」→「1億2000万円」（読み方：いちおくにせんまんえん）\n- 「5678百万円」→「56億7800万円」（読み方：ごじゅうろくおくななせんはっぴゃくまんえん）\n- 「203百万円」→「2億300万円」（読み方：におくさんびゃくまんえん）`,
             VoiceNote_Size: `\n・最終的な音声の長さが**8分程度**になるようにしてください。日本語で3,200〜4,000文字程度の原稿にしてください。`,//`\n・音声は{{audioLength}}の長さに収めてください。`,
             
-            xNotifyText: `Youtube動画用のX告知文を、全角125文字ぴったりで作成してください。この文章を見て動画のURLをクリックしたくなるようなものにしてください。内容について触れても構わないが、動画の視聴意欲がなくならないように、動画の結論や最も重要な内容は告知文に書かないでください。文章末尾に検索されやすいようにハッシュタグも必ず付与し、出典の記述、カッコ、番号は一切入れないでください。`,
+            // 概要欄ルール
             gaiyoNote: `YouTube動画の概要欄を、10行程度＋ハッシュタグ1行で作成してください。出力は日本語の文章のみ。箇条書き・番号付きリスト・中黒「・」やダッシュ「—」「-」「▶」などの行頭記号、Markdownの「-」「*」「#」は禁止。各行は1〜2文の自然な文章で、改行のみで区切る。\nただし、次の点を守ってください。\n・結論や分析の最終的な評価・見通し、最大の注目ポイントは書かない\n・視聴者が『どの事実・データ・話題に触れるのか』『どんな観点・エピソードが登場するか』を分かるように、具体的な話題やポイント、視点、議論の流れ（例：部門別の業績動向、地域ごとの売上変化、投資家の関心事項など）を紹介する\n・本編で明かす重要な分析結果やインサイトには言及しない\n・特に動画への期待や「ぜひご視聴ください」といった視聴アクションにつなげる締め文を入れる\n・出典やカッコ番号は不要\n・テンプレート文として、備考欄の最後に2行改行し、\n\n本動画にはAI生成コンテンツが含まれています。\n迅速な解説と、内容の可視化（図解・イラスト化）を実現するため、ナレーションや資料作成のプロセスに生成AIを積極的に活用しています。\nAIの特性上、音声のイントネーションや資料の細部に不自然な点が生じる場合があります。\nつきましては、表現上の細かな点に関するご指摘は、どうかご容赦いただけますようお願い申し上げます。\nまた、内容の正確性には十分配慮しておりますが、事実確認や最終的な判断はご自身でお願いいたします。\n\nと記載してください。`,
+            SgaiyoNote: `ショート動画の概要欄を、10行程度＋ハッシュタグ1行で作成してください。ただし、次の点を守ってください。\n・結論や分析の最終的な評価・見通し、最大の注目ポイントは書かない\n・視聴者が『どの事実・データ・話題に触れるのか』『どんな観点・エピソードが登場するか』を分かるように、具体的な話題やポイント、視点、議論の流れ（例：部門別の業績動向、地域ごとの売上変化、投資家の関心事項など）を紹介する\n・本編で明かす重要な分析結果やインサイトには言及しない\n・特に動画への期待や「ぜひご視聴ください」といった視聴アクションにつなげる締め文を入れる\n・出典やカッコ番号は不要\n・テンプレート文として、備考欄の最後に2行改行し、\n\n本動画にはAI生成コンテンツが含まれています。\n迅速な解説と、内容の可視化（図解・イラスト化）を実現するため、ナレーションや資料作成のプロセスに生成AIを積極的に活用しています。\nAIの特性上、音声のイントネーションや資料の細部に不自然な点が生じる場合があります。\nつきましては、表現上の細かな点に関するご指摘は、どうかご容赦いただけますようお願い申し上げます。\nまた、内容の正確性には十分配慮しておりますが、事実確認や最終的な判断はご自身でお願いいたします。\n\nと記載してください。`,
+            SgaiyoNote1: `ショート動画の概要欄を、以下の構成で作成してください。\n--要点・価値・CTA--\n・３行程度で、動画の結論/学べることについて文章でまとめてください。\n・この部分は視聴者が動画を視聴するかを決める大事な箇所です。動画を開きたく見たくなるような魅力的な内容にしてください。\n・本編で明かす重要な分析結果やインサイトには言及せず、どのようなことが理解できるか、何を分析するのかを記載してください。`,
+            gaiyoNote1: `YouTube動画の概要欄を、以下の構成で作成してください。\n--要点・価値・CTA--\n・３行程度で、動画の結論/学べることについて文章でまとめてください。\n・この部分は視聴者が動画を視聴するかを決める大事な箇所です。動画を開きたく見たくなるような魅力的な内容にしてください。\n・本編で明かす重要な分析結果やインサイトには言及せず、どのようなことが理解できるか、何を分析するのかを記載してください。\n・改行はしないこと。`,
+            gaiyoNote2: `\n\n--詳しい要約--\n・5～6行程度で、動画の内容を要約してください。\n・視聴者が『どの事実・データ・話題に触れるのか』『どんな観点・エピソードが登場するか』を分かるように、具体的な話題やポイント、視点、議論の流れ（例：部門別の業績動向、地域ごとの売上変化、投資家の関心事項など）を紹介する\n・本編で明かす重要な分析結果やインサイトには言及しない。\n・「。」の後は改行すること`,
+            priorityText: `\n\n--メンバーシップ誘導文（以下の内容をそのまま記載）--\n\n「この動画は「すみっこマネー大学」メンバーシップで先行公開された内容です。\nメンバーの方は、今後も市況分析・速報を一般公開より早く視聴できます。\n▶ メンバーシップ登録はこちら\nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join`,
+            gaiyoNote3: `\n\n--注意文（以下の内容をそのまま記載）--\n\n本動画にはAI生成コンテンツが含まれています。\n迅速な解説と、内容の可視化（図解・イラスト化）を実現するため、ナレーションや資料作成のプロセスに生成AIを積極的に活用しています。\nAIの特性上、音声のイントネーションや資料の細部に不自然な点が生じる場合があります。\nつきましては、表現上の細かな点に関するご指摘は、どうかご容赦いただけますようお願い申し上げます。\nまた、内容の正確性には十分配慮しておりますが、事実確認や最終的な判断はご自身でお願いいたします。`,
+            gaiyoNote4: `\n\n--ハッシュタグ--\n・SEO対策、検索対策としてハッシュタグを1行で作成してください。\n・各ハッシュタグの先頭には「#」をつけてください。`,
+            gaiyoNote9: `\n\n--概要欄作成の注意点（概要欄に記載不要、文章作成時の注意点です）--\n・箇条書き、番号付きリスト、中黒「・」やダッシュ「—」「-」「▶」などの行頭記号、Markdownの「-」「*」「#」は禁止。\n・出典やカッコ番号は削除する\n・「--要点・価値・CTA--」などの見出しは削除する`,
+            
+
+            xNotifyText: `Youtube動画用のX告知文を、全角125文字ぴったりで作成してください。この文章を見て動画のURLをクリックしたくなるようなものにしてください。内容について触れても構わないが、動画の視聴意欲がなくならないように、動画の結論や最も重要な内容は告知文に書かないでください。文章末尾に検索されやすいようにハッシュタグも必ず付与し、出典の記述、カッコ、番号は一切入れないでください。`,
             thumbnail: `YouTube動画を作成します。\nサムネイル用に、その日の相場を表す短文を考えてください。\n1行あたり「全角6～8文字」×3行で配置します。\n各行にふさわしい全角6～8文字の文章を生成してください。`,
             titleBf: `YouTube動画を作成します。\n見たくなるようなYouTubeタイトル案を5パターン考えてください。\n※「株価下落の真相は？」「今後どうなる？」「意外な理由が…」など、視聴者に疑問や興味を持たせる内容にしてください。`,
-            SgaiyoNote: `ショート動画の概要欄を、10行程度＋ハッシュタグ1行で作成してください。ただし、次の点を守ってください。\n・結論や分析の最終的な評価・見通し、最大の注目ポイントは書かない\n・視聴者が『どの事実・データ・話題に触れるのか』『どんな観点・エピソードが登場するか』を分かるように、具体的な話題やポイント、視点、議論の流れ（例：部門別の業績動向、地域ごとの売上変化、投資家の関心事項など）を紹介する\n・本編で明かす重要な分析結果やインサイトには言及しない\n・特に動画への期待や「ぜひご視聴ください」といった視聴アクションにつなげる締め文を入れる\n・出典やカッコ番号は不要\n・テンプレート文として、備考欄の最後に2行改行し、\n\n本動画にはAI生成コンテンツが含まれています。\n迅速な解説と、内容の可視化（図解・イラスト化）を実現するため、ナレーションや資料作成のプロセスに生成AIを積極的に活用しています。\nAIの特性上、音声のイントネーションや資料の細部に不自然な点が生じる場合があります。\nつきましては、表現上の細かな点に関するご指摘は、どうかご容赦いただけますようお願い申し上げます。\nまた、内容の正確性には十分配慮しておりますが、事実確認や最終的な判断はご自身でお願いいたします。\n\nと記載してください。`,
             titleSBf: `ショート動画を作成します。\n見たくなるようなYouTubeタイトル案を5パターン考えてください。\n※「株価下落の真相は？」「今後どうなる？」「意外な理由が…」など、視聴者に疑問や興味を持たせる内容にしてください。`,
             reportKk: `資料を10000文字以上で作成してください\n・根拠資料として使用するため、引用やカッコつきの番号は記載しないでください\n・企業概要は記載しないでください。`,
             reportSs: `YouTube動画を作成するので、動画内で使用する投影資料を作成してください。\n・表紙は、表題と、内容を4行程度の文章でまとめてください。\nただし、「この資料は」などとプレゼン資料自体の事を書かないでください\nまた、資料・動画の視聴意欲がなくならないように、結論や最も重要な内容は書かないでください。\n・最後のページは「まとめ」のページにしてください\n・目次、企業概要のスライドは作成しないでください`,
@@ -192,10 +202,10 @@ const App = {
                     presentation: `以下の流れで資料を作成して\n表紙\n国内主要株価指数\n・各市場（プライム、スタンダード、グロース）の出来高・時価総額\n株価上昇率ランキング\n株価下落率ランキング\n日経平均プラス寄与度ランキング\n日経平均マイナス寄与度ランキング\n売買代金ランキング\n業種別変動率ランキング（上位）\n業種別変動率ランキング（下位）\nニュース\nまとめ\n\n・指数は小数点以下2桁まで記載してください\n・指数は大きな数字のレイアウトでまとめてください\n・ランキングは表形式にし、見出し行をつけ、上位5位まで記載して。前日比を記述する場合は「変動幅（変動率）」の形式で記述して\n・寄与度ランキングは左にプラス寄与、右にマイナス寄与で１ページにして\n・業種別ランキングは左に上位、右に下位で１ページにして\n・ランキングのタイトルは上記に記載の通りとし、後ろに日付を付けたりしないで\n・表紙は、表題と、内容を4行程度の文章でまとめてください。\nただし、「この資料は」などとプレゼン資料自体の事を書かないでください\nまた、資料・動画の視聴意欲がなくならないように、結論や最も重要な内容は書かないでください。`,
                     thumbnail: "{{intro}}{{thumbnail}}",
                     titleBf: "{{intro}}{{titleBf}}後ろに「【{{today}}東証マーケット振り返り】｜AI市場分析」をつけてください。{{CommonNote_source}}",
-                    gaiyo: `{{intro}}{{gaiyoNote}}`,
+                    gaiyo: `{{intro}}{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     xNotify: "{{intro}}{{xNotifyText}}",
                     shortTitle: "2分で{{intro}}{{titleSBf}}先頭に「【2分で東証マーケット振り返り】」、後ろに「【{{today}}】｜AI市場分析」をつけてください。{{CommonNote_source}}",
-                    shortGaiyo: `2分で{{intro}}{{SgaiyoNote}}`,
+                    shortGaiyo: `2分で{{intro}}{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}{{reportNote}}`
                 }
             },
@@ -221,10 +231,10 @@ const App = {
                     presentation: `以下の構成で、YouTube動画用の投影資料を作成してください。\n表紙（1ページ）\n株式指数: 日経平均、TOPIXの動きを記載（1ページ）\n・大きな数字で指数（指数は小数点以下2桁まで記載してください）を表示、説明に前週比（変動率）を表記\n今週の主な経済ニュース:重要なニュースを数点、簡潔にまとめる（1ページ）\n{{termDirectionLabel}}率ランキング:表形式で表示（週間上位10銘柄を1ページ、月間上位10銘柄を1ページ）\n・ランキングはコード、銘柄名、変動率（週間or月間）、{{termDirectionLabel}}理由（簡潔に）の順で記載\n注目銘柄:注目銘柄を1ページに1銘柄ずつ以下の内容を記載（注目銘柄：{{textbox}}）\n・銘柄名と証券コード\n・月間、週間ランキング（ランクと変動率）\n・{{termDirectionLabel}}理由\n・ポイント（投資を判断する材料、注目する理由）\nまとめ（1ページ）\n・表紙は、表題と、内容を4行程度の文章でまとめてください。\nただし、「この資料は」などとプレゼン資料自体の事を書かないでください\nまた、資料・動画の視聴意欲がなくならないように、結論や最も重要な内容は書かないでください。`,
                     thumbnail: "{{intro}}についての{{thumbnail}}",
                     titleBf: `{{intro}}{{titleBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}`,
-                    gaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{gaiyoNote}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`,
+                    gaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`,
                     xNotify: `{{intro}}する{{xNotifyText}}`,
                     shortTitle: `{{intro}}{{titleSBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}`,
-                    shortGaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{SgaiyoNote}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`,
+                    shortGaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`,
                     noteArticle: `{{intro}}する{{reportNote}}\n・はじめに、ニュース、ランキングTOP10、分析内容（全銘柄の 変動要因、戦略への示唆など）、まとめの構成で記載してください\n・分析内容は、レポートのように１銘柄ずつ羅列してください。また、各銘柄は----で区切ってください。`
                 }
             },
@@ -320,10 +330,10 @@ const App = {
                     presentation: "{{intro}}する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}する{{thumbnail}}",
                     titleBf: "{{intro}}する{{titleBf}}{{companyNamePrefix}}後ろに「｜AIニュース分析」をつけてください。{{CommonNote_source}}",
-                    gaiyo: `{{intro}}する{{gaiyoNote}}`,
+                    gaiyo: `{{intro}}する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: "2分で{{intro}}する{{titleSBf}}{{companyNamePrefix}}後ろに「｜2分でニュース分析」をつけてください。{{CommonNote_source}}",
-                    shortGaiyo: `2分で{{intro}}する{{SgaiyoNote}}`,
+                    shortGaiyo: `2分で{{intro}}する{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}する{{reportNote}}`,
                 }
             },
@@ -354,10 +364,10 @@ const App = {
                     presentationEarningsOnly: "{{companyName}}の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}についての{{thumbnail}}",
                     titleBf: "{{intro}}についての{{titleBf}}{{companyNamePrefix}}後ろに「｜AI市場分析」をつけてください。{{CommonNote_source}}",
-                    gaiyo: `{{intro}}についての{{gaiyoNote}}`,
+                    gaiyo: `{{intro}}についての{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     xNotify: "{{intro}}についての{{xNotifyText}}",
                     shortTitle: "2分で{{intro}}についての{{titleSBf}}{{companyNamePrefix}}後ろに「｜2分で市場分析」をつけてください。{{CommonNote_source}}",
-                    shortGaiyo: `2分で{{intro}}についての{{SgaiyoNote}}`,
+                    shortGaiyo: `2分で{{intro}}についての{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}についての{{reportNote}}`,
                 }
             },
@@ -403,10 +413,10 @@ const App = {
                     presentationEarningsOnly: "{{companyName}}の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}する{{thumbnail}}",
                     titleBf: "{{intro}}する{{titleBf}}{{companyNamePrefix}}後ろに「｜AI株価分析」をつけてください。{{CommonNote_source}}",
-                    gaiyo: `{{intro}}する{{gaiyoNote}}`,
+                    gaiyo: `{{intro}}する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: "{{intro}}する{{titleBf}}{{companyNamePrefix}}後ろに「｜AI株価分析」をつけてください。{{CommonNote_source}}",
-                    shortGaiyo: `{{intro}}する{{gaiyoNote}}`,
+                    shortGaiyo: `{{intro}}する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}する{{reportNote}}`,
                 }
             },
@@ -451,10 +461,10 @@ const App = {
                     presentationEarningsOnly: "{{companyName}}の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}する{{thumbnail}}",
                     titleBf: "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する{{titleBf}}{{companyNamePrefix}}後ろに「｜AI決算分析」をつけてください。{{CommonNote_source}}",
-                    gaiyo: `{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する{{gaiyoNote}}`,
+                    gaiyo: `{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを2分で考察する{{titleSBf}}{{companyNamePrefix}}後ろに「｜AI決算分析」をつけてください。{{CommonNote_source}}",
-                    shortGaiyo: `{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを2分で考察する{{SgaiyoNote}}`,
+                    shortGaiyo: `{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを2分で考察する{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}する{{reportNote}}`
                 }
             },
@@ -516,10 +526,10 @@ const App = {
 表紙、企業概要、事業内容、企業の特長・強み、課題・懸念材料、市場の将来性、業績（直近実績）、業績（累積実績）、業績（次期予想）、業績推移、財務状況、需給環境、株価の妥当性、IPOの基本情報、投資判断、ポジティブ要因、ネガティブ要因、まとめ`,
                     thumbnail: "{{intro}}についての{{thumbnail}}",
                     titleBf: `{{intro}}するYouTube動画を作成します。\n見たくなるようなYouTubeタイトル案を5パターン考えてください。\nターゲットは{{companyName}}のIPOに参加するか迷っている人です。\n※「株価下落の真相は？」「今後どうなる？」「意外な理由が…」など、視聴者に疑問や興味を持たせる内容にしてください。先頭に「【{{companyName}}】」、後ろに「｜AI初値分析」をつけてください。\n※企業の特徴と「ついに上場」のような文章を加えるのがいいと思います。\n※出典・カッコ・番号などは入れず、文章だけを提示してください。`,
-                    gaiyo: `{{intro}}する{{gaiyoNote}}`,
+                    gaiyo: `{{intro}}する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: `{{intro}}するYouTube動画を作成します。\n見たくなるようなYouTubeタイトル案を5パターン考えてください。\nターゲットは{{companyName}}のIPOに参加するか迷っている人です。\n※「株価下落の真相は？」「今後どうなる？」「意外な理由が…」など、視聴者に疑問や興味を持たせる内容にしてください。先頭に「【{{companyName}}】」、後ろに「｜AI初値分析」をつけてください。\n※企業の特徴と「ついに上場」のような文章を加えるのがいいと思います。\n※出典・カッコ・番号などは入れず、文章だけを提示してください。`,
-                    shortGaiyo: `{{intro}}する{{gaiyoNote}}`,
+                    shortGaiyo: `{{intro}}する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}する{{reportNote}}`,
                 }
             },
@@ -570,10 +580,10 @@ const App = {
                     presentation: "{{intro}}する{{reportSs}}",
                     thumbnail: "{{intro}}する{{thumbnail}}",
                     titleBf: "{{intro}}する{{titleBf}}{{companyNamePrefix}}後ろに「｜AIテーマ分析」をつけてください。{{CommonNote_source}}",
-                    gaiyo: `{{intro}}する{{gaiyoNote}}`,
+                    gaiyo: `{{intro}}する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: "2分で{{intro}}する{{titleSBf}}{{companyNamePrefix}}後ろに「｜AIテーマ分析」をつけてください。{{CommonNote_source}}",
-                    shortGaiyo: `2分で{{intro}}する{{SgaiyoNote}}`,
+                    shortGaiyo: `2分で{{intro}}する{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}する{{reportNote}}`
                 }
             },
@@ -985,6 +995,23 @@ const App = {
                     
                     svcDiv.appendChild(shortCheckbox);
                     svcDiv.appendChild(shortLabel);
+                    
+                    // 優先公開チェックボックスを追加（音声生成後カテゴリのみ）
+                    if (category.category.includes('音声生成後')) {
+                        const priorityCheckbox = document.createElement("input");
+                        priorityCheckbox.type = "checkbox";
+                        priorityCheckbox.id = `priority-${analysis}-${category.category}`;
+                        priorityCheckbox.style.marginLeft = "8px";
+                        
+                        const priorityLabel = document.createElement("label");
+                        priorityLabel.htmlFor = priorityCheckbox.id;
+                        priorityLabel.textContent = "優先公開";
+                        priorityLabel.style.fontSize = "0.7rem";
+                        priorityLabel.style.cursor = "pointer";
+                        
+                        svcDiv.appendChild(priorityCheckbox);
+                        svcDiv.appendChild(priorityLabel);
+                    }
                 }
                 
                 categoryDiv.appendChild(svcDiv);
@@ -998,7 +1025,8 @@ const App = {
                     b.textContent = btn.label;
                     b.addEventListener("click", () => {
                         const isShort = service.service === 'notebookLM' && document.getElementById(`short-${analysis}-${category.category}`)?.checked;
-                        const copyText = App.getCopyText(analysis, btn.copyId, isShort);
+                        const isPriority = service.service === 'notebookLM' && document.getElementById(`priority-${analysis}-${category.category}`)?.checked;
+                        const copyText = App.getCopyText(analysis, btn.copyId, isShort, isPriority);
                         if (copyText) {
                             navigator.clipboard.writeText(copyText);
                         }
@@ -1148,6 +1176,8 @@ const App = {
             companyName,
             companyNamePrefix,
         };
+        
+        // priorityTextはgetCopyTextで設定される
         
         if (analysisKey === 'market_term_rank') {
             const termDirectionLabel = form.termDirection === 'up' ? '上昇' : '下落';
@@ -1315,11 +1345,13 @@ const App = {
         document.body.removeChild(dummy);
     },
 
-    getCopyText: function(analysisKey, copyId, isShort = false) {
+    getCopyText: function(analysisKey, copyId, isShort = false, isPriority = false) {
         const settings = this.CONFIG.analysisSettings[analysisKey];
         if (!settings) return '';
 
         const variables = this.getTemplateVariables(analysisKey);
+        variables.isPriorityChecked = isPriority;
+        variables.priorityText = isPriority ? this.CONFIG.commonTemplates.priorityText : '';
         
         // ショート版の場合はcopyIdを変更
         let actualCopyId = copyId;
