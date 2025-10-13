@@ -323,7 +323,7 @@ const App = {
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
-                    urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
+                    urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/kabuka?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
                     analysis: "{{intro}}して{{CommonNote_source}}",
                     voice: `{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}`,
                     reportKk: `{{intro}}する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
@@ -355,7 +355,7 @@ const App = {
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
-                    urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
+                    urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/kabuka?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
                     analysis: "{{intro}}を分析して{{CommonNote_source}}",
                     voice: "{{intro}}を分析してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください。",
                     reportKk: `{{intro}}についての{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
@@ -405,7 +405,7 @@ const App = {
                         up: { '{分析タイトル}': '上昇の持続性と天井のサイン', '{現在のトレンド}': '上昇', '{将来のポテンシャル}': '上値余地', '{転換点の意味}': '天井圏（上昇トレンドの終焉）', '{投資家のゴール}': '利確・損切りポイントの特定', '{リスクシナリオ}': '上昇トレンドが崩れ、下落に転じるリスク' },
                         down: { '{分析タイトル}': '下落の要因と底値のサイン', '{現在のトレンド}': '下落', '{将来のポテンシャル}': '下値余地', '{転換点の意味}': '底値圏（下落トレンドの終焉と反転）', '{投資家のゴール}': '買いポイントの特定', '{リスクシナリオ}': '底打ちと判断して買ったが、さらに下落が続くリスク' }
                     },
-                    urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/`,
+                    urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/kabuka?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/`,
                     voice: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください.",
                     reportKk: `{{intro}}する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
                     reportKkEarningsOnly: `{{companyName}}の決算内容を分析する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
@@ -453,7 +453,7 @@ const App = {
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
-                    urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/chart?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
+                    urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/kabuka?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
                     voice: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}",
                     reportKk: `{{intro}}する{{reportKk}}`,
                     reportKkEarningsOnly: `{{companyName}}の決算内容を分析する{{reportKk}}`,
@@ -571,7 +571,7 @@ const App = {
                         if (codes.length === 0) return '';
                         
                         return vars.emarket === 'jp'
-                            ? codes.map(code => `https://kabutan.jp/stock/chart?code=${code}\nhttps://kabutan.jp/stock/finance?code=${code}`).join('\n')
+                            ? codes.map(code => `https://kabutan.jp/stock/kabuka?code=${code}\nhttps://kabutan.jp/stock/finance?code=${code}`).join('\n')
                             : codes.map(code => `https://us.kabutan.jp/stocks/${code}/\nhttps://us.kabutan.jp/stocks/${code}/finance`).join('\n');
                     },
                     analysis: "{{intro}}してください。{{CommonNote_source}}",
