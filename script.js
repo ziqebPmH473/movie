@@ -874,7 +874,7 @@ const App = {
         
         inputs.forEach(input => {
             if (input.id) {
-                if (input.id === 'large-textbox1' || input.id === 'large-textbox2' || input.id === 'large-textbox3') {
+                if (input.id === 'large-textbox1' || input.id === 'large-textbox2' || input.id === 'large-textbox3' || input.id === 'news-performance-text') {
                     localStorage.setItem(input.id, input.value);
                 } else {
                     this.state.savedFormValues[input.id] = input.value;
@@ -905,13 +905,15 @@ const App = {
             }
         });
         
-        // textbox1、2、3はlocalStorageから復元
+        // textbox1、2、3、news-performance-textはlocalStorageから復元
         const textbox1 = document.getElementById('large-textbox1');
         const textbox2 = document.getElementById('large-textbox2');
         const textbox3 = document.getElementById('large-textbox3');
+        const newsPerformanceText = document.getElementById('news-performance-text');
         if (textbox1) textbox1.value = localStorage.getItem('large-textbox1') || '';
         if (textbox2) textbox2.value = localStorage.getItem('large-textbox2') || '';
         if (textbox3) textbox3.value = localStorage.getItem('large-textbox3') || '';
+        if (newsPerformanceText) newsPerformanceText.value = localStorage.getItem('news-performance-text') || '';
     },
 
     updateUiVisibility: function() {
@@ -1230,6 +1232,7 @@ const App = {
             earningsDate: this.dom.earningsDate?.value || this.state.today,
             earningsTiming: this.dom.earningsTiming?.value || '',
             movieInfoFinancial: this.dom.movieInfoFinancial?.checked || false,
+            newsPerformanceText: this.dom.newsPerformanceText?.value || '',
             checkType: this.dom.checkType?.value || '新規',
             thumbnailType: this.dom.thumbnailType?.value || '決算',
             title: this.dom.youtubeTitle?.value || '',
