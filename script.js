@@ -80,6 +80,7 @@ const App = {
                 <label><input type="radio" name="analysis" value="ipo"><span>IPO</span></label>
                 <label><input type="radio" name="analysis" value="theme_analysis"><span>テーマ</span></label>
                 <label><input type="radio" name="analysis" value="content_creation"><span>コンテンツ作成</span></label>
+                <label><input type="radio" name="analysis" value="youtube_posting"><span>Youtube投稿内容</span></label>
             `,
             'ticker-name-area': `
                 <div class="ticker-name-row">
@@ -94,6 +95,39 @@ const App = {
                 </div>
             `,
             'ir-kabutan-buttons': ``,
+            'youtube-posting-area': `
+                <div id="youtube-posting-area">
+                    <div class="input-group">
+                        <label>チェック内容:</label>
+                        <label><input type="radio" name="check-type" value="アップ前" checked> 新規</label>
+                        <label><input type="radio" name="check-type" value="伸び悩んでいるので"> 不調</label>
+                        <label><input type="radio" name="check-type" value="好調だがもっと良くなるよう"> 好調</label>
+                        <label><input type="radio" name="check-type" value="アップ済みだが良くなるよう"> 既存</label>
+                    </div>
+                    <div class="input-group" style="margin-top: 0.8em;">
+                        <label>サムネ:</label>
+                        <label><input type="radio" name="thumbnail-type" value="決算" checked> 決算</label>
+                        <label><input type="radio" name="thumbnail-type" value="依頼"> 依頼</label>
+                        <label><input type="radio" name="thumbnail-type" value="チェック"> チェック</label>
+                    </div>
+                    <div class="input-group" style="margin-top: 0.8em;">
+                        <label>タイトル:</label>
+                        <input type="text" id="youtube-title" placeholder="動画タイトル" style="width: 400px;">
+                    </div>
+                    <div class="input-group" style="margin-top: 0.8em;">
+                        <label>概要欄:</label>
+                        <textarea id="youtube-memo" placeholder="概要欄" style="width: 100%; min-height: 100px;"></textarea>
+                    </div>
+                    <div class="input-group" style="margin-top: 0.8em;">
+                        <label>URL:</label>
+                        <input type="text" id="youtube-url" placeholder="https://www.youtube.com/watch?v=..." style="width: 400px;">
+                    </div>
+                    <div class="input-group" style="margin-top: 0.8em;">
+                        <label>新タイトル:</label>
+                        <input type="text" id="youtube-new-title" placeholder="新しいタイトル" style="width: 400px;">
+                    </div>
+                </div>
+            `,
             'jpx-button': ``,
             'earnings-market-area': `
                 <div id="earnings-market-area">
@@ -650,6 +684,32 @@ const App = {
 動画で触れきれなかった補足や要点をまとめています。通勤中やあとで振り返るときにぜひご利用ください。`
                 }
             },
+            youtube_posting: {
+                label: 'Youtube投稿内容',
+                intro: "Youtube投稿内容",
+                audioLength: "8分から10分",
+                checkboxDefaults: {},
+                ui: { 
+                    dynamicInputs: ['youtube-posting-area'], 
+                    searchBtns: [] 
+                },
+                buttonData: [
+                    { 
+                        category: "【チェック】", 
+                        services: [{ 
+                            service: "chatGPT", 
+                            buttons: [
+                                { label: "チェック", copyId: "check" },
+                                { label: "登録", copyId: "register" }
+                            ] 
+                        }] 
+                    }
+                ],
+                copyTexts: {
+                    check: "{{checkType}}チェックお願いします。CTR・SEO観点で最適化して。\n（一般投資家向け・検索から伸ばしたい）チェックを行ってください。\nタイトル：{{title}}\n概要欄：\n{{memo}}\nサムネ：{{thumbnailType}}",
+                    register: "この内容でアップします。\nタイトル：{{newTitle}}\nURL：{{url}}\nこの表に追加して"
+                }
+            },
         }
     },
 
@@ -728,6 +788,11 @@ const App = {
             buttonArea: document.getElementById('button-area'),
         };
         
+        // buttonAreaの再取得を確実にする
+        if (!this.dom.buttonArea) {
+            this.dom.buttonArea = document.getElementById('button-area');
+        }
+        
         // DOM要素の存在確認
         const missingElements = [];
         Object.keys(this.dom).forEach(key => {
@@ -766,7 +831,7 @@ const App = {
     forceShowContent: function() {
         // スマートフォンでの表示を強制的に確実にする
         const dynamicContainer = this.dom.dynamicInputContainer;
-        const buttonArea = this.dom.buttonArea;
+        const buttonArea = this.dom.buttonArea || document.getElementById('button-area');
         
         if (dynamicContainer) {
             dynamicContainer.style.display = 'block';
@@ -1140,6 +1205,12 @@ const App = {
         this.dom.newsPerformanceCheck = document.getElementById('news-performance-check');
         this.dom.newsPerformanceText = document.getElementById('news-performance-text');
         this.dom.movieInfoFinancial = document.getElementById('movie_info_financial');
+        this.dom.checkType = document.querySelector('input[name="check-type"]:checked');
+        this.dom.youtubeTitle = document.getElementById('youtube-title');
+        this.dom.youtubeMemo = document.getElementById('youtube-memo');
+        this.dom.youtubeUrl = document.getElementById('youtube-url');
+        this.dom.youtubeNewTitle = document.getElementById('youtube-new-title');
+        this.dom.thumbnailType = document.querySelector('input[name="thumbnail-type"]:checked');
         
         const settings = this.CONFIG.analysisSettings[analysisKey];
         const form = {
@@ -1158,7 +1229,13 @@ const App = {
             noPriceChecked: this.dom.noPriceCheck?.checked || false,
             earningsDate: this.dom.earningsDate?.value || this.state.today,
             earningsTiming: this.dom.earningsTiming?.value || '',
-            movieInfoFinancial: this.dom.movieInfoFinancial?.checked || false
+            movieInfoFinancial: this.dom.movieInfoFinancial?.checked || false,
+            checkType: this.dom.checkType?.value || '新規',
+            thumbnailType: this.dom.thumbnailType?.value || '決算',
+            title: this.dom.youtubeTitle?.value || '',
+            memo: this.dom.youtubeMemo?.value || '',
+            url: this.dom.youtubeUrl?.value || '',
+            newTitle: this.dom.youtubeNewTitle?.value || ''
         };
         
         const introFn = settings.intro;
@@ -1200,9 +1277,20 @@ const App = {
         // companyNamePrefixを定義（companyNameがnullでない場合のみ先頭に追加）
         const companyNamePrefix = companyName ? `先頭に「【${companyName}】」` : '';
 
+        // thumbnailTypeの値を変換
+        let thumbnailTypeText = form.thumbnailType;
+        if (form.thumbnailType === '決算') {
+            thumbnailTypeText = 'AI決算分析シリーズのサムネテンプレで';
+        } else if (form.thumbnailType === '依頼') {
+            thumbnailTypeText = 'サムネを考えて';
+        } else if (form.thumbnailType === 'チェック') {
+            thumbnailTypeText = '添付';
+        }
+
         const baseVars = {
             ...this.state,
             ...form,
+            thumbnailType: thumbnailTypeText,
             ...this.CONFIG.commonTemplates,
             intro: introText,
             readingNote,
