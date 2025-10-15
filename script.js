@@ -106,8 +106,7 @@ const App = {
                     </div>
                     <div class="input-group" style="margin-top: 0.8em;">
                         <label>サムネ:</label>
-                        <label><input type="radio" name="thumbnail-type" value="決算" checked> 決算</label>
-                        <label><input type="radio" name="thumbnail-type" value="依頼"> 依頼</label>
+                        <label><input type="radio" name="thumbnail-type" value="依頼" checked> 依頼</label>
                         <label><input type="radio" name="thumbnail-type" value="チェック"> チェック</label>
                     </div>
                     <div class="input-group" style="margin-top: 0.8em;">
@@ -1282,12 +1281,10 @@ const App = {
 
         // thumbnailTypeの値を変換
         let thumbnailTypeText = form.thumbnailType;
-        if (form.thumbnailType === '決算') {
-            thumbnailTypeText = 'AI決算分析シリーズのサムネテンプレで';
-        } else if (form.thumbnailType === '依頼') {
+        if  (form.thumbnailType === '依頼') {
             thumbnailTypeText = 'サムネを考えて';
         } else if (form.thumbnailType === 'チェック') {
-            thumbnailTypeText = '添付';
+            thumbnailTypeText = '添付のサムネをチェックして';
         }
 
         const baseVars = {
