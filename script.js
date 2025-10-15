@@ -103,6 +103,7 @@ const App = {
                         <label><input type="radio" name="check-type" value="伸び悩んでいるので"> 不調</label>
                         <label><input type="radio" name="check-type" value="好調だがもっと良くなるよう"> 好調</label>
                         <label><input type="radio" name="check-type" value="アップ済みだが良くなるよう"> 既存</label>
+                        <label><input type="radio" name="check-type" value="再"> 再ck</label>
                     </div>
                     <div class="input-group" style="margin-top: 0.8em;">
                         <label>サムネ:</label>
