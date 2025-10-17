@@ -39,7 +39,7 @@ const App = {
             VoiceNote_Ks1: `ただし、決算資料のみ決算資料であることに触れて構いません。`,
             VoiceNote_Ks2: `\n・用語の厳密な定義（上方修正・下方修正）\n- 上方修正: 数値が【上がる】・状況が【良くなる】こと。\n- 下方修正: 数値が【下がる】・状況が【悪くなる】こと。\n- 覚え方: 「増えたら上方、減ったら下方」`,
             VoiceNote_Ks3: `\n・ビジネス数値の読み替え\n「〇百万円」という表記は、計算・変換後の数値で読むこと。\n例）\n- 「45百万円」→「4500万円」（読み方：よんせんごひゃくまんえん）\n- 「120百万円」→「1億2000万円」（読み方：いちおくにせんまんえん）\n- 「5678百万円」→「56億7800万円」（読み方：ごじゅうろくおくななせんはっぴゃくまんえん）\n- 「203百万円」→「2億300万円」（読み方：におくさんびゃくまんえん）`,
-            VoiceNote_Size: `\n・最終的な音声の長さが**8分程度**になるようにしてください。日本語で3,500〜4,000文字程度の原稿にしてください。`,//`\n・音声は{{audioLength}}の長さに収めてください。`,
+            VoiceNote_Size: `\n・最終的な音声の長さが**{{voiceTime}}**になるようにしてください。日本語で{{voiceChars}}の原稿にしてください。`,
             
             // 概要欄ルール
             gaiyoNote: `YouTube動画の概要欄を、10行程度＋ハッシュタグ1行で作成してください。出力は日本語の文章のみ。箇条書き・番号付きリスト・中黒「・」やダッシュ「—」「-」「▶」などの行頭記号、Markdownの「-」「*」「#」は禁止。各行は1〜2文の自然な文章で、改行のみで区切る。\nただし、次の点を守ってください。\n・結論や分析の最終的な評価・見通し、最大の注目ポイントは書かない\n・視聴者が『どの事実・データ・話題に触れるのか』『どんな観点・エピソードが登場するか』を分かるように、具体的な話題やポイント、視点、議論の流れ（例：部門別の業績動向、地域ごとの売上変化、投資家の関心事項など）を紹介する\n・本編で明かす重要な分析結果やインサイトには言及しない\n・特に動画への期待や「ぜひご視聴ください」といった視聴アクションにつなげる締め文を入れる\n・出典やカッコ番号は不要\n・テンプレート文として、備考欄の最後に2行改行し、\n\n本動画にはAI生成コンテンツが含まれています。\n迅速な解説と、内容の可視化（図解・イラスト化）を実現するため、ナレーションや資料作成のプロセスに生成AIを積極的に活用しています。\nAIの特性上、音声のイントネーションや資料の細部に不自然な点が生じる場合があります。\nつきましては、表現上の細かな点に関するご指摘は、どうかご容赦いただけますようお願い申し上げます。\nまた、内容の正確性には十分配慮しておりますが、事実確認や最終的な判断はご自身でお願いいたします。\n\nと記載してください。`,
@@ -874,7 +874,7 @@ const App = {
         
         inputs.forEach(input => {
             if (input.id) {
-                if (input.id === 'large-textbox1' || input.id === 'large-textbox2' || input.id === 'large-textbox3' || input.id === 'news-performance-text') {
+                if (input.id === 'large-textbox1' || input.id === 'large-textbox2' || input.id === 'large-textbox3' || input.id === 'news-performance-text' || input.id === 'youtube-memo') {
                     localStorage.setItem(input.id, input.value);
                 } else {
                     this.state.savedFormValues[input.id] = input.value;
@@ -905,15 +905,17 @@ const App = {
             }
         });
         
-        // textbox1、2、3、news-performance-textはlocalStorageから復元
+        // textbox1、2、3、news-performance-text、youtube-memoはlocalStorageから復元
         const textbox1 = document.getElementById('large-textbox1');
         const textbox2 = document.getElementById('large-textbox2');
         const textbox3 = document.getElementById('large-textbox3');
         const newsPerformanceText = document.getElementById('news-performance-text');
+        const youtubeMemo = document.getElementById('youtube-memo');
         if (textbox1) textbox1.value = localStorage.getItem('large-textbox1') || '';
         if (textbox2) textbox2.value = localStorage.getItem('large-textbox2') || '';
         if (textbox3) textbox3.value = localStorage.getItem('large-textbox3') || '';
         if (newsPerformanceText) newsPerformanceText.value = localStorage.getItem('news-performance-text') || '';
+        if (youtubeMemo) youtubeMemo.value = localStorage.getItem('youtube-memo') || '';
     },
 
     updateUiVisibility: function() {
@@ -1480,11 +1482,23 @@ const App = {
         variables.isPriorityChecked = isPriority;
         variables.priorityText = isPriority ? this.CONFIG.commonTemplates.priorityText : '';
         
-        // VoiceNote_Sizeは「短め」の場合のみ追加
-        if (voiceLength === '短め') {
-            variables.VoiceNote_Size = this.CONFIG.commonTemplates.VoiceNote_Size;
+        // VoiceNote_SizeをvoiceLengthに応じて設定
+        if (voiceLength === 'ショート') {
+            variables.VoiceNote_Size = '';
+            variables.voiceTime = '';
+            variables.voiceChars = '';
+        } else if (voiceLength === '短め') {
+            variables.voiceTime = '8分程度';
+            variables.voiceChars = '3,500〜4,000文字程度';
+            variables.VoiceNote_Size = this.replaceVariables(this.CONFIG.commonTemplates.VoiceNote_Size, variables);
+        } else if (voiceLength === 'デフォルト') {
+            variables.voiceTime = '15分程度';
+            variables.voiceChars = '7,000～7,500文字程度';
+            variables.VoiceNote_Size = this.replaceVariables(this.CONFIG.commonTemplates.VoiceNote_Size, variables);
         } else {
             variables.VoiceNote_Size = '';
+            variables.voiceTime = '';
+            variables.voiceChars = '';
         }
         
         // ショート版の場合はcopyIdを変更
