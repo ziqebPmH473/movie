@@ -264,10 +264,10 @@ const App = {
                     rank: `以下の2つのリストを表形式で作成してください。\n1.週間{{termDirectionLabel}}率ランキング: 上位10銘柄の「銘柄名」「コード」「1週間前比」をリストアップしてください。\n2.月間{{termDirectionLabel}}率ランキング: 上位10銘柄の「銘柄名」「コード」「1ヵ月前比」をリストアップしてください。\n・見出し（週間下落率ランキング、月間下落率ランキング）、ランキングのみを記載し、他の文章などは記載しないでください。`,
                     presentation: `以下の構成で、YouTube動画用の投影資料を作成してください。\n表紙（1ページ）\n株式指数: 日経平均、TOPIXの動きを記載（1ページ）\n・大きな数字で指数（指数は小数点以下2桁まで記載してください）を表示、説明に前週比（変動率）を表記\n今週の主な経済ニュース:重要なニュースを数点、簡潔にまとめる（1ページ）\n{{termDirectionLabel}}率ランキング:表形式で表示（週間上位10銘柄を1ページ、月間上位10銘柄を1ページ）\n・ランキングはコード、銘柄名、変動率（週間or月間）、{{termDirectionLabel}}理由（簡潔に）の順で記載\n注目銘柄:注目銘柄を1ページに1銘柄ずつ以下の内容を記載（注目銘柄：{{textbox}}）\n・銘柄名と証券コード\n・月間、週間ランキング（ランクと変動率）\n・{{termDirectionLabel}}理由\n・ポイント（投資を判断する材料、注目する理由）\nまとめ（1ページ）\n・表紙は、表題と、内容を4行程度の文章でまとめてください。\nただし、「この資料は」などとプレゼン資料自体の事を書かないでください\nまた、資料・動画の視聴意欲がなくならないように、結論や最も重要な内容は書かないでください。`,
                     thumbnail: "{{intro}}についての{{thumbnail}}",
-                    titleBf: `{{intro}}{{titleBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}`,
+                    titleBf: `{{intro}}{{titleBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
                     gaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`,
                     xNotify: `{{intro}}する{{xNotifyText}}`,
-                    shortTitle: `{{intro}}{{titleSBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}`,
+                    shortTitle: `{{intro}}{{titleSBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
                     shortGaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`,
                     noteArticle: `{{intro}}する{{reportNote}}\n・はじめに、ニュース、ランキングTOP10、分析内容（全銘柄の 変動要因、戦略への示唆など）、まとめの構成で記載してください\n・分析内容は、レポートのように１銘柄ずつ羅列してください。また、各銘柄は----で区切ってください。`
                 }
