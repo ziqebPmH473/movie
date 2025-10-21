@@ -223,7 +223,7 @@ const App = {
                 checkboxDefaults: {'movie_info_report': true,'movie_info_kabutan': true},
                 ui: { dynamicInputs: ['movie-information'], searchBtns: [] },
                 buttonData: [
-                    { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "TOP10理由・ニュース", copyId: "top10ReasonNews" }] }] },
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "TOP10理由・ニュース", copyId: "top10ReasonNews" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
@@ -252,7 +252,7 @@ const App = {
                 checkboxDefaults: {'movie_info_report': true,'movie_info_kabutan': true},
                 ui: { dynamicInputs: ['movie-information','term-direction-area', 'textbox-area'], searchBtns: [] },
                 buttonData: [
-                    { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "注目銘柄分析", copyId: "analysis" }, { label: "銘柄分析(ランクNG)", copyId: "analysisRankNg" }] }] },
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "注目銘柄分析", copyId: "analysis" }, { label: "銘柄分析(ランクNG)", copyId: "analysisRankNg" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "ランキング生成", copyId: "rank" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】（スライド：6+銘柄数）", services: [{ service: "gamma", buttons: [{ label: "*プレゼン生成", copyId: "presentation" }] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "*概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
@@ -355,7 +355,7 @@ const App = {
                     searchBtns: ['ir', 'kabutan']
                 },
                 buttonData: [
-                    { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
@@ -388,7 +388,7 @@ const App = {
                 checkboxDefaults: {'movie_info_report': true, 'movie_info_kabutan': true},
                 ui: { dynamicInputs: ['movie-information','ticker-name-area', 'ir-kabutan-buttons', 'earnings-market-area', 'stock-direction-area'], searchBtns: ['ir', 'kabutan'], directionOptions: { default: '' } },
                 buttonData: [
-                    { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
@@ -434,7 +434,7 @@ const App = {
                     directionOptions: { hide: ['s-high', 's-low', 'after-hours', 'no-price', 'none'], default: '下落した' }
                 },
                 buttonData: [
-                     { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
@@ -518,7 +518,7 @@ const App = {
                 checkboxDefaults: {'movie_info_report': true, 'movie_info_kabutan': true},
                 ui: { dynamicInputs: ['movie-information','ticker-name-area', 'ir-kabutan-buttons', 'jpx-button', 'earnings-market-area'], searchBtns: ['jpx'], directionOptions: { default: '' } },
                 buttonData: [
-                    { category: "【分析】（上場時資料から4ファイル+企業ページの業績予想を読み込む）", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                    { category: "【分析】（上場時資料から4ファイル+企業ページの業績予想を読み込む）", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "音声生成", copyId: "voice" }] }] },
                     { category: "【プレゼン資料】(レポートを使用/スライド：20)", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "動画タイトル", copyId: "titleBf" }, { label: "概要欄", copyId: "gaiyo" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
@@ -593,7 +593,7 @@ const App = {
                     searchBtns: []
                 },
                 buttonData: [
-                    { category: "【分析】", services: [{ service: "gemini", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
