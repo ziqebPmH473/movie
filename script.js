@@ -99,6 +99,16 @@ const App = {
             'youtube-posting-area': `
                 <div id="youtube-posting-area">
                     <div class="input-group">
+                        <label>カテゴリ:</label>
+                        <label><input type="radio" name="category" value="東証マーケット振り返り" checked> 日次</label>
+                        <label><input type="radio" name="category" value="週間振り返り"> 週間</label>
+                        <label><input type="radio" name="category" value="ニュース"> ニュース</label>
+                        <label><input type="radio" name="category" value="銘柄分析"> 個別</label>
+                        <label><input type="radio" name="category" value="株価分析"> 株価</label>
+                        <label><input type="radio" name="category" value="決算分析"> 決算</label>
+                        <label><input type="radio" name="category" value="テーマ分析"> テーマ</label>
+                    </div>
+                    <div class="input-group" style="margin-top: 0.8em;">
                         <label>チェック内容:</label>
                         <label><input type="radio" name="check-type" value="アップ前" checked> 新規</label>
                         <label><input type="radio" name="check-type" value="伸び悩んでいるので"> 不調</label>
@@ -732,8 +742,10 @@ const App = {
                     }
                 ],
                 copyTexts: {
-                    check: "{{checkType}}チェックお願いします。CTR・SEO観点で最適化して。\n（一般投資家向け・検索から伸ばしたい）チェックを行ってください。\nタイトル：{{title}}\n動画内容：{{content}}\n概要欄：\n{{memo}}\nサムネ：{{thumbnailType}}",
-                    register: "この内容でアップします。\nタイトル：{{newTitle}}\nURL：{{url}}\nこの表に追加して"
+                    check: "{{checkType}}チェックお願いします。CTR・SEO観点で最適化して。\n（一般投資家向け・検索から伸ばしたい）チェックを行ってください。\nタイトル：{{title}}\nURL：{{url}}",
+                    checkNew: "{{checkType}}チェックお願いします。CTR・SEO観点で最適化して。\n（一般投資家向け・検索から伸ばしたい）チェックを行ってください。\nタイトル：{{title}}\n動画内容：{{content}}\n概要欄：\n{{memo}}\nサムネ：{{thumbnailType}}",
+                    register: "この内容で修正します。\nタイトル：{{newTitle}}\nURL：{{url}}\nこの表に追加して",
+                    registerNew: "この内容でアップします。\nタイトル：{{title}}\nURL：{{url}}\nカテゴリ：{{category}}\nこの表に追加して"
                 }
             },
         }
@@ -1242,6 +1254,7 @@ const App = {
         this.dom.youtubeUrl = document.getElementById('youtube-url');
         this.dom.youtubeNewTitle = document.getElementById('youtube-new-title');
         this.dom.thumbnailType = document.querySelector('input[name="thumbnail-type"]:checked');
+        this.dom.category = document.querySelector('input[name="category"]:checked');
         
         const settings = this.CONFIG.analysisSettings[analysisKey];
         const form = {
@@ -1268,7 +1281,8 @@ const App = {
             content: this.dom.youtubeContent?.value || '',
             memo: this.dom.youtubeMemo?.value || '',
             url: this.dom.youtubeUrl?.value || '',
-            newTitle: this.dom.youtubeNewTitle?.value || ''
+            newTitle: this.dom.youtubeNewTitle?.value || '',
+            category: this.dom.category?.value || '日次'
         };
         
         const introFn = settings.intro;
@@ -1541,6 +1555,16 @@ const App = {
         let actualCopyId = copyId;
         if (isShort && (copyId === 'titleBf' || copyId === 'gaiyo')) {
             actualCopyId = copyId === 'titleBf' ? 'shortTitle' : 'shortGaiyo';
+        }
+        
+        // Youtube投稿内容のチェック機能で新規の場合はcheckNewを使用
+        if (analysisKey === 'youtube_posting' && copyId === 'check' && variables.checkType === 'アップ前') {
+            actualCopyId = 'checkNew';
+        }
+        
+        // Youtube投稿内容の登録機能で新規の場合はregisterNewを使用
+        if (analysisKey === 'youtube_posting' && copyId === 'register' && variables.checkType === 'アップ前') {
+            actualCopyId = 'registerNew';
         }
         
         let textTemplate = settings.copyTexts[actualCopyId] || '';
