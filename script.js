@@ -78,10 +78,11 @@ const App = {
                 <label><input type="radio" name="analysis" value="market_stock"><span>個別銘柄</span></label>
                 <label><input type="radio" name="analysis" value="market_buy_analysis"><span>株価分析</span></label>
                 <label><input type="radio" name="analysis" value="market_earnings"><span>決算</span></label>
-                <label><input type="radio" name="analysis" value="ipo"><span>IPO</span></label>
+                <label style="display:none"><input type="radio" name="analysis" value="ipo"><span>IPO</span></label>
                 <label><input type="radio" name="analysis" value="theme_analysis"><span>テーマ</span></label>
                 <label><input type="radio" name="analysis" value="content_creation"><span>コンテンツ作成</span></label>
                 <label><input type="radio" name="analysis" value="youtube_posting"><span>Youtube投稿内容</span></label>
+                <label><input type="radio" name="analysis" value="ai_education"><span>AI教養ラボ</span></label>
             `,
             'ticker-name-area': `
                 <div class="ticker-name-row">
@@ -746,6 +747,88 @@ const App = {
                     checkNew: "{{checkType}}チェックお願いします。CTR・SEO観点で最適化して。\n（一般投資家向け・検索から伸ばしたい）チェックを行ってください。\nタイトル：{{title}}\n動画内容：{{content}}\n概要欄：\n{{memo}}\nサムネ：{{thumbnailType}}",
                     register: "この内容で修正します。\nタイトル：{{newTitle}}\nURL：{{url}}\nこの表に追加して",
                     registerNew: "この内容でアップします。\nタイトル：{{title}}\nURL：{{url}}\nカテゴリ：{{category}}\nこの表に追加して"
+                }
+            },
+            ai_education: {
+                label: 'AI教養ラボ',
+                intro: "AI教養ラボ",
+                audioLength: "8分から10分",
+                checkboxDefaults: {},
+                ui: { 
+                    dynamicInputs: [], 
+                    searchBtns: [] 
+                },
+                buttonData: [
+                    { 
+                        category: "【音声生成】", 
+                        services: [{ 
+                            service: "notebookLM", 
+                            buttons: [
+                                { label: "音声", copyId: "voice" },
+                                { label: "原稿", copyId: "script" }
+                            ] 
+                        }] 
+                    },
+                    { 
+                        category: "【プレゼン資料】", 
+                        services: [{ 
+                            service: "gamma", 
+                            buttons: [
+                                { label: "資料", copyId: "presentation" }
+                            ] 
+                        }] 
+                    }
+                ],
+                copyTexts: {
+                    voice: `【ルールの原則】
+1. ルールは静かに適用する。説明や前置きは不要。
+2. 発話は自然で一度だけ述べる。繰り返し禁止。
+3. 指定された内容は、応答の最初から最後まで一貫して守る。
+
+【発声スタイル】
+・声のトーンは知的で穏やか。感情を排し、落ち着いた教育番組の語りのように。
+・テンポは1秒あたり3〜3.5文字。
+・各段落の間に0.3〜0.5秒の無音を入れ、静けさで余韻を作る。
+・文末は下げ調子で終える。強調語や語尾の上げは行わない。
+・BGMを想定しても声が埋もれないよう、発声は明瞭に。
+・語りの中で「考える時間」を与える間を自然に含む。
+
+【長さ】
+・音声は約3〜4分。原稿量は800〜900文字を想定。
+・導入は60文字以内（簡潔な提示）、結びは1回のみ。
+
+【禁止事項】
+・出典や資料への言及をしない。
+・「この資料をもとに」「いかがでしたか」「考えてみてください」などのメタ発話禁止。
+・章ごとの要約や繰り返しまとめ禁止。
+・感情的な抑揚、強い強調表現を使用しない。
+
+【締め方】
+・最後は「事実」または「静かな余韻」で終える。
+・問いかけや感情の誘導は避け、聴き手に静かに考える余白を残す。`,
+                    script: `以下の内容をもとに、解説原稿をスライド構成形式で出力してください。
+
+【出力フォーマット】
+各スライドを次の形式で書くこと：
+Slide 1:
+タイトル：
+本文：（2〜3文以内）
+
+【出力条件】
+・スライド数は7〜8枚
+・全体で約1,400文字前後（3〜4分音声に対応）
+・Slide 1は導入、Slide 7〜8は結論や静かなまとめにする
+・文体は穏やかで知的、ナレーション向けに自然な語り口
+・繰り返し、問いかけ、出典やメタ発話は禁止
+・文末は事実または静かな余韻で終える
+・文体・構成を毎回同一形式で保つこと（全動画共通フォーマット）`,
+                    presentation: `・スライド枚数：5〜6枚（Slide番号に合わせる）。
+・デザインは統一テンプレート。
+・1スライド1主張。
+・説明文は3行以内、見出しは10文字以内。
+・箇条書き最大3項目。
+・イラスト提案は抽象的（脳、人、波、光など）。
+・文末は「〜と考えられています」で統一。`
                 }
             },
         }
