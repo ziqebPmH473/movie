@@ -101,10 +101,10 @@ const App = {
                 <div id="youtube-posting-area">
                     <div class="input-group">
                         <label>カテゴリ:</label>
-                        <label><input type="radio" name="category" value="東証マーケット振り返り" checked> 日次</label>
+                        <label><input type="radio" name="category" value="東証マーケット振り返り"> 日次</label>
                         <label><input type="radio" name="category" value="週間振り返り"> 週間</label>
                         <label><input type="radio" name="category" value="ニュース"> ニュース</label>
-                        <label><input type="radio" name="category" value="銘柄分析"> 個別</label>
+                        <label><input type="radio" name="category" value="銘柄分析" checked> 個別</label>
                         <label><input type="radio" name="category" value="株価分析"> 株価</label>
                         <label><input type="radio" name="category" value="決算分析"> 決算</label>
                         <label><input type="radio" name="category" value="テーマ分析"> テーマ</label>
@@ -746,7 +746,7 @@ const App = {
                     check: "{{checkType}}チェックお願いします。CTR・SEO観点で最適化して。\n（一般投資家向け・検索から伸ばしたい）チェックを行ってください。\nタイトル：{{title}}\nURL：{{url}}",
                     checkNew: "{{checkType}}チェックお願いします。CTR・SEO観点で最適化して。\n（一般投資家向け・検索から伸ばしたい）チェックを行ってください。\nタイトル：{{title}}\n動画内容：{{content}}\n概要欄：\n{{memo}}\nサムネ：{{thumbnailType}}",
                     register: "この内容で修正します。\nタイトル：{{newTitle}}\nURL：{{url}}\nこの表に追加して",
-                    registerNew: "この内容でアップします。\nタイトル：{{title}}\nURL：{{url}}\nカテゴリ：{{category}}\nこの表に追加して"
+                    registerNew: "この内容でアップします。\nタイトル：{{newTitle}}\nURL：{{url}}\nカテゴリ：{{category}}\nこの表に追加して"
                 }
             },
             ai_education: {
