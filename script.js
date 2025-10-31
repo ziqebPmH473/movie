@@ -491,8 +491,15 @@ const App = {
                 intro: () => {
                     const direction = App.dom.stockDirection?.value || '';
                     const isAfterHours = App.dom.afterHoursCheck?.checked;
+                    const period = App.dom.inputPeriod?.value;
                     if (direction === '') {
                         return "{{formattedEarningsDate}}{{timing}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察";
+                    }
+                    if (period && period.trim() !== '') {
+                        if (isAfterHours) {
+                            return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の株価が{{period}}{{afterHours}}" + direction + "理由と今後の見通しを考察";
+                        }
+                        return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の株価が{{period}}" + direction + "理由と今後の見通しを考察";
                     }
                     if (isAfterHours) {
                         return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の株価が{{formattedEarningsDate}}の{{afterHours}}" + direction + "理由と今後の見通しを考察";
