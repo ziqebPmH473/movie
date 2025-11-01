@@ -492,19 +492,23 @@ const App = {
                     const direction = App.dom.stockDirection?.value || '';
                     const isAfterHours = App.dom.afterHoursCheck?.checked;
                     const period = App.dom.inputPeriod?.value;
+                    const isShort = App.state.isShortVideo || false;
+                    const suffix = isShort ? '理由を考察' : '理由と今後の見通しを考察';
+                    const suffixOnly = isShort ? 'を考察' : '、今後の見通しを考察';
+                    
                     if (direction === '') {
-                        return "{{formattedEarningsDate}}{{timing}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察";
+                        return "{{formattedEarningsDate}}{{timing}}に発表された{{companyName}}の決算内容を" + (isShort ? '2分で分析' : '分析し、今後の見通しを考察');
                     }
                     if (period && period.trim() !== '') {
                         if (isAfterHours) {
-                            return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の株価が{{period}}{{afterHours}}" + direction + "理由と今後の見通しを考察";
+                            return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の株価が{{period}}{{afterHours}}" + direction + suffix;
                         }
-                        return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の株価が{{period}}" + direction + "理由と今後の見通しを考察";
+                        return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の株価が{{period}}" + direction + suffix;
                     }
                     if (isAfterHours) {
-                        return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の株価が{{formattedEarningsDate}}の{{afterHours}}" + direction + "理由と今後の見通しを考察";
+                        return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の株価が{{formattedEarningsDate}}の{{afterHours}}" + direction + suffix;
                     }
-                    return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の{{today}}の株価が" + direction + "理由と今後の見通しを考察";
+                    return "{{formattedEarningsDate}}{{timing}}に発表された決算内容を分析し、{{companyName}}の{{today}}の株価が" + direction + suffix;
                 },
                 audioLength: "8分から12分",
                 checkboxDefaults: {'movie_info_financial': true, 'movie_info_kabutan': true},
@@ -534,9 +538,21 @@ const App = {
                     presentationEarningsOnly: "{{companyName}}の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}する{{thumbnail}}",
                     //titleBf: "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する{{titleBf}}{{companyNamePrefix}}後ろに「｜AI決算分析」をつけてください。{{CommonNote_source}}",
-                    titleBf: "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する{{titleBf}}{{companyNamePrefix}}後ろに「｜決算分析」をつけてください。{{CommonNote_source}}",
+                    titleBf: () => {
+                        const isShort = App.state.isShortVideo || false;
+                        const baseText = isShort ? 
+                            "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を2分で分析する" :
+                            "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する";
+                        return baseText + "{{titleBf}}{{companyNamePrefix}}後ろに「｜決算分析」をつけてください。{{CommonNote_source}}";
+                    },
                     videoContent: `{{intro}}`,
-                    gaiyo: `{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
+                    gaiyo: () => {
+                        const isShort = App.state.isShortVideo || false;
+                        const baseText = isShort ? 
+                            "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を2分で分析する" :
+                            "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する";
+                        return baseText + "{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}";
+                    },
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     //shortTitle: "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを2分で考察する{{titleSBf}}{{companyNamePrefix}}後ろに「｜AI決算分析」をつけてください。{{CommonNote_source}}",
                     shortTitle: "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを2分で考察する{{titleSBf}}{{companyNamePrefix}}後ろに「｜決算分析」をつけてください。{{CommonNote_source}}",
@@ -1238,7 +1254,8 @@ Slide 1:
                     if (category.category.includes('音声生成前')) {
                         const radioName = `voice-length-${analysis}-${category.category}`;
                         
-                        ['ショート', '短め', 'デフォルト'].forEach((option, index) => {
+                        const options = analysis === 'market_earnings' ? ['ショート', '短め', 'デフォルト', '2分動画'] : ['ショート', '短め', 'デフォルト'];
+                        options.forEach((option, index) => {
                             const radio = document.createElement("input");
                             radio.type = "radio";
                             radio.name = radioName;
@@ -1246,6 +1263,10 @@ Slide 1:
                             radio.id = `${radioName}-${option}`;
                             radio.style.marginLeft = "8px";
                             if (option === '短め') radio.checked = true; // 初期値
+                            
+                            radio.addEventListener('change', () => {
+                                App.state.isShortVideo = (option === '2分動画');
+                            });
                             
                             const label = document.createElement("label");
                             label.htmlFor = radio.id;
