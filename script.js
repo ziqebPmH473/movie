@@ -937,8 +937,8 @@ Slide 1:
                 },
                 buttonData: [],
                 copyTexts: {
-                    comment: `詳細版：{{url8min}}`,
-                    description: `この動画は決算内容を2分でまとめた動画です。詳細は {{url8min}}`,
+                    comment: `詳しい解説はこちら {{url8min}}`,
+                    description: `この動画は決算の要点を約2分で整理しています。\n詳しい解説はこちら {{url8min}}`,
                     priority: `この動画は「すみっこマネー大学」メンバーシップで先行公開された内容です。\nメンバー限定で、市況分析や速報を一般公開よりも早く視聴できます。\n\n▶ メンバーシップ登録はこちら  \nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join`
                 }
             },
