@@ -84,6 +84,7 @@ const App = {
                 <label><input type="radio" name="analysis" value="content_creation"><span>コンテンツ作成</span></label>
                 <label><input type="radio" name="analysis" value="youtube_posting"><span>Youtube投稿内容</span></label>
                 <label><input type="radio" name="analysis" value="ai_education"><span>AI教養ラボ</span></label>
+                <label><input type="radio" name="analysis" value="video_completion"><span>動画補完</span></label>
             `,
             'ticker-name-area': `
                 <div class="ticker-name-row">
@@ -229,6 +230,22 @@ const App = {
                     <div style="position: relative;">
                         <textarea id="large-textbox3" class="large-textbox" placeholder="テキストボックス3"></textarea>
                         <button type="button" onclick="App.clearTextbox('large-textbox3')" style="margin-top: 5px; font-size: 0.8em;">クリア</button>
+                    </div>
+                </div>
+            `,
+            'video-completion-area': `
+                <div class="service-group">
+                    <div class="category-title">8分動画</div>
+                    <div class="button-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                        <input type="text" id="url-8min" placeholder="8分動画のURL" style="width: 300px;">
+                        <button onclick="App.handleVideoCompletion('comment')">コメント</button>
+                        <button onclick="App.handleVideoCompletion('description')">概要欄</button>
+                    </div>
+                </div>
+                <div class="service-group">
+                    <div class="category-title">優先公開</div>
+                    <div class="button-row">
+                        <button onclick="App.handleVideoCompletion('priority')">優先公開</button>
                     </div>
                 </div>
             `
@@ -909,6 +926,22 @@ Slide 1:
 ・視覚的に理解できるように図や画像を多く活用する。`
                 }
             },
+            video_completion: {
+                label: '動画補完',
+                intro: "動画補完",
+                audioLength: "8分から9分",
+                checkboxDefaults: {},
+                ui: { 
+                    dynamicInputs: ['video-completion-area'], 
+                    searchBtns: [] 
+                },
+                buttonData: [],
+                copyTexts: {
+                    comment: `詳細版：{{url8min}}`,
+                    description: `この動画は決算内容を2分でまとめた動画です。詳細は {{url8min}}`,
+                    priority: `この動画は「すみっこマネー大学」メンバーシップで先行公開された内容です。\nメンバー限定で、市況分析や速報を一般公開よりも早く視聴できます。\n\n▶ メンバーシップ登録はこちら  \nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join`
+                }
+            },
         }
     },
 
@@ -1421,6 +1454,7 @@ Slide 1:
         this.dom.youtubeNewTitle = document.getElementById('youtube-new-title');
         this.dom.thumbnailType = document.querySelector('input[name="thumbnail-type"]:checked');
         this.dom.category = document.querySelector('input[name="category"]:checked');
+        this.dom.url8min = document.getElementById('url-8min');
         
         const settings = this.CONFIG.analysisSettings[analysisKey];
         const form = {
@@ -1448,7 +1482,8 @@ Slide 1:
             memo: this.dom.youtubeMemo?.value || '',
             url: this.dom.youtubeUrl?.value || '',
             newTitle: this.dom.youtubeNewTitle?.value || '',
-            category: this.dom.category?.value || '日次'
+            category: this.dom.category?.value || '日次',
+            url8min: this.dom.url8min?.value || ''
         };
         
         const introFn = settings.intro;
@@ -1787,6 +1822,13 @@ Slide 1:
                 }
             }
         });
+    },
+
+    handleVideoCompletion: function(copyId) {
+        const copyText = this.getCopyText('video_completion', copyId);
+        if (copyText) {
+            this.copyToClipboard(copyText);
+        }
     }
 };
 
