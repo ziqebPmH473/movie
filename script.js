@@ -233,22 +233,7 @@ const App = {
                     </div>
                 </div>
             `,
-            'video-completion-area': `
-                <div class="service-group">
-                    <div class="category-title">8分動画</div>
-                    <div class="button-row" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                        <input type="text" id="url-8min" placeholder="8分動画のURL" style="width: 300px;">
-                        <button onclick="App.handleVideoCompletion('comment')">コメント</button>
-                        <button onclick="App.handleVideoCompletion('description')">概要欄</button>
-                    </div>
-                </div>
-                <div class="service-group">
-                    <div class="category-title">優先公開</div>
-                    <div class="button-row">
-                        <button onclick="App.handleVideoCompletion('priority')">優先公開</button>
-                    </div>
-                </div>
-            `
+            'video-completion-area': ``
         },
 
         // 各分析カテゴリごとの設定
@@ -1251,6 +1236,76 @@ Slide 1:
         const settings = App.CONFIG.analysisSettings[analysis];
         if (!settings) return;
 
+        // 動画補完の特別処理
+        if (analysis === 'video_completion') {
+            // 8分動画セクション
+            const video8minDiv = document.createElement("div");
+            video8minDiv.classList.add("service-group");
+            
+            const video8minTitle = document.createElement("div");
+            video8minTitle.classList.add("category-title");
+            video8minTitle.textContent = "8分動画";
+            video8minDiv.appendChild(video8minTitle);
+            
+            const video8minRow = document.createElement("div");
+            video8minRow.classList.add("button-row");
+            video8minRow.style.display = "flex";
+            video8minRow.style.alignItems = "center";
+            video8minRow.style.gap = "10px";
+            video8minRow.style.marginBottom = "10px";
+            
+            const urlInput = document.createElement("input");
+            urlInput.type = "text";
+            urlInput.id = "url-8min";
+            urlInput.placeholder = "8分動画のURL";
+            urlInput.style.width = "300px";
+            video8minRow.appendChild(urlInput);
+            
+            const commentBtn = document.createElement("button");
+            commentBtn.textContent = "コメント";
+            commentBtn.addEventListener("click", () => {
+                const copyText = App.getCopyText('video_completion', 'comment');
+                if (copyText) navigator.clipboard.writeText(copyText);
+            });
+            video8minRow.appendChild(commentBtn);
+            
+            const descBtn = document.createElement("button");
+            descBtn.textContent = "概要欄";
+            descBtn.addEventListener("click", () => {
+                const copyText = App.getCopyText('video_completion', 'description');
+                if (copyText) navigator.clipboard.writeText(copyText);
+            });
+            video8minRow.appendChild(descBtn);
+            
+            video8minDiv.appendChild(video8minRow);
+            buttonArea.appendChild(video8minDiv);
+            
+            // 固定文言セクション
+            const priorityDiv = document.createElement("div");
+            priorityDiv.classList.add("service-group");
+            
+            const priorityTitle = document.createElement("div");
+            priorityTitle.classList.add("category-title");
+            priorityTitle.textContent = "固定文言";
+            priorityDiv.appendChild(priorityTitle);
+            
+            const priorityRow = document.createElement("div");
+            priorityRow.classList.add("button-row");
+            
+            const priorityBtn = document.createElement("button");
+            priorityBtn.textContent = "優先公開";
+            priorityBtn.addEventListener("click", () => {
+                const copyText = App.getCopyText('video_completion', 'priority');
+                if (copyText) navigator.clipboard.writeText(copyText);
+            });
+            priorityRow.appendChild(priorityBtn);
+            
+            priorityDiv.appendChild(priorityRow);
+            buttonArea.appendChild(priorityDiv);
+            
+            return;
+        }
+
         settings.buttonData.forEach(category => {
             const categoryDiv = document.createElement("div");
             categoryDiv.classList.add("service-group");
@@ -1824,12 +1879,7 @@ Slide 1:
         });
     },
 
-    handleVideoCompletion: function(copyId) {
-        const copyText = this.getCopyText('video_completion', copyId);
-        if (copyText) {
-            this.copyToClipboard(copyText);
-        }
-    }
+
 };
 
 // ===================================================================================
