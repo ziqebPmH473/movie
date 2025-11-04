@@ -14,7 +14,7 @@ const App = {
             notebookLM: 'https://notebooklm.google.com/',
             gamma: 'https://gamma.app/',
             chatGPT: 'https://chat.openai.com/',
-            youtube: 'https://www.youtube.com/'
+            youtube: 'https://studio.youtube.com/'
         },
         holidays: [
             '2025-07-21', '2025-08-11', '2025-09-15', '2025-09-23',
@@ -924,7 +924,9 @@ Slide 1:
                 copyTexts: {
                     comment: `詳しい解説はこちら {{url8min}}`,
                     description: `この動画は決算の要点を約2分で整理しています。\n詳しい解説はこちら {{url8min}}`,
-                    priority: `この動画は「すみっこマネー大学」メンバーシップで先行公開された内容です。\nメンバー限定で、市況分析や速報を一般公開よりも早く視聴できます。\n\n▶ メンバーシップ登録はこちら  \nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join`
+                    priority: `この動画は「すみっこマネー大学」メンバーシップで先行公開された内容です。\nメンバー限定で、市況分析や速報を一般公開よりも早く視聴できます。\n\n▶ メンバーシップ登録はこちら  \nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join`,
+                    postText: `【メンバー限定】重要ポイントだけを素早く確認できる保存版（画像1枚）\n{{videoTitle}}\n\n本編 → {{videoUrl}}\n— 情報提供のみ（数値は投稿時点）。`,
+                    postDescription: `【要点サマリ（画像1枚/保存可）】\nメンバー限定のコミュニティ投稿 → {{postUrl}}\n未加入はこちら → https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n\n※情報提供のみ（数値は公開時点）`
                 }
             },
         }
@@ -1303,6 +1305,62 @@ Slide 1:
             priorityDiv.appendChild(priorityRow);
             buttonArea.appendChild(priorityDiv);
             
+            // 投稿セクション
+            const postDiv = document.createElement("div");
+            postDiv.classList.add("service-group");
+            
+            const postTitle = document.createElement("div");
+            postTitle.classList.add("category-title");
+            postTitle.textContent = "投稿";
+            postDiv.appendChild(postTitle);
+            
+            const postRow = document.createElement("div");
+            postRow.classList.add("button-row");
+            postRow.style.display = "flex";
+            postRow.style.alignItems = "center";
+            postRow.style.gap = "10px";
+            postRow.style.marginBottom = "10px";
+            
+            const videoTitleInput = document.createElement("input");
+            videoTitleInput.type = "text";
+            videoTitleInput.id = "video-title";
+            videoTitleInput.placeholder = "動画タイトル";
+            videoTitleInput.style.width = "200px";
+            postRow.appendChild(videoTitleInput);
+            
+            const videoUrlInput = document.createElement("input");
+            videoUrlInput.type = "text";
+            videoUrlInput.id = "video-url";
+            videoUrlInput.placeholder = "動画URL";
+            videoUrlInput.style.width = "200px";
+            postRow.appendChild(videoUrlInput);
+            
+            const postTextBtn = document.createElement("button");
+            postTextBtn.textContent = "投稿文";
+            postTextBtn.addEventListener("click", () => {
+                const copyText = App.getCopyText('video_completion', 'postText');
+                if (copyText) navigator.clipboard.writeText(copyText);
+            });
+            postRow.appendChild(postTextBtn);
+            
+            const postUrlInput = document.createElement("input");
+            postUrlInput.type = "text";
+            postUrlInput.id = "post-url";
+            postUrlInput.placeholder = "投稿URL";
+            postUrlInput.style.width = "200px";
+            postRow.appendChild(postUrlInput);
+            
+            const postDescBtn = document.createElement("button");
+            postDescBtn.textContent = "概要欄";
+            postDescBtn.addEventListener("click", () => {
+                const copyText = App.getCopyText('video_completion', 'postDescription');
+                if (copyText) navigator.clipboard.writeText(copyText);
+            });
+            postRow.appendChild(postDescBtn);
+            
+            postDiv.appendChild(postRow);
+            buttonArea.appendChild(postDiv);
+            
             return;
         }
 
@@ -1510,6 +1568,9 @@ Slide 1:
         this.dom.thumbnailType = document.querySelector('input[name="thumbnail-type"]:checked');
         this.dom.category = document.querySelector('input[name="category"]:checked');
         this.dom.url8min = document.getElementById('url-8min');
+        this.dom.videoTitle = document.getElementById('video-title');
+        this.dom.videoUrl = document.getElementById('video-url');
+        this.dom.postUrl = document.getElementById('post-url');
         
         const settings = this.CONFIG.analysisSettings[analysisKey];
         const form = {
@@ -1538,7 +1599,10 @@ Slide 1:
             url: this.dom.youtubeUrl?.value || '',
             newTitle: this.dom.youtubeNewTitle?.value || '',
             category: this.dom.category?.value || '日次',
-            url8min: this.dom.url8min?.value || ''
+            url8min: this.dom.url8min?.value || '',
+            videoTitle: this.dom.videoTitle?.value || '',
+            videoUrl: this.dom.videoUrl?.value || '',
+            postUrl: this.dom.postUrl?.value || ''
         };
         
         const introFn = settings.intro;
