@@ -769,8 +769,8 @@ const App = {
                     }
                 ],
                 copyTexts: {
-                    check: "{{checkType}}チェックお願いします。CTR・SEO観点で最適化して。\n（一般投資家向け・検索から伸ばしたい）チェックを行ってください。\nタイトル：{{title}}\nURL：{{url}}",
-                    checkNew: "{{checkType}}チェックお願いします。CTR・SEO観点で最適化して。\n（一般投資家向け・検索から伸ばしたい）チェックを行ってください。\nタイトル：{{title}}\n動画内容：{{content}}\n概要欄：\n{{memo}}\nサムネ：{{thumbnailType}}",
+                    check: "{{checkType}}チェックお願いします。\nタイトル：{{title}}\nURL：{{url}}",
+                    checkNew: "{{checkType}}チェックお願いします。\nタイトル：{{title}}\n動画内容：{{content}}\n概要欄：\n{{memo}}\nサムネ：{{thumbnailType}}",
                     register: "この内容で修正します。\nタイトル：{{newTitle}}\nURL：{{url}}\nこの表に追加して",
                     registerNew: "この内容でアップします。\nタイトル：{{newTitle}}\nURL：{{url}}\nカテゴリ：{{category}}\nこの表に追加して"
                 }
