@@ -929,7 +929,7 @@ Slide 1:
                     description: `この動画は決算の要点を約2分で整理しています。\n詳しい解説はこちら {{url8min}}`,
                     priority: `この動画は「すみっこマネー大学」メンバーシップで先行公開された内容です。\nメンバー限定で一般公開よりも早く視聴できたり、一部動画で要点サマリ画像を確認できます。\n\n▶ メンバーシップ登録はこちら  \nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join`,
                     postText: `【メンバー限定】重要ポイントだけを素早く確認できる保存版（画像1枚）\n{{videoTitle}}\n\n本編 → {{videoUrl}}\n— 情報提供のみ（数値は投稿時点）。`,
-                    postDescription: `【要点サマリ（画像1枚/保存可）】\nメンバー限定のコミュニティ投稿 → {{postUrl}}\n未加入はこちら → https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n※情報提供のみ（数値は公開時点）`
+                    postDescription: `【要点サマリ（画像1枚/保存可）】\nメンバー限定のコミュニティ投稿 → {{postUrl}}\n未加入はこちら → https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n※情報提供のみ（数値は公開時点）\nサンプル → https://www.youtube.com/post/UgkxvIfp6WXHQTDYlByElANnsDtCTR7bGQ2-`
                 }
             },
         }
