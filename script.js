@@ -775,7 +775,7 @@ const App = {
                     check: "{{checkType}}チェックお願いします。\nタイトル：{{title}}\nURL：{{url}}",
                     checkNew: "{{checkType}}チェックお願いします。\nタイトル：{{title}}\n動画内容：{{content}}\n概要欄：\n{{memo}}\n管理表：",
                     register: "この内容で修正します。\nタイトル：{{newTitle}}\nURL：{{url}}\nこの表に追加して",
-                    registerNew: "この内容でアップします。\nタイトル：{{newTitle}}\nURL：{{url}}\nカテゴリ：{{category}}\nこの表に追加して"
+                    registerNew: "この内容でアップします。\nタイトル：{{newTitle}}\nURL：{{url}}\nこの表に追加して"
                 }
             },
             ai_education: {
