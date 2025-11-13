@@ -1133,11 +1133,13 @@ Slide 1:
         const textbox3 = document.getElementById('large-textbox3');
         const newsPerformanceText = document.getElementById('news-performance-text');
         const youtubeMemo = document.getElementById('youtube-memo');
+        const youtubeContent = document.getElementById('youtube-content');
         if (textbox1) textbox1.value = localStorage.getItem('large-textbox1') || '';
         if (textbox2) textbox2.value = localStorage.getItem('large-textbox2') || '';
         if (textbox3) textbox3.value = localStorage.getItem('large-textbox3') || '';
         if (newsPerformanceText) newsPerformanceText.value = localStorage.getItem('news-performance-text') || '';
         if (youtubeMemo) youtubeMemo.value = localStorage.getItem('youtube-memo') || '';
+        if (youtubeContent) youtubeContent.value = localStorage.getItem('youtube-content') || '';
     },
 
     updateUiVisibility: function() {
@@ -1488,6 +1490,10 @@ Slide 1:
                         
                         const copyText = App.getCopyText(analysis, btn.copyId, isShort, isPriority, voiceLength);
                         if (copyText) {
+                            // 動画内容ボタンの場合はlocalStorageに保存
+                            if (btn.copyId === 'videoContent') {
+                                localStorage.setItem('youtube-content', copyText);
+                            }
                             navigator.clipboard.writeText(copyText);
                         }
                     });
@@ -1939,7 +1945,7 @@ Slide 1:
             const field = document.getElementById(fieldId);
             if (field) {
                 field.value = '';
-                if (fieldId === 'youtube-memo') {
+                if (fieldId === 'youtube-memo' || fieldId === 'youtube-content') {
                     localStorage.removeItem(fieldId);
                 }
             }
