@@ -1134,12 +1134,16 @@ Slide 1:
         const newsPerformanceText = document.getElementById('news-performance-text');
         const youtubeMemo = document.getElementById('youtube-memo');
         const youtubeContent = document.getElementById('youtube-content');
+        const videoTitle = document.getElementById('video-title');
+        const videoUrl = document.getElementById('video-url');
         if (textbox1) textbox1.value = localStorage.getItem('large-textbox1') || '';
         if (textbox2) textbox2.value = localStorage.getItem('large-textbox2') || '';
         if (textbox3) textbox3.value = localStorage.getItem('large-textbox3') || '';
         if (newsPerformanceText) newsPerformanceText.value = localStorage.getItem('news-performance-text') || '';
         if (youtubeMemo) youtubeMemo.value = localStorage.getItem('youtube-memo') || '';
         if (youtubeContent) youtubeContent.value = localStorage.getItem('youtube-content') || '';
+        if (videoTitle) videoTitle.value = localStorage.getItem('video-title') || '';
+        if (videoUrl) videoUrl.value = localStorage.getItem('video-url') || '';
     },
 
     updateUiVisibility: function() {
@@ -1331,6 +1335,11 @@ Slide 1:
             videoTitleInput.id = "video-title";
             videoTitleInput.placeholder = "動画タイトル";
             videoTitleInput.style.width = "200px";
+            videoTitleInput.addEventListener('input', () => {
+                if (videoTitleInput.value === '') {
+                    localStorage.removeItem('video-title');
+                }
+            });
             postRow.appendChild(videoTitleInput);
             
             const videoUrlInput = document.createElement("input");
@@ -1338,6 +1347,11 @@ Slide 1:
             videoUrlInput.id = "video-url";
             videoUrlInput.placeholder = "動画URL";
             videoUrlInput.style.width = "200px";
+            videoUrlInput.addEventListener('input', () => {
+                if (videoUrlInput.value === '') {
+                    localStorage.removeItem('video-url');
+                }
+            });
             postRow.appendChild(videoUrlInput);
             
             const postTextBtn = document.createElement("button");
@@ -1493,6 +1507,13 @@ Slide 1:
                             // 動画内容ボタンの場合はlocalStorageに保存
                             if (btn.copyId === 'videoContent') {
                                 localStorage.setItem('youtube-content', copyText);
+                            }
+                            // Youtube投稿内容の登録ボタンの場合は動画補完ページに情報を保存
+                            if (analysis === 'youtube_posting' && (btn.copyId === 'register' || btn.copyId === 'registerNew')) {
+                                const youtubeUrl = document.getElementById('youtube-url')?.value || '';
+                                const youtubeNewTitle = document.getElementById('youtube-new-title')?.value || '';
+                                if (youtubeUrl) localStorage.setItem('video-title', youtubeNewTitle);
+                                if (youtubeNewTitle) localStorage.setItem('video-url', youtubeUrl);
                             }
                             navigator.clipboard.writeText(copyText);
                         }
