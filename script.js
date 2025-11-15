@@ -1890,7 +1890,7 @@ Slide 1:
             variables.VoiceNote_Size = this.replaceVariables(this.CONFIG.commonTemplates.VoiceNote_Size, variables);
         } else if (voiceLength === 'デフォルト') {
             variables.voiceTime = '15分程度';
-            variables.voiceChars = '7,000～7,500文字程度';
+            variables.voiceChars = '8,500～9,500文字程度';
             variables.op_voiceChars = '230文字程度';
             variables.end_voiceChars = '160文字程度';
             variables.VoiceNote_Size = this.replaceVariables(this.CONFIG.commonTemplates.VoiceNote_Size, variables);
