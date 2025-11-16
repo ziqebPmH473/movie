@@ -75,16 +75,17 @@ const App = {
             'analysis-radios': `
                 <label><input type="radio" name="analysis" value="market_todayjp"><span>日次</span></label>
                 <label><input type="radio" name="analysis" value="market_term_rank"><span>週間</span></label>
-                <label><input type="radio" name="analysis" value="news"><span>ニュース</span></label>
                 <label><input type="radio" name="analysis" value="market_stock"><span>個別銘柄</span></label>
                 <label><input type="radio" name="analysis" value="market_buy_analysis"><span>株価分析</span></label>
-                <label><input type="radio" name="analysis" value="market_earnings"><span>決算</span></label>
-                <label style="display:none"><input type="radio" name="analysis" value="ipo"><span>IPO</span></label>
                 <label><input type="radio" name="analysis" value="theme_analysis"><span>テーマ</span></label>
+                <label><input type="radio" name="analysis" value="market_earnings"><span>決算</span></label>
                 <label><input type="radio" name="analysis" value="content_creation"><span>コンテンツ作成</span></label>
-                <label><input type="radio" name="analysis" value="youtube_posting"><span>Youtube投稿内容</span></label>
-                <label><input type="radio" name="analysis" value="ai_education"><span>AI教養ラボ</span></label>
                 <label><input type="radio" name="analysis" value="video_completion"><span>動画補完</span></label>
+                <label><input type="radio" name="analysis" value="youtube_posting"><span>Youtube投稿内容</span></label>
+                <label><input type="radio" name="analysis" value="news"><span>ニュース</span></label>
+                <label style="display:none"><input type="radio" name="analysis" value="ipo"><span>IPO</span></label>
+                <label><input type="radio" name="analysis" value="ai_education"><span>AI教養ラボ</span></label>
+                <label><input type="radio" name="analysis" value="dynamic_stocks"><span>注目決算</span></label>
             `,
             'ticker-name-area': `
                 <div class="ticker-name-row">
@@ -233,7 +234,16 @@ const App = {
                     </div>
                 </div>
             `,
-            'video-completion-area': ``
+            'video-completion-area': ``,
+            'dynamic-stocks-area': `
+                <div id="dynamic-stocks-area">
+                    <div class="input-group">
+                        <label>銘柄数:</label>
+                        <input type="number" id="stock-count" min="1" max="50" value="3" style="width: 80px;">
+                    </div>
+                    <div id="dynamic-stocks-container"></div>
+                </div>
+            `
         },
 
         // 各分析カテゴリごとの設定
@@ -266,6 +276,32 @@ const App = {
                     shortTitle: "2分で{{intro}}{{titleSBf}}先頭に「【2分で東証マーケット振り返り】」、後ろに「【{{today}}】」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。",
                     shortGaiyo: `2分で{{intro}}{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}{{reportNote}}`
+                }
+            },
+            dynamic_stocks: {
+                label: '動的銘柄',
+                intro: "入力した銘柄数に応じて動的に分析を行い、注目すべき銘柄を分析",
+                audioLength: "8分から12分",
+                checkboxDefaults: {'movie_info_report': true,'movie_info_kabutan': true},
+                ui: { dynamicInputs: ['movie-information', 'dynamic-stocks-area'], searchBtns: [] },
+                buttonData: [
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "注目銘柄分析", copyId: "analysis" }, { label: "銘柄分析(ランクNG)", copyId: "analysisRankNg" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "ランキング生成", copyId: "rank" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
+                    { category: "【プレゼン資料】（スライド：6+銘柄数）", services: [{ service: "gamma", buttons: [{ label: "*プレゼン生成", copyId: "presentation" }] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "*概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
+                ],
+                copyTexts: {
+                    analysis: `分析対象銘柄:\n{{stockList}}`,
+                    urls: `{{stockUrls}}`,
+                    rank: `銘柄一覧:\n{{stockList}}`,
+                    voice: `以下の銘柄について分析してください:\n{{stockList}}`,
+                    reportKk: `分析対象:\n{{stockList}}`,
+                    presentation: `プレゼン資料作成対象:\n{{stockList}}`,
+                    gaiyo: `概要欄用テキスト:\n{{stockList}}`,
+                    titleBf: `動画タイトル用:\n{{stockList}}`,
+                    videoContent: `動画内容:\n{{stockList}}`,
+                    xNotify: `X告知用:\n{{stockList}}`,
+                    noteArticle: `note記事用:\n{{stockList}}`
                 }
             },
             market_term_rank: {
@@ -1085,8 +1121,12 @@ Slide 1:
         this.renderButtons();
         // 復元後に表示
         this.restoreFormValues();
+        this.setupDynamicStocksEvents();
         this.forceShowContent();
         this.dom.dynamicInputContainer.style.visibility = 'visible';
+        
+        // 動的銘柄の入力イベントを追加
+        this.addStockInputEvents();
     },
 
     saveFormValues: function() {
@@ -1144,6 +1184,160 @@ Slide 1:
         if (youtubeContent) youtubeContent.value = localStorage.getItem('youtube-content') || '';
         if (videoTitle) videoTitle.value = localStorage.getItem('video-title') || '';
         if (videoUrl) videoUrl.value = localStorage.getItem('video-url') || '';
+    },
+
+    // 銘柄データを保存するオブジェクト
+    stockData: {},
+
+    // 動的銘柄入力機能
+    updateStockInputs: function() {
+        const stockCountInput = document.getElementById('stock-count');
+        if (!stockCountInput) return;
+        
+        const count = parseInt(stockCountInput.value) || 0;
+        const container = document.getElementById('dynamic-stocks-container');
+        if (!container) return;
+        
+        // 現在の値を保存
+        this.saveStockValues();
+        
+        // コンテナをクリア
+        container.innerHTML = '';
+        
+        // 新しい入力フィールドを生成（固定グリッドレイアウト）
+        for (let i = 1; i <= count; i++) {
+            const stockDiv = document.createElement('div');
+            stockDiv.className = 'stock-input-row';
+            stockDiv.innerHTML = `
+                <div class="stock-item">
+                    <label>銘柄${i}:</label>
+                    <input type="text" id="stock-name-${i}" placeholder="銘柄名">
+                    <input type="text" id="stock-reading-${i}" placeholder="読みがな">
+                    <button type="button" onclick="App.searchStockIR('${i}')">株探</button>
+                </div>
+            `;
+            container.appendChild(stockDiv);
+        }
+        
+        // 保存した値を復元
+        this.restoreStockValues(count);
+        
+        // 入力イベントを追加
+        this.addStockInputEvents();
+    },
+
+    saveStockValues: function() {
+        const inputs = document.querySelectorAll('[id^="stock-"]');
+        inputs.forEach(input => {
+            this.stockData[input.id] = input.value;
+            if (input.value) {
+                localStorage.setItem(input.id, input.value);
+            } else {
+                localStorage.removeItem(input.id);
+            }
+        });
+        
+        // 銘柄数も保存
+        const stockCountInput = document.getElementById('stock-count');
+        if (stockCountInput) {
+            localStorage.setItem('stock-count', stockCountInput.value);
+        }
+    },
+
+    restoreStockValues: function(count) {
+        for (let i = 1; i <= count; i++) {
+            const nameInput = document.getElementById(`stock-name-${i}`);
+            const readingInput = document.getElementById(`stock-reading-${i}`);
+            
+            if (nameInput) {
+                const savedName = localStorage.getItem(`stock-name-${i}`) || this.stockData[`stock-name-${i}`] || '';
+                nameInput.value = savedName;
+            }
+            if (readingInput) {
+                const savedReading = localStorage.getItem(`stock-reading-${i}`) || this.stockData[`stock-reading-${i}`] || '';
+                readingInput.value = savedReading;
+            }
+        }
+    },
+
+    searchStockIR: function(stockIndex) {
+        const stockName = document.getElementById(`stock-name-${stockIndex}`)?.value;
+        if (!stockName) {
+            alert('銘柄名を入力してください');
+            return;
+        }
+        
+        const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(stockName + ' IR情報')}`;
+        window.open(searchUrl, '_blank');
+    },
+
+    setupDynamicStocksEvents: function() {
+        const stockCountInput = document.getElementById('stock-count');
+        if (stockCountInput) {
+            // 保存された銘柄数を復元
+            const savedCount = localStorage.getItem('stock-count');
+            if (savedCount) {
+                stockCountInput.value = savedCount;
+            }
+            
+            stockCountInput.addEventListener('input', () => {
+                this.updateStockInputs();
+            });
+            // 初期表示
+            this.updateStockInputs();
+        }
+    },
+
+    generateStockList: function() {
+        const stockCountInput = document.getElementById('stock-count');
+        if (!stockCountInput) return '';
+        
+        const count = parseInt(stockCountInput.value) || 0;
+        const stocks = [];
+        
+        for (let i = 1; i <= count; i++) {
+            const nameInput = document.getElementById(`stock-name-${i}`);
+            const readingInput = document.getElementById(`stock-reading-${i}`);
+            
+            const name = nameInput?.value.trim() || '';
+            const reading = readingInput?.value.trim() || '';
+            
+            if (name) {
+                const stockInfo = reading ? `${name}（${reading}）` : name;
+                stocks.push(`${i}. ${stockInfo}`);
+            }
+        }
+        
+        return stocks.join('\n');
+    },
+
+    generateStockUrls: function() {
+        const stockCountInput = document.getElementById('stock-count');
+        if (!stockCountInput) return '';
+        
+        const count = parseInt(stockCountInput.value) || 0;
+        const urls = [];
+        
+        for (let i = 1; i <= count; i++) {
+            const nameInput = document.getElementById(`stock-name-${i}`);
+            const name = nameInput?.value.trim() || '';
+            
+            if (name) {
+                urls.push(`https://kabutan.jp/stock/search/?query=${encodeURIComponent(name)}`);
+            }
+        }
+        
+        return urls.join('\n');
+    },
+
+    addStockInputEvents: function() {
+        // 動的銘柄の入力フィールドにイベントリスナーを追加
+        const stockInputs = document.querySelectorAll('[id^="stock-"]');
+        stockInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                this.saveStockValues();
+            });
+        });
     },
 
     updateUiVisibility: function() {
@@ -1719,6 +1913,16 @@ Slide 1:
         }
         
         baseVars.intro = this.replaceVariables(baseVars.intro, baseVars);
+        
+        // 動的銘柄の場合の特別処理
+        if (analysisKey === 'dynamic_stocks') {
+            const stockList = this.generateStockList();
+            const stockUrls = this.generateStockUrls();
+            Object.assign(baseVars, {
+                stockList,
+                stockUrls
+            });
+        }
 
         return baseVars;
     },
