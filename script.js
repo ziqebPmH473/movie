@@ -1698,9 +1698,10 @@ Slide 1:
                         
                         const copyText = App.getCopyText(analysis, btn.copyId, isShort, isPriority, voiceLength);
                         if (copyText) {
-                            // 動画内容ボタンの場合はlocalStorageに保存
+                            // 動画内容ボタンの場合はlocalStorageに保存のみ（クリップボードにはコピーしない）
                             if (btn.copyId === 'videoContent') {
                                 localStorage.setItem('youtube-content', copyText);
+                                return; // クリップボードコピーをスキップ
                             }
                             // Youtube投稿内容の登録ボタンの場合は動画補完ページに情報を保存
                             if (analysis === 'youtube_posting' && (btn.copyId === 'register' || btn.copyId === 'registerNew')) {
