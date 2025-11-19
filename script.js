@@ -589,7 +589,12 @@ const App = {
                             "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を分析し、今後の見通しを考察する";
                         return baseText + "{{titleBf}}{{companyNamePrefix}}後ろに「｜決算分析」をつけてください。{{CommonNote_source}}";
                     },
-                    videoContent: `{{intro}}`,
+                    videoContent: () => {
+                        const isShort = App.state.isShortVideo || false;
+                        return isShort ? 
+                            "{{formattedEarningsDate}}に発表された{{companyName}}の決算内容を2分で分析する" :
+                            "{{intro}}";
+                    },
                     gaiyo: () => {
                         const isShort = App.state.isShortVideo || false;
                         const baseText = isShort ? 
