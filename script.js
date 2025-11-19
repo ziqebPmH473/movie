@@ -2085,14 +2085,20 @@ Slide 1:
         
         // VoiceNote_SizeをvoiceLengthに応じて設定
         if (voiceLength === 'ショート') {
-            variables.VoiceNote_Size = '';
-            variables.voiceTime = '';
-            variables.voiceChars = '';
-            variables.op_voiceChars = '';
-            variables.end_voiceChars = '';
+            variables.voiceTime = '3分程度';
+            variables.voiceChars = '1,200〜1,500文字程度';
+            variables.op_voiceChars = '100文字程度';
+            variables.end_voiceChars = '80文字程度';
+            variables.VoiceNote_Size = this.replaceVariables(this.CONFIG.commonTemplates.VoiceNote_Size, variables);
+        } else if (voiceLength === '2分動画') {
+            variables.voiceTime = '3分程度';
+            variables.voiceChars = '1,200〜1,500文字程度';
+            variables.op_voiceChars = '100文字程度';
+            variables.end_voiceChars = '80文字程度';
+            variables.VoiceNote_Size = this.replaceVariables(this.CONFIG.commonTemplates.VoiceNote_Size, variables);
         } else if (voiceLength === '短め') {
-            variables.voiceTime = '8分程度';
-            variables.voiceChars = '3,500〜4,000文字程度';
+            variables.voiceTime = '9分程度';
+            variables.voiceChars = '4,500〜5,000文字程度';
             variables.op_voiceChars = '180文字程度';
             variables.end_voiceChars = '160文字程度';
             variables.VoiceNote_Size = this.replaceVariables(this.CONFIG.commonTemplates.VoiceNote_Size, variables);
