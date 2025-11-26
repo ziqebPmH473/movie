@@ -35,7 +35,7 @@ const App = {
 3. 一貫性と自己チェック:指示されたルールは、応答の途中で忘れることなく、最後まで一貫して適用してください。応答を終える前に、すべての指示が守られているか必ず自己チェックする習慣をつけてください。`,
             VoiceNote_Read: `\n【重要ルール】\n・動画内において、数字はとても重要な情報です。特に、桁の間違いに注意してください。（復唱しての確認などは行わず、すべてのルールは、会話の裏側で静かに適用してください。）\n・以下の単語は、必ず指定された読み方で発音してください。\n(読むときは「上記、かみき」ではなく「かみき」のように、読みがなを一度だけ発音してください)
 上期：かみき\n下期：しもき\nEBITDA：イービットディーエー\nEBITA：イービットエー\nIFRS：イファース\n終値：おわりね\n初値：はつね\n老舗：しにせ\n月次：げつじ\n高市：たかいち`,
-            VoiceNote_Basic: `\n【基本ルール】\n・この音声では、元の資料やソース、レポート、出典などの存在に一切触れず、内容のみを自然な解説としてまとめてください。\n・日付は「今日」「昨日」と言わず、必ず「8月5日」のように具体的な日付で話してください。特定の日付に続く「前日」などの表現は問題ありません。`,
+            VoiceNote_Basic: `\n【基本ルール】\n・この音声では、元の資料やソース、レポート、出典などの存在に一切触れず、内容のみを自然な解説としてまとめてください。\n・日付は「今日」「昨日」と言わず、必ず「8月5日」のように具体的な日付で話してください。特定の日付に続く「前日」などの表現は問題ありません。\n【比喩・たとえ表現のルール】\n・原則として、比喩やたとえ話は使わないこと。\n・「例えるなら〜のようなもので…」「〜にたとえると…」と前置きして、たとえ話を広げる表現は使わないこと。\n・どうしても比喩が必要な場合のみ、「渋滞のように動きが遅くなる」のような、ごく一般的で短い一言の比喩にとどめること。\n・比喩を使うか迷う場合は、比喩を使わずにストレートに説明することを優先すること。`,
             VoiceNote_Ks1: `ただし、決算資料のみ決算資料であることに触れて構いません。`,
             VoiceNote_Ks2: `\n・用語の厳密な定義（上方修正・下方修正）\n- 上方修正: 数値が【上がる】・状況が【良くなる】こと。\n- 下方修正: 数値が【下がる】・状況が【悪くなる】こと。\n- 覚え方: 「増えたら上方、減ったら下方」`,
             VoiceNote_Ks3: `\n・ビジネス数値の読み替え\n「〇百万円」という表記は、計算・変換後の数値で読むこと。\n例）\n- 「45百万円」→「4500万円」（読み方：よんせんごひゃくまんえん）\n- 「120百万円」→「1億2000万円」（読み方：いちおくにせんまんえん）\n- 「5678百万円」→「56億7800万円」（読み方：ごじゅうろくおくななせんはっぴゃくまんえん）\n- 「203百万円」→「2億300万円」（読み方：におくさんびゃくまんえん）`,
@@ -255,10 +255,11 @@ const App = {
                 checkboxDefaults: {'movie_info_report': true,'movie_info_kabutan': true},
                 ui: { dynamicInputs: ['movie-information', 'textbox-area'], searchBtns: [] },
                 buttonData: [
+                    { category: "【ランキング作成】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "分析用RANK", copyId: "rank" }] }] },
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "理由ニュース", copyId: "top10ReasonNews" }, { label: "理由ニュース(NG)", copyId: "top10ReasonNewsNG" }] }] },
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "分析用RANK", copyId: "rank" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [ { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "生成(ショート)", copyId: "presenShort" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     urls: `https://quote.nomura.co.jp/nomura/cgi-bin/quote.cgi?template=nomura_tp_index_01\nhttps://s.kabutan.jp/warnings/nk225_contrib/?direction=desc&order=contrib_price\nhttps://s.kabutan.jp/warnings/nk225_contrib/?direction=asc&order=contrib_price\nhttps://kabutan.jp/warning/?mode=2_1&market=1&dispmode=normal\nhttps://kabutan.jp/warning/?mode=2_2&market=1&dispmode=normal\nhttps://s.kabutan.jp/warnings/sector_stocks_ranking/\nhttps://s.kabutan.jp/warnings/sector_stocks_ranking/?direction=asc&order=prev_price_ratio\nhttp://kabutan.jp/warning/trading_value_ranking`,
@@ -314,10 +315,11 @@ const App = {
                 checkboxDefaults: {'movie_info_report': true,'movie_info_kabutan': true},
                 ui: { dynamicInputs: ['movie-information','term-direction-area', 'textbox-area'], searchBtns: [] },
                 buttonData: [
+                    { category: "【ランキング作成】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "ランキング生成", copyId: "rank" }] }] },
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "注目銘柄分析", copyId: "analysis" }, { label: "銘柄分析(ランクNG)", copyId: "analysisRankNg" }] }] },
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "ランキング生成", copyId: "rank" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "*概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }] }] },
                     { category: "【プレゼン資料】（スライド：6+銘柄数）", services: [{ service: "gamma", buttons: [{ label: "*プレゼン生成", copyId: "presentation" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "*概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     urls: `{{weeklyRankUrl}}\n{{monthlyRankUrl}}`,
@@ -1013,6 +1015,7 @@ Slide 1:
             this.bindEvents();
             this.updateDates();
             this.renderCategoryRadios();
+            this.setupRadioButtonControl();
             
             // 複数回試行して確実に初期化
             this.ensureInitialization();
@@ -1199,6 +1202,19 @@ Slide 1:
 
     // 銘柄データを保存するオブジェクト
     stockData: {},
+
+    // ラジオボタンの変更を監視してショートチェックボックスを制御
+    setupRadioButtonControl() {
+        document.addEventListener('change', (e) => {
+            if (e.target.name && e.target.name.includes('voice-length')) {
+                const shortCheckbox = document.querySelector('input[type="checkbox"][id*="short"]');
+                if (shortCheckbox) {
+                    // ショート・２分動画が選択された場合はチェック、それ以外はチェック外す
+                    shortCheckbox.checked = (e.target.value === 'ショート' || e.target.value === '2分動画');
+                }
+            }
+        });
+    },
 
     // 動的銘柄入力機能
     updateStockInputs: function() {
