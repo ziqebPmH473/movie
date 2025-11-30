@@ -432,8 +432,8 @@ const App = {
                 },
                 buttonData: [
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}, { label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "根拠資料生成", copyId: "reportKk" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成", copyId: "reportKk" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] }
                 ],
                 copyTexts: {
@@ -468,8 +468,8 @@ const App = {
                 ui: { dynamicInputs: ['movie-information','ticker-name-area', 'ir-kabutan-buttons', 'earnings-market-area', 'stock-direction-area'], searchBtns: ['ir', 'kabutan'], directionOptions: { default: '' } },
                 buttonData: [
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}, { label: "根拠資料生成", copyId: "reportKk" }, { label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}, { label: "根拠資料生成", copyId: "reportKk" }] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] }
                 ],
                 copyTexts: {
@@ -519,8 +519,8 @@ const App = {
                 },
                 buttonData: [
                      { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}, { label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] },
                     { category: "【メンバーシップ投稿】", services: [{ service: "notebookLM", buttons: [{ label: "出力", copyId: "memberpresen" }, { label: "作成", copyId: "menberpresenmade" }] }] }
                 ],
@@ -590,8 +590,8 @@ const App = {
                     directionOptions: { default: '' }
                 },
                 buttonData: [
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" },{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}, { label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" },{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] },
                     { category: "【メンバーシップ投稿】", services: [{ service: "notebookLM", buttons: [{ label: "出力", copyId: "memberpresen" }, { label: "作成", copyId: "menberpresenmade" }] }] }
                 ],
@@ -720,8 +720,8 @@ const App = {
                 buttonData: [
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" }] }] },
-                    { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"},{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"},{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] }
                 ],
                 copyTexts: {
                     urls: (vars) => {
