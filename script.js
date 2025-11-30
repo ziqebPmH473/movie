@@ -344,7 +344,7 @@ const App = {
                     //titleBf: `{{intro}}{{titleBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
                     titleBf: `{{intro}}{{titleBf}}後ろに「【{{strategy_title_suffix}}】」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
                     videoContent: `東証プライム市場の週間・月間{{termDirectionLabel}}率ランキングから１週間の相場を振り返り、{{strategy}}で注目すべき銘柄を分析`,
-                    gaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして`,
+                    gaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして\n・個別銘柄に焦点を当てた文章にしないでください。`,
                     xNotify: `{{intro}}する{{xNotifyText}}`,
                     //shortTitle: `{{intro}}{{titleSBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
                     shortTitle: `{{intro}}{{titleSBf}}後ろに「【{{strategy_title_suffix}}】」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
@@ -997,11 +997,12 @@ Slide 1:
                 },
                 buttonData: [],
                 copyTexts: {
-                    comment: `詳しい解説はこちら {{url8min}}`,
                     description: `\nこの動画は決算の要点を約2分で整理しています。\n詳しい解説はこちら {{url8min}}\n`,
+                    comment: `詳しい解説はこちら {{url8min}}`,
                     priority: `\nこの動画は「すみっこマネー大学」メンバーシップで先行公開された内容です。\nメンバー限定で一般公開よりも早く視聴できたり、一部動画で要点サマリ画像を確認できます。\n\n▶ メンバーシップ登録はこちら  \nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n`,
                     postText: `重要ポイントだけを素早く確認できる保存版（画像1枚）\n{{videoTitle}}\n\n本編 → {{videoUrl}}\n— 情報提供のみ（数値は投稿時点）。`,
-                    postDescription: `\n【要点サマリ（画像1枚/保存可）】\nメンバー限定のコミュニティ投稿 → {{postUrl}}\n※情報提供のみ（数値は公開時点）\nメンバーシップ登録はこちら → https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\nサンプル → https://www.youtube.com/post/UgkxvIfp6WXHQTDYlByElANnsDtCTR7bGQ2-\n`
+                    postDescription: `\n【要点サマリ（画像1枚/保存可）】\nメンバー限定のコミュニティ投稿 → {{postUrl}}\n※情報提供のみ（数値は公開時点）\nメンバーシップ登録はこちら → https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\nサンプル → https://www.youtube.com/post/UgkxvIfp6WXHQTDYlByElANnsDtCTR7bGQ2-\n`,
+                    postComment: `【メンバーシップ限定｜要点サマリ（画像1枚/保存可）】\n{{postUrl}}\n※情報提供のみ（数値は公開時点）\nメンバーシップ登録はこちら → https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\nサンプル → https://www.youtube.com/post/UgkxvIfp6WXHQTDYlByElANnsDtCTR7bGQ2-\n`
                 }
             },
         }
@@ -1516,14 +1517,6 @@ Slide 1:
             urlInput.style.width = "300px";
             video8minRow.appendChild(urlInput);
             
-            const commentBtn = document.createElement("button");
-            commentBtn.textContent = "コメント";
-            commentBtn.addEventListener("click", () => {
-                const copyText = App.getCopyText('video_completion', 'comment');
-                if (copyText) navigator.clipboard.writeText(copyText);
-            });
-            video8minRow.appendChild(commentBtn);
-            
             const descBtn = document.createElement("button");
             descBtn.textContent = "概要欄";
             descBtn.addEventListener("click", () => {
@@ -1531,6 +1524,14 @@ Slide 1:
                 if (copyText) navigator.clipboard.writeText(copyText);
             });
             video8minRow.appendChild(descBtn);
+            
+            const commentBtn = document.createElement("button");
+            commentBtn.textContent = "コメント";
+            commentBtn.addEventListener("click", () => {
+                const copyText = App.getCopyText('video_completion', 'comment');
+                if (copyText) navigator.clipboard.writeText(copyText);
+            });
+            video8minRow.appendChild(commentBtn);
             
             video8minDiv.appendChild(video8minRow);
             buttonArea.appendChild(video8minDiv);
@@ -1620,6 +1621,14 @@ Slide 1:
                 if (copyText) navigator.clipboard.writeText(copyText);
             });
             postRow.appendChild(postDescBtn);
+            
+            const postCommentBtn = document.createElement("button");
+            postCommentBtn.textContent = "コメント";
+            postCommentBtn.addEventListener("click", () => {
+                const copyText = App.getCopyText('video_completion', 'postComment');
+                if (copyText) navigator.clipboard.writeText(copyText);
+            });
+            postRow.appendChild(postCommentBtn);
             
             postDiv.appendChild(postRow);
             buttonArea.appendChild(postDiv);
