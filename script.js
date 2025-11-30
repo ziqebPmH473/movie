@@ -82,12 +82,12 @@ const App = {
                 <label><input type="radio" name="analysis" value="market_term_rank"><span>週間</span></label>
                 <label><input type="radio" name="analysis" value="market_stock"><span>個別銘柄</span></label>
                 <label><input type="radio" name="analysis" value="market_buy_analysis"><span>株価分析</span></label>
-                <label><input type="radio" name="analysis" value="theme_analysis"><span>テーマ</span></label>
+                <label><input type="radio" name="analysis" value="news"><span>ニュース</span></label>
                 <label><input type="radio" name="analysis" value="market_earnings"><span>決算</span></label>
+                <label><input type="radio" name="analysis" value="theme_analysis"><span>テーマ</span></label>
                 <label><input type="radio" name="analysis" value="content_creation"><span>コンテンツ作成</span></label>
                 <label><input type="radio" name="analysis" value="video_completion"><span>動画補完</span></label>
                 <label><input type="radio" name="analysis" value="youtube_posting"><span>Youtube投稿内容</span></label>
-                <label><input type="radio" name="analysis" value="news"><span>ニュース</span></label>
                 <label style="display:none"><input type="radio" name="analysis" value="ipo"><span>IPO</span></label>
                 <label><input type="radio" name="analysis" value="ai_education"><span>AI教養ラボ</span></label>
                 <label><input type="radio" name="analysis" value="dynamic_stocks"><span>注目決算</span></label>
