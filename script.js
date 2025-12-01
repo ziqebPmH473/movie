@@ -1000,9 +1000,9 @@ Slide 1:
                     description: `\nこの動画は決算の要点を約2分で整理しています。\n詳しい解説はこちら {{url8min}}\n`,
                     comment: `詳しい解説はこちら {{url8min}}`,
                     priority: `\nこの動画は「すみっこマネー大学」メンバーシップで先行公開された内容です。\nメンバー限定で一般公開よりも早く視聴できたり、一部動画で要点サマリ画像を確認できます。\n\n▶ メンバーシップ登録はこちら  \nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n`,
-                    postText: `重要ポイントだけを素早く確認できる保存版（画像1枚）\n{{videoTitle}}\n\n本編 → {{videoUrl}}\n— 情報提供のみ（数値は投稿時点）。`,
-                    postDescription: `\n【要点サマリ（画像1枚/保存可）】\nメンバー限定のコミュニティ投稿 → {{postUrl}}\n※情報提供のみ（数値は公開時点）\nメンバーシップ登録はこちら → https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\nサンプル → https://www.youtube.com/post/UgkxvIfp6WXHQTDYlByElANnsDtCTR7bGQ2-\n`,
-                    postComment: `【メンバーシップ限定｜要点サマリ（画像1枚/保存可）】\n{{postUrl}}\n※情報提供のみ（数値は公開時点）\nメンバーシップ登録はこちら → https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\nサンプル → https://www.youtube.com/post/UgkxvIfp6WXHQTDYlByElANnsDtCTR7bGQ2-\n`
+                    postText: `【特典｜保存版】動画内の分析データ\nこの画像は、本日解説した内容を実戦で使えるように1枚にまとめたものです。ご活用ください。\n\n■ 動画の内容\n{{videoTitle}}\n■ 本編動画はこちら\n{{videoUrl}}\n\n— 情報提供のみ（数値は公開時点）`,
+                    postDescription: `---\n✅ 【メンバー限定特典】本日の実戦用データ配布中！\n▼ データリスト（画像/スマホ保存可）をダウンロード ： {{postUrl}}\n\n※ メンバー登録をされていない方で、上記リンクが機能しない場合はこちらからご登録ください。\n👉 メンバーシップに登録して特典を入手：https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n---\n`,
+                    postComment: `【メンバー限定】本日の実戦用データはこちら！\n動画の最後で流れたデータリスト（画像）を保存用として配布中です。\n\n👉 データダウンロード（メンバー限定記事）\n{{postUrl}}\n\n非メンバーの方はこちらからご登録ください\nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join`
                 }
             },
         }
