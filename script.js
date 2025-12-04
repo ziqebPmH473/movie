@@ -262,10 +262,10 @@ const App = {
                 buttonData: [
                     { category: "【ランキング作成】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "分析用RANK", copyId: "rank" }] }] },
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "理由ニュース", copyId: "top10ReasonNews" }, { label: "理由ニュース(NG)", copyId: "top10ReasonNewsNG" }] }] },
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [ { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [ { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }, { label: "まとめ画像", copyId: "summaryImage" }] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [ { label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" },{ label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "生成(ショート)", copyId: "presenShort" }] }] },
-                    { category: "【メンバーシップ投稿】", services: [{ service: "notebookLM", buttons: [{ label: "作成", copyId: "menberinfografic" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "note記事", copyId: "noteArticle" }] }] }
+                    
                 ],
                 copyTexts: {
                     urls: `https://quote.nomura.co.jp/nomura/cgi-bin/quote.cgi?template=nomura_tp_index_01\nhttps://s.kabutan.jp/warnings/nk225_contrib/?direction=desc&order=contrib_price\nhttps://s.kabutan.jp/warnings/nk225_contrib/?direction=asc&order=contrib_price\nhttps://kabutan.jp/warning/?mode=2_1&market=1&dispmode=normal\nhttps://kabutan.jp/warning/?mode=2_2&market=1&dispmode=normal\nhttps://s.kabutan.jp/warnings/sector_stocks_ranking/\nhttps://s.kabutan.jp/warnings/sector_stocks_ranking/?direction=asc&order=prev_price_ratio\nhttp://kabutan.jp/warning/trading_value_ranking`,
@@ -471,8 +471,9 @@ const App = {
                 ui: { dynamicInputs: ['movie-information','ticker-name-area', 'ir-kabutan-buttons', 'earnings-market-area', 'stock-direction-area'], searchBtns: ['ir', 'kabutan'], directionOptions: { default: '' } },
                 buttonData: [
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}, { label: "根拠資料生成", copyId: "reportKk" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] }
                 ],
                 copyTexts: {
@@ -496,6 +497,7 @@ const App = {
                     shortTitle: "2分で{{intro}}についての{{titleSBf}}{{companyNamePrefix}}後ろに「｜2分で市場分析」をつけてください。{{CommonNote_source}}",
                     shortGaiyo: `2分で{{intro}}についての{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}についての{{reportNote}}`,
+                    menberinfografic: `あなたはプロの株式投資アナリストです。\n入力された情報に基づき、投資家がスマホで瞬時に確認するための「実戦用データリスト」の原稿を作成してください。\n\n# 目的\nこのリストは、投資家が「なぜこの株が急騰/急落したのか？」を一目で判断し、記憶するためのツールです。\n\n# 【形式の指定】（厳守）\n1. **レイアウト:** スマホ画面で見やすい「縦長リスト形式」を前提としてください。\n2. **情報の密度:** 「読み物」は禁止です。文章、解説、接続詞（～のため、等）は全て削除し、**「体言止め」と「キーワード」のみ**で構成してください。\n3. **数値の統一:** 株価や変動率は、表記揺れがないように統一してください。\n\n# 【記載項目】\n以下のフォーマットに情報を埋めて出力してください。\n\n--------------------------------------------------\n{{companyName}}\n\n■株価データ\n・終値：(終値) 円\n・変動：(前日比 +xx円 / +xx.x%)\n・出来高：(株数) 株（※普段より急増している場合のみ「急増」と追記）\n\n■材料（株価変動のトリガー）\n※以下の条件分岐で記載すること\n・ニュースがある場合：(キーワードで簡潔に)\n・明確な材料がない場合：「需給主導」「思惑買い」「仕手化」などと記載\n\n■関連テーマ（連想されるセクター）\n・(単語)\n・(単語)\n--------------------------------------------------`,
                 }
             },
             market_buy_analysis: {
@@ -723,8 +725,8 @@ const App = {
                 },
                 buttonData: [
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"},{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] }
                 ],
                 copyTexts: {
@@ -760,7 +762,8 @@ const App = {
                     xNotify: "{{intro}}する{{xNotifyText}}",
                     shortTitle: "2分で{{intro}}する{{titleSBf}}{{companyNamePrefix}}後ろに「｜AIテーマ分析」をつけてください。{{CommonNote_source}}",
                     shortGaiyo: `2分で{{intro}}する{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
-                    noteArticle: `{{intro}}する{{reportNote}}`
+                    noteArticle: `{{intro}}する{{reportNote}}`,
+                    menberinfografic: `注目企業の銘柄のみをまとめてください。説明など注目の理由は一切書かないでください\nカテゴリごとに区切り、数銘柄ずつ記載してください。(全銘柄を記載しなくてよい)\n* 情報過多を防ぐため、「簡潔」にまとめること。`
                 }
             },
             content_creation: {
