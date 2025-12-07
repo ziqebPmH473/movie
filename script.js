@@ -78,6 +78,7 @@ const App = {
                 <label><input type="checkbox" id="movie_info_kabutan"> 株探</label>
             `,
             'analysis-radios': `
+                <label><input type="radio" name="analysis" value="market_morningsession"><span>前場</span></label>
                 <label><input type="radio" name="analysis" value="market_todayjp"><span>日次</span></label>
                 <label><input type="radio" name="analysis" value="market_term_rank"><span>週間</span></label>
                 <label><input type="radio" name="analysis" value="market_stock"><span>個別銘柄</span></label>
@@ -253,6 +254,22 @@ const App = {
 
         // 各分析カテゴリごとの設定
         analysisSettings: {
+            market_morningsession: {
+                label: '前場',
+                intro: "今日の前場の東京株式市場を振り返る",
+                audioLength: "8分から10分",
+                checkboxDefaults: {},
+                ui: { dynamicInputs: [], searchBtns: [] },
+                buttonData: [
+                    { category: "【ランキング作成】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "RANK", copyId: "rank" }] }] },
+                    { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] }
+                ],
+                copyTexts: {
+                    urls: `https://quote.nomura.co.jp/nomura/cgi-bin/quote.cgi?template=nomura_tp_index_01\nhttps://kabutan.jp/warning/?mode=2_1&market=1&dispmode=normal\nhttps://kabutan.jp/warning/?mode=2_2&market=1&dispmode=normal\nhttps://s.kabutan.jp/warnings/sector_stocks_ranking/\nhttps://s.kabutan.jp/warnings/sector_stocks_ranking/?direction=asc&order=prev_price_ratio`,
+                    rank: `【出力内容】に記述の内容のみを、【出力形式】に記載の形式で出力してください。\n【出力内容】\n1.日経平均、TOPIXの現在値、変動幅、変動率\n2.上昇率TOP5の銘柄の銘柄名、株価、株価変動幅、株価変動率\n3.下落率TOP5の銘柄の銘柄名、株価、株価変動幅、株価変動率\n4.業種別上昇率TOP5（変動率がマイナスでも上位5業種）の業種、変動率、PER\n5.業種別下落率TOP5（変動率がプラスでも上位5業種）の業種、変動率、PER\n\n【出力形式】\n指数の値動き\n|指数|現在値|変動幅|変動率|\n|:---|:---|:---|:---|\n|日経平均| | | |\n|TOPIX| | | |\n---\n\n上昇率TOP5\n|銘柄名|株価|変動幅（変動率）|\n|:---|:---|:---|\n| | | |\n| | | |\n| | | |\n| | | |\n| | | |\n---\n\n下落率TOP5\n|銘柄名|株価|変動幅（変動率）|\n|:---|:---|:---|\n| | | |\n| | | |\n| | | |\n| | | |\n| | | |\n---\n\n業種別上昇率TOP5\n|業種|変動率|PER|\n|:---|:---|:---|\n| | | |\n| | | |\n| | | |\n| | | |\n| | | |\n---\n\n業種別下落率TOP5\n|業種|変動率|PER|\n|:---|:---|:---|\n| | | |\n| | | |\n| | | |\n| | | |\n| | | |`,
+                    presentation: `表紙、まとめのスライドは不要\n以下に記載の内容以外を出力しないこと（以下に記載のない、説明なども一切不要）\n\n【出力内容】\n以下のスライドを作成\n・指数の値動き（大きな数字のレイアウト）\n・上昇率TOP5（表形式）\n・下落率TOP5（表形式）\n・業種別騰落率上位（表形式）\n・業種率騰落率下位（表形式）\n\n【出力形式の注意点】\n・全スライド\n順位の記載は不要\n画像は不要\n表内の文字はすべて黒字\n表の背景色は白のみ（交互に色を変えない）\n・上昇率TOP5、下落率TOP5\n銘柄名、株価、前日比の列を出力\n株価は半角6文字、前日比は半角10文字が収まるぎりぎりの列幅にすること\n前日比は、変動幅(変動率)の形式で出力し、変動幅と変動率の間で改行する\n・業種別騰落率上位、業種率騰落率下位\n業種、変動率、PERの列を出力\n変動率は半角10文字、PERは半角10文字がギリギリ収まる列幅にすること`,
+                }
+            },
             market_todayjp: {
                 label: '日次',
                 intro: "今日の東京株式市場を振り返る",
