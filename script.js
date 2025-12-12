@@ -355,10 +355,10 @@ const App = {
                 ],
                 copyTexts: {
                     urls: `{{weeklyRankUrl}}\n{{monthlyRankUrl}}`,
-                    analysis: `以下の手順と情報源を基に、日本の株式市場に関する包括的な分析レポートを作成してください。このレポートは、注目銘柄を選定するための判断材料として使用します。**記載するのは以下の手順で指定された内容のみとし、それ以外の文章（冒頭の挨拶や結びの言葉など）は一切含めないでください。**テキストをコピーして使用するため、引用元に関する引用番号は記載しないでください。銘柄名は正式な名称を証券コードから調査し、記載してください。（**株式会社の表記は省略してください**。）\n\n**手順1: 市場全体の動向を把握**\n* **指数の値動き**: **先週末（{{lastWeekFriday}}）から今週末（{{thisWeekFriday}}）まで**の期間について、以下の形式で主要指数の動きをまとめてください。指数・変動率は小数点以下2桁まで記載してください。\n    ----\n    【指数の週間動向（{{lastWeekFriday}}～{{thisWeekFriday}}）】\n    ・日経平均株価: 先週末（{{lastWeekFriday}}）終値 XXXX.XX円 → 今週末（{{thisWeekFriday}}）終値 YYYY.YY円 (前週比 ZZZ.ZZ円, A.BB%)\n    ・TOPIX: 先週末（{{lastWeekFriday}}）終値 XXXX.XX → 今週末（{{thisWeekFriday}}）終値 YYYY.YY (前週比 ZZZ.ZZ, A.BB%)\n    ----\n* **主要経済ニュース**: 先週末（{{lastWeekFriday}}）の15:30から今週末（{{thisWeekFriday}}）の15:29に日本の株式市場に影響を与えたと考えられる主要な経済ニュースやイベント（個別銘柄のニュースは除く）を3～5つ、以下の形式で挙げてください。\n    ----\n    【今週の主要ニュース】\n    概要：〇〇〇〇〇〇\n    日付：YYYY年M月D日\n    詳細：XXXXXXXXXXXXX\n    ----\n\n**手順2: ランキング上位銘柄の分析**\n\n分析対象リストの作成手順:\n以下の手順を厳格に実行し、分析対象となる銘柄の最終リストを作成してください。\n\n週間ランキングの取得: 以下のURLから「週間{{termDirectionLabel}}率ランキング」の上位10銘柄をリストアップする。\n週間{{termDirectionLabel}}率ランキング: {{weeklyRankUrl}}\n\n月間ランキングの取得: 以下のURLから「月間{{termDirectionLabel}}率ランキング」の上位10銘柄をリストアップする。\n月間{{termDirectionLabel}}率ランキング: {{monthlyRankUrl}}\n\n最終リストの作成:\n和集合の作成: 上記2つのリストに含まれる全ての銘柄を合わせたリストを作成する。この際、重複する銘柄は1つにまとめること。（数学的な集合演算における「和集合」を作成する）\nこのリストを「最終分析リスト」とする。この手順により、週間・月間のどちらか一方のランキングにしか含まれない銘柄も、必ず最終分析リストに含まれるようにすること。\n\n分析の実行:\n作成した「最終分析リスト」に含まれるすべての銘柄について、漏れなく詳細な分析を行ってください。\n\n**分析の観点（{{strategy}}）**:\n* **{{termDirectionLabel}}要因の特定**: 株価{{termDirectionLabel}}の直接的な原因となった出来事（例：好決算、新製品発表、M&Aなど）を具体的に特定し、その日付（上旬などの曖昧な記述は禁止）も記載してください。\n* **{{strategy_analysis_point_title}}**: {{strategy_analysis_point_detail}}\n\n**【最重要ルール】ランキング順位に関する厳格な指示**\nルール1: 情報源の絶対化\n「ランキング状況」に記載する順位は、上記2つのURLに表示されている情報のみを唯一絶対の正解とします。いかなる理由があっても、ニュース記事、他のWebサイト、AIの知識など、指定URL以外の情報源から順位を引用、類推、補完することを固く禁じます。\nルール2: 機械的な転記作業の徹底\n各銘柄の分析を開始する前に、まず上記URLにアクセスし、そこに表示されている「順位の数字（例: 1位、2位…）」を寸分違わず機械的に転記してください。「週間 上位」「急騰銘柄」といった曖昧な表現は一切使用せず、必ず「X位」または「ランク外」のどちらかで記述してください。\nルール3: 自己検証の義務化\n最終的なレポートを生成する直前に、全銘柄の「ランキング状況」に記載した順位が、再度アクセスした指定URLの表示と完全に一致しているか、必ず自己検証を行ってください。\n\n**出力形式**:\n---\n【銘柄分析】 {{銘柄名}}（{{証券コード}}）\n ランキング状況: 週間 X位 / 月間 Y位 （※上記ルールに基づき、指定URLの情報を機械的に転記すること。片方が10位以下なら必ず「ランク外」と記載すること）\n 変動率: 週間 A.BB% / 月間 A.BB% （週間、月間のうち、ランクインした方のみ記載してください。両方にランクインした場合は両方記載してください。）\n {{termDirectionLabel}}要因: （ここに具体的な要因を記述）\n {{strategy_suggestion_title}}: （ここに考察を記述）\n-`,
-                    analysisRankNg: `以下の手順と情報源を基に、日本の株式市場に関する包括的な分析レポートを作成してください。このレポートは、注目銘柄を選定するための判断材料として使用します。**記載するのは以下の手順で指定された内容のみとし、それ以外の文章（冒頭の挨拶や結びの言葉など）は一切含めないでください。**テキストをコピーして使用するため、引用元に関する引用番号は記載しないでください。銘柄名は正式な名称を証券コードから調査し、記載してください。（**株式会社の表記は省略してください**。）\n\n**手順1: 市場全体の動向を把握**\n* **指数の値動き**: **先週末（{{lastWeekFriday}}）から今週末（{{thisWeekFriday}}）まで**の期間について、以下の形式で主要指数の動きをまとめてください。指数・変動率は小数点以下2桁まで記載してください。\n    ----\n    【指数の週間動向（{{lastWeekFriday}}～{{thisWeekFriday}}）】\n    ・日経平均株価: 先週末（{{lastWeekFriday}}）終値 XXXX.XX円 → 今週末（{{thisWeekFriday}}）終値 YYYY.YY円 (前週比 ZZZ.ZZ円, A.BB%)\n    ・TOPIX: 先週末（{{lastWeekFriday}}）終値 XXXX.XX → 今週末（{{thisWeekFriday}}）終値 YYYY.YY (前週比 ZZZ.ZZ, A.BB%)\n    ----\n* **主要経済ニュース**: 先週末（{{lastWeekFriday}}）の15:30から今週末（{{thisWeekFriday}}）の15:29に日本の株式市場に影響を与えたと考えられる主要な経済ニュースやイベント（個別銘柄のニュースは除く）を3～5つ、以下の形式で挙げてください。\n    ----\n    【今週の主要ニュース】\n    概要：〇〇〇〇〇〇\n    日付：YYYY年M月D日\n    詳細：XXXXXXXXXXXXX\n    ----\n\n**手順2: ランキング上位銘柄の分析**\n\n分析対象リスト:\n{{textbox}}\n\n\n最終リストの作成:\n和集合の作成: 上記のリストに含まれる全ての銘柄を合わせたリストを作成する。この際、重複する銘柄は1つにまとめること。（数学的な集合演算における「和集合」を作成する）\nこのリストを「最終分析リスト」とする。この手順により、週間・月間のどちらか一方のランキングにしか含まれない銘柄も、必ず最終分析リストに含まれるようにすること。\n\n分析の実行:\n作成した「最終分析リスト」に含まれるすべての銘柄について、漏れなく詳細な分析を行ってください。\n\n**分析の観点（{{strategy}}）**:\n* **{{termDirectionLabel}}要因の特定**: 株価{{termDirectionLabel}}の直接的な原因となった出来事（例：好決算、新製品発表、M&Aなど）を具体的に特定し、その日付も記載してください。ただし、週間ランキングは1週間、月間ランキングは1ヶ月以内に発生した出来事のみを対象としてください。\n* **{{strategy_analysis_point_title}}**: {{strategy_analysis_point_detail}}\n\n**【最重要ルール】ランキング順位に関する厳格な指示**\nルール1: 情報源の絶対化\n「ランキング状況」に記載する順位は「分析対象リスト」に表示されている情報のみを唯一絶対の正解とします。いかなる理由があっても、ニュース記事、他のWebサイト、AIの知識など、「分析対象リスト」以外の情報源から順位を引用、類推、補完することを固く禁じます。\nルール2: 機械的な転記作業の徹底\n各銘柄の分析を開始する前に、「分析対象リスト」に表示されている「順位の数字（例: 1位、2位…）」を寸分違わず機械的に転記してください。「週間 上位」「急騰銘柄」といった曖昧な表現は一切使用せず、必ず「X位」または「ランク外」のどちらかで記述してください。\nルール3: 自己検証の義務化\n最終的なレポートを生成する直前に、全銘柄の「ランキング状況」に記載した順位が、「分析対象リスト」の表示と完全に一致しているか、必ず自己検証を行ってください。\n\n**出力形式**:\n---\n【銘柄分析】 {{銘柄名}}（{{証券コード}}）\n ランキング状況: 週間 X位 / 月間 Y位 （※上記ルールに基づき、機械的に転記すること。片方が10位以下なら必ず「ランク外」と記載すること）\n 変動率: 週間 A.BB% / 月間 A.BB% （週間、月間のうち、ランクインした方のみ記載してください。両方にランクインした場合は両方記載してください。）\n {{termDirectionLabel}}要因: （ここに具体的な要因を記述）\n {{strategy_suggestion_title}}: （ここに考察を記述）\n-`,
+                    analysis: `以下の手順と情報源を基に、日本の株式市場に関する包括的な分析レポートを作成してください。このレポートは、注目銘柄を選定するための判断材料として使用します。**記載するのは以下の手順で指定された内容のみとし、それ以外の文章（冒頭の挨拶や結びの言葉など）は一切含めないでください。**テキストをコピーして使用するため、引用元に関する引用番号は記載しないでください。銘柄名は正式な名称を証券コードから調査し、記載してください。（**株式会社の表記は省略してください**。）\n\n**手順1: 市場全体の動向を把握**\n* **指数の値動き**: **先週末（{{lastWeekFriday}}）から今週末（{{thisWeekFriday}}）まで**の期間について、以下の形式で主要指数の動きをまとめてください。指数・変動率は小数点以下2桁まで記載してください。\n    ----\n    【指数の週間動向（{{lastWeekFriday}}～{{thisWeekFriday}}）】\n    ・日経平均株価: 先週末（{{lastWeekFriday}}）終値 XXXX.XX円 → 今週末（{{thisWeekFriday}}）終値 YYYY.YY円 (前週比 ZZZ.ZZ円, A.BB%)\n    ・TOPIX: 先週末（{{lastWeekFriday}}）終値 XXXX.XX → 今週末（{{thisWeekFriday}}）終値 YYYY.YY (前週比 ZZZ.ZZ, A.BB%)\n    ----\n* **主要経済ニュース**: 先週末（{{lastWeekFriday}}）の15:30から今週末（{{thisWeekFriday}}）の15:29に日本の株式市場に影響を与えたと考えられる主要な経済ニュースやイベント（個別銘柄のニュースは除く）を3～5つ、以下の形式で挙げてください。\n    ----\n    【今週の主要ニュース】\n    概要：〇〇〇〇〇〇\n    日付：YYYY年M月D日\n    詳細：XXXXXXXXXXXXX\n    ----\n\n**手順2: ランキング上位銘柄の分析**\n\n分析対象リストの作成手順:\n以下の手順を厳格に実行し、分析対象となる銘柄の最終リストを作成してください。\n\n週間ランキングの取得: 以下のURLから「週間{{termDirectionLabel}}率ランキング」の上位10銘柄をリストアップする。\n週間{{termDirectionLabel}}率ランキング: {{weeklyRankUrl}}\n\n月間ランキングの取得: 以下のURLから「月間{{termDirectionLabel}}率ランキング」の上位10銘柄をリストアップする。\n月間{{termDirectionLabel}}率ランキング: {{monthlyRankUrl}}\n\n最終リストの作成:\n和集合の作成: 上記2つのリストに含まれる全ての銘柄を合わせたリストを作成する。この際、重複する銘柄は1つにまとめること。（数学的な集合演算における「和集合」を作成する）\nこのリストを「最終分析リスト」とする。この手順により、週間・月間のどちらか一方のランキングにしか含まれない銘柄も、必ず最終分析リストに含まれるようにすること。\n\n分析の実行:\n作成した「最終分析リスト」に含まれるすべての銘柄について、漏れなく詳細な分析を行ってください。\n\n**分析の観点（{{strategy}}）**:\n* **{{termDirectionLabel}}要因の特定**: 株価{{termDirectionLabel}}の直接的な原因となった出来事（例：好決算、新製品発表、M&Aなど）を具体的に特定し、その日付（上旬などの曖昧な記述は禁止）も記載してください。\n* **{{strategy_analysis_point_title}}**: {{strategy_analysis_point_detail}}\n\n**【最重要ルール】ランキング順位に関する厳格な指示**\nルール1: 情報源の絶対化\n「ランキング状況」に記載する順位は、上記2つのURLに表示されている情報のみを唯一絶対の正解とします。いかなる理由があっても、ニュース記事、他のWebサイト、AIの知識など、指定URL以外の情報源から順位を引用、類推、補完することを固く禁じます。\nルール2: 機械的な転記作業の徹底\n各銘柄の分析を開始する前に、まず上記URLにアクセスし、そこに表示されている「順位の数字（例: 1位、2位…）」を寸分違わず機械的に転記してください。「週間 上位」「急騰銘柄」といった曖昧な表現は一切使用せず、必ず「X位」または「ランク外」のどちらかで記述してください。\nルール3: 自己検証の義務化\n最終的なレポートを生成する直前に、全銘柄の「ランキング状況」に記載した順位が、再度アクセスした指定URLの表示と完全に一致しているか、必ず自己検証を行ってください。\n\n**出力形式**:\n---\n【銘柄分析】 {{銘柄名}}（{{証券コード}}）\n ランキング状況: 週間 X位 / 月間 Y位 （※上記ルールに基づき、指定URLの情報を機械的に転記すること。片方が10位未満なら必ず「ランク外」と記載すること）\n 変動率: 週間 A.BB% / 月間 A.BB% （週間、月間のうち、ランクインした方のみ記載してください。両方にランクインした場合は両方記載してください。）\n {{termDirectionLabel}}要因: （ここに具体的な要因を記述）\n {{strategy_suggestion_title}}: （ここに考察を記述）\n-`,
+                    analysisRankNg: `以下の手順と情報源を基に、日本の株式市場に関する包括的な分析レポートを作成してください。このレポートは、注目銘柄を選定するための判断材料として使用します。**記載するのは以下の手順で指定された内容のみとし、それ以外の文章（冒頭の挨拶や結びの言葉など）は一切含めないでください。**テキストをコピーして使用するため、引用元に関する引用番号は記載しないでください。銘柄名は正式な名称を証券コードから調査し、記載してください。（**株式会社の表記は省略してください**。）\n\n**手順1: 市場全体の動向を把握**\n* **指数の値動き**: **先週末（{{lastWeekFriday}}）から今週末（{{thisWeekFriday}}）まで**の期間について、以下の形式で主要指数の動きをまとめてください。指数・変動率は小数点以下2桁まで記載してください。\n    ----\n    【指数の週間動向（{{lastWeekFriday}}～{{thisWeekFriday}}）】\n    ・日経平均株価: 先週末（{{lastWeekFriday}}）終値 XXXX.XX円 → 今週末（{{thisWeekFriday}}）終値 YYYY.YY円 (前週比 ZZZ.ZZ円, A.BB%)\n    ・TOPIX: 先週末（{{lastWeekFriday}}）終値 XXXX.XX → 今週末（{{thisWeekFriday}}）終値 YYYY.YY (前週比 ZZZ.ZZ, A.BB%)\n    ----\n* **主要経済ニュース**: 先週末（{{lastWeekFriday}}）の15:30から今週末（{{thisWeekFriday}}）の15:29に日本の株式市場に影響を与えたと考えられる主要な経済ニュースやイベント（個別銘柄のニュースは除く）を3～5つ、以下の形式で挙げてください。\n    ----\n    【今週の主要ニュース】\n    概要：〇〇〇〇〇〇\n    日付：YYYY年M月D日\n    詳細：XXXXXXXXXXXXX\n    ----\n\n**手順2: ランキング上位銘柄の分析**\n\n分析対象リスト:\n{{textbox}}\n\n\n最終リストの作成:\n和集合の作成: 上記のリストに含まれる全ての銘柄を合わせたリストを作成する。この際、重複する銘柄は1つにまとめること。（数学的な集合演算における「和集合」を作成する）\nこのリストを「最終分析リスト」とする。この手順により、週間・月間のどちらか一方のランキングにしか含まれない銘柄も、必ず最終分析リストに含まれるようにすること。\n\n分析の実行:\n作成した「最終分析リスト」に含まれるすべての銘柄について、漏れなく詳細な分析を行ってください。\n\n**分析の観点（{{strategy}}）**:\n* **{{termDirectionLabel}}要因の特定**: 株価{{termDirectionLabel}}の直接的な原因となった出来事（例：好決算、新製品発表、M&Aなど）を具体的に特定し、その日付も記載してください。ただし、週間ランキングは1週間、月間ランキングは1ヶ月以内に発生した出来事のみを対象としてください。\n* **{{strategy_analysis_point_title}}**: {{strategy_analysis_point_detail}}\n\n**【最重要ルール】ランキング順位に関する厳格な指示**\nルール1: 情報源の絶対化\n「ランキング状況」に記載する順位は「分析対象リスト」に表示されている情報のみを唯一絶対の正解とします。いかなる理由があっても、ニュース記事、他のWebサイト、AIの知識など、「分析対象リスト」以外の情報源から順位を引用、類推、補完することを固く禁じます。\nルール2: 機械的な転記作業の徹底\n各銘柄の分析を開始する前に、「分析対象リスト」に表示されている「順位の数字（例: 1位、2位…）」を寸分違わず機械的に転記してください。「週間 上位」「急騰銘柄」といった曖昧な表現は一切使用せず、必ず「X位」または「ランク外」のどちらかで記述してください。\nルール3: 自己検証の義務化\n最終的なレポートを生成する直前に、全銘柄の「ランキング状況」に記載した順位が、「分析対象リスト」の表示と完全に一致しているか、必ず自己検証を行ってください。\n\n**出力形式**:\n---\n【銘柄分析】 {{銘柄名}}（{{証券コード}}）\n ランキング状況: 週間 X位 / 月間 Y位 （※上記ルールに基づき、機械的に転記すること。片方が10位未満なら必ず「ランク外」と記載すること）\n 変動率: 週間 A.BB% / 月間 A.BB% （週間、月間のうち、ランクインした方のみ記載してください。両方にランクインした場合は両方記載してください。）\n {{termDirectionLabel}}要因: （ここに具体的な要因を記述）\n {{strategy_suggestion_title}}: （ここに考察を記述）\n-`,
                     voice: `以下の流れで、今週の株式市場を振り返る動画のナレーションを作成してください。\n1. **今週の指数の値動き**: 日経平均やTOPIXなどの主要な指数の週間での動きを簡潔に手短にまとめてください。\n2. **今週の主な経済ニュース**: 市場全体に影響を与えた重要な経済ニュースやイベントを取り上げ、その影響を簡潔に手短にまとめてください。\n3. **週間・月間ランキングの分析**: {{termDirectionLabel}}率の週間ランキングTOP10と月間ランキングTOP10の中から、両方にランクインしている銘柄や、特徴的な動きをした銘柄を数銘柄ピックアップして、株価の{{termDirectionLabel}}理由のみを手短かつ簡潔に紹介してください。ランキング上位の全銘柄を読み上げる必要はありません。\n4. **注目銘柄の深掘り**: 株価の上昇が期待できる銘柄を2～4銘柄選び、「なぜ注目すべきか」を解説してください。株価の上昇が期待できると判断した銘柄以外を取り上げる必要はありません。\n{{VoiceNote_Principle}}{{VoiceNote_Read}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}\n・この動画のメインを「4.注目銘柄の深掘り」にしたいので、1～3については手短かつ簡潔に進めてください。\n・銘柄名はレポートを正としてください。`,
-                    reportKk: `以下の構成で、動画制作用の根拠資料を作成してください。\n・レポート形式ではなく、以下の形式でまとめてください。以下に記載のない余計な文章や表などは追加しないでください。\n・銘柄名はレポートを正としてください。\n    1. 今週の主要指数: 指数の情報（小数点以下第2位まで記載）を以下の形式でまとめてください。\n出力形式：\n-\n【指数の週間動向（{{lastWeekFriday}}～{{thisWeekFriday}}）】\n・日経平均株価: 先週末（{{lastWeekFriday}}）終値 XXXX円 → 今週末（{{thisWeekFriday}}）終値 YYYY円 (前週比 ZZZ円, A.B%)\n・TOPIX: 先週末（{{lastWeekFriday}}）終値 XXXX → 今週末（{{thisWeekFriday}}）終値 YYYY (前週比 ZZZ, A.B%)\n-\n    2. 今週の主要経済ニュース: 市場に影響を与えたニュースを5つ程度、概要と日付を記載してください。（日本の個別銘柄に関するニュースは除外してください）\n出力形式：\n-\n【今週の主要ニュース】\n概要：〇〇〇〇〇〇\n日付：YYYY年M月D日\n詳細：XXXXXXXXXXXXX\n-\n    3. 週間{{termDirectionLabel}}率ランキング: 上位10銘柄の「銘柄名」「コード」「1週間前比」をリストアップしてください。\n    4. 月間{{termDirectionLabel}}率ランキング: 上位10銘柄の「銘柄名」「コード」「1ヵ月前比」をリストアップしてください。\n    5. 注目銘柄の分析データ: 個別銘柄の分析内容を全銘柄記載してください。\n出力形式:\n-\n【銘柄分析】 {{銘柄名}}（{{証券コード}}）\n    ランキング状況: 週間 X位 / 月間 Y位 （※上記ルールに基づき、指定URLの情報を機械的に転記すること。片方が10位以下なら必ず「ランク外」と記載すること）\n    変動率: 週間 A.BB% / 月間 A.BB% （週間、月間のうち、ランクインした方のみ記載してください。両方にランクインした場合は両方記載してください。）\n    {{termDirectionLabel}}要因: （ここに具体的な要因を記述）\n    {{strategy_suggestion_title}}: （ここに考察を記述）\n-`,
+                    reportKk: `以下の構成で、動画制作用の根拠資料を作成してください。\n・レポート形式ではなく、以下の形式でまとめてください。以下に記載のない余計な文章や表などは追加しないでください。\n・銘柄名はレポートを正としてください。\n    1. 今週の主要指数: 指数の情報（小数点以下第2位まで記載）を以下の形式でまとめてください。\n出力形式：\n-\n【指数の週間動向（{{lastWeekFriday}}～{{thisWeekFriday}}）】\n・日経平均株価: 先週末（{{lastWeekFriday}}）終値 XXXX円 → 今週末（{{thisWeekFriday}}）終値 YYYY円 (前週比 ZZZ円, A.B%)\n・TOPIX: 先週末（{{lastWeekFriday}}）終値 XXXX → 今週末（{{thisWeekFriday}}）終値 YYYY (前週比 ZZZ, A.B%)\n-\n    2. 今週の主要経済ニュース: 市場に影響を与えたニュースを5つ程度、概要と日付を記載してください。（日本の個別銘柄に関するニュースは除外してください）\n出力形式：\n-\n【今週の主要ニュース】\n概要：〇〇〇〇〇〇\n日付：YYYY年M月D日\n詳細：XXXXXXXXXXXXX\n-\n    3. 週間{{termDirectionLabel}}率ランキング: 上位10銘柄の「銘柄名」「コード」「1週間前比」をリストアップしてください。\n    4. 月間{{termDirectionLabel}}率ランキング: 上位10銘柄の「銘柄名」「コード」「1ヵ月前比」をリストアップしてください。\n    5. 注目銘柄の分析データ: 個別銘柄の分析内容を全銘柄記載してください。\n出力形式:\n-\n【銘柄分析】 {{銘柄名}}（{{証券コード}}）\n    ランキング状況: 週間 X位 / 月間 Y位 （※上記ルールに基づき、指定URLの情報を機械的に転記すること。片方が10位未満なら必ず「ランク外」と記載すること）\n    変動率: 週間 A.BB% / 月間 A.BB% （週間、月間のうち、ランクインした方のみ記載してください。両方にランクインした場合は両方記載してください。）\n    {{termDirectionLabel}}要因: （ここに具体的な要因を記述）\n    {{strategy_suggestion_title}}: （ここに考察を記述）\n-`,
                     summaryImage: `今週の株式市場を振り返る画像を作成してください。\n{{notebookLMPresen1}}`,
                     //slideDocument: `各ランキングや指数動向を総合して、今日の東証相場を振り返り、特徴や投資家心理、市場の注目ポイントをまとめてください\n{{notebookLMPresen1}}`,
                     rank: `以下の2つのリストを表形式で作成してください。\n1.週間{{termDirectionLabel}}率ランキング: 上位10銘柄の「銘柄名」「コード」「1週間前比」をリストアップしてください。\n2.月間{{termDirectionLabel}}率ランキング: 上位10銘柄の「銘柄名」「コード」「1ヵ月前比」をリストアップしてください。\n・見出し（週間下落率ランキング、月間下落率ランキング）、ランキングのみを記載し、他の文章などは記載しないでください。`,
@@ -1202,7 +1202,7 @@ Slide 1:
         inputs.forEach(input => {
             if (input.id) {
                 if (input.id === 'large-textbox1' || input.id === 'large-textbox2' || input.id === 'large-textbox3' || input.id === 'news-performance-text' || input.id === 'youtube-memo') {
-                    localStorage.setItem(input.id, input.value);
+                    sessionStorage.setItem(input.id, input.value);
                 } else {
                     this.state.savedFormValues[input.id] = input.value;
                 }
@@ -1232,7 +1232,7 @@ Slide 1:
             }
         });
         
-        // textbox1、2、3、news-performance-text、youtube-memoはlocalStorageから復元
+        // textbox1、2、3、news-performance-text、youtube-memoはsessionStorageから復元
         const textbox1 = document.getElementById('large-textbox1');
         const textbox2 = document.getElementById('large-textbox2');
         const textbox3 = document.getElementById('large-textbox3');
@@ -1241,14 +1241,14 @@ Slide 1:
         const youtubeContent = document.getElementById('youtube-content');
         const videoTitle = document.getElementById('video-title');
         const videoUrl = document.getElementById('video-url');
-        if (textbox1) textbox1.value = localStorage.getItem('large-textbox1') || '';
-        if (textbox2) textbox2.value = localStorage.getItem('large-textbox2') || '';
-        if (textbox3) textbox3.value = localStorage.getItem('large-textbox3') || '';
-        if (newsPerformanceText) newsPerformanceText.value = localStorage.getItem('news-performance-text') || '';
-        if (youtubeMemo) youtubeMemo.value = localStorage.getItem('youtube-memo') || '';
-        if (youtubeContent) youtubeContent.value = localStorage.getItem('youtube-content') || '';
-        if (videoTitle) videoTitle.value = localStorage.getItem('video-title') || '';
-        if (videoUrl) videoUrl.value = localStorage.getItem('video-url') || '';
+        if (textbox1) textbox1.value = sessionStorage.getItem('large-textbox1') || '';
+        if (textbox2) textbox2.value = sessionStorage.getItem('large-textbox2') || '';
+        if (textbox3) textbox3.value = sessionStorage.getItem('large-textbox3') || '';
+        if (newsPerformanceText) newsPerformanceText.value = sessionStorage.getItem('news-performance-text') || '';
+        if (youtubeMemo) youtubeMemo.value = sessionStorage.getItem('youtube-memo') || '';
+        if (youtubeContent) youtubeContent.value = sessionStorage.getItem('youtube-content') || '';
+        if (videoTitle) videoTitle.value = sessionStorage.getItem('video-title') || '';
+        if (videoUrl) videoUrl.value = sessionStorage.getItem('video-url') || '';
     },
 
     // 銘柄データを保存するオブジェクト
@@ -1309,16 +1309,16 @@ Slide 1:
         inputs.forEach(input => {
             this.stockData[input.id] = input.value;
             if (input.value) {
-                localStorage.setItem(input.id, input.value);
+                sessionStorage.setItem(input.id, input.value);
             } else {
-                localStorage.removeItem(input.id);
+                sessionStorage.removeItem(input.id);
             }
         });
         
         // 銘柄数も保存
         const stockCountInput = document.getElementById('stock-count');
         if (stockCountInput) {
-            localStorage.setItem('stock-count', stockCountInput.value);
+            sessionStorage.setItem('stock-count', stockCountInput.value);
         }
     },
 
@@ -1328,11 +1328,11 @@ Slide 1:
             const readingInput = document.getElementById(`stock-reading-${i}`);
             
             if (nameInput) {
-                const savedName = localStorage.getItem(`stock-name-${i}`) || this.stockData[`stock-name-${i}`] || '';
+                const savedName = sessionStorage.getItem(`stock-name-${i}`) || this.stockData[`stock-name-${i}`] || '';
                 nameInput.value = savedName;
             }
             if (readingInput) {
-                const savedReading = localStorage.getItem(`stock-reading-${i}`) || this.stockData[`stock-reading-${i}`] || '';
+                const savedReading = sessionStorage.getItem(`stock-reading-${i}`) || this.stockData[`stock-reading-${i}`] || '';
                 readingInput.value = savedReading;
             }
         }
@@ -1353,7 +1353,7 @@ Slide 1:
         const stockCountInput = document.getElementById('stock-count');
         if (stockCountInput) {
             // 保存された銘柄数を復元
-            const savedCount = localStorage.getItem('stock-count');
+            const savedCount = sessionStorage.getItem('stock-count');
             if (savedCount) {
                 stockCountInput.value = savedCount;
             }
@@ -1784,20 +1784,20 @@ Slide 1:
                         
                         const copyText = App.getCopyText(analysis, btn.copyId, isShort, isPriority, voiceLength);
                         if (copyText) {
-                            // 動画内容ボタンの場合はlocalStorageに保存のみ（クリップボードにはコピーしない）
+                            // 動画内容ボタンの場合はsessionStorageに保存のみ（クリップボードにはコピーしない）
                             if (btn.copyId === 'videoContent') {
-                                localStorage.setItem('youtube-content', copyText);
+                                sessionStorage.setItem('youtube-content', copyText);
                                 // Youtube投稿内容のタイトルと概要欄をクリア
-                                localStorage.removeItem('youtube-title');
-                                localStorage.removeItem('youtube-memo');
+                                sessionStorage.removeItem('youtube-title');
+                                sessionStorage.removeItem('youtube-memo');
                                 return; // クリップボードコピーをスキップ
                             }
                             // Youtube投稿内容の登録ボタンの場合は動画補完ページに情報を保存
                             if (analysis === 'youtube_posting' && (btn.copyId === 'register' || btn.copyId === 'registerNew')) {
                                 const youtubeUrl = document.getElementById('youtube-url')?.value || '';
                                 const youtubeNewTitle = document.getElementById('youtube-new-title')?.value || '';
-                                if (youtubeUrl) localStorage.setItem('video-title', youtubeNewTitle);
-                                if (youtubeNewTitle) localStorage.setItem('video-url', youtubeUrl);
+                                if (youtubeUrl) sessionStorage.setItem('video-title', youtubeNewTitle);
+                                if (youtubeNewTitle) sessionStorage.setItem('video-url', youtubeUrl);
                             }
                             navigator.clipboard.writeText(copyText);
                         }
@@ -2256,7 +2256,7 @@ Slide 1:
         const textbox = document.getElementById(textboxId);
         if (textbox) {
             textbox.value = '';
-            localStorage.removeItem(textboxId);
+            sessionStorage.removeItem(textboxId);
         }
     },
 
@@ -2267,7 +2267,7 @@ Slide 1:
             if (field) {
                 field.value = '';
                 if (fieldId === 'youtube-memo' || fieldId === 'youtube-content') {
-                    localStorage.removeItem(fieldId);
+                    sessionStorage.removeItem(fieldId);
                 }
             }
         });
