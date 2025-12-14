@@ -62,7 +62,7 @@ const App = {
             reportKk: `資料を10000文字以上で作成してください\n・根拠資料として使用するため、引用やカッコつきの番号は記載しないでください\n・企業概要は記載しないでください。`,
             reportKkks: `\n・以下の内容は必ず記載してください。（以下は最低限の情報です。他に決算分析・解説に必要な情報は記載してください）\n　業績：実績（単体、累計）、通期予想\n　業績好調、もしくは不調となった理由\n　・セグメントごとの業績\n　・株主還元\n　・財務状況、キャッシュフローの状況`,
             reportSs: `YouTube動画を作成するので、動画内で使用する投影資料を作成してください。\n・表紙は、表題と、内容を4行程度の文章でまとめてください。\nただし、「この資料は」などとプレゼン資料自体の事を書かないでください\nまた、資料・動画の視聴意欲がなくならないように、結論や最も重要な内容は書かないでください。\n・最後のページは「まとめ」のページにしてください\n・目次、企業概要のスライドは作成しないでください`,
-            reportGc: `\n・決算の結果、業績予想は大きな数字のレイアウトで作成してください\n数字の単位（百万円など）は数字の後ろに付けず、見出し（売上高、営業利益など）の後ろに付加し「売上高(百万円)」の形式で表示してください\n・業績予想の修正をした場合は、表で前回発表、今回修正、増減額、増減率をまとめてください\n・「PTSで下落」という書き方はせず、「株価下落」と記載してください（取引後に資料を見た際にPTSとの表記が邪魔をするため）`,
+            reportGc: `\n・決算の結果、業績予想は大きな数字のレイアウトで作成してください\n・数字の単位（百万円など）は数字の後ろに付けず、見出し（売上高、営業利益など）の後ろに付加し「売上高(百万円)」などの形式で表示してください\n・業績予想の修正をした場合は、表で前回発表、今回修正、増減額、増減率をまとめてください\n・「PTSで下落」という書き方はせず、「株価下落」と記載してください（取引後に資料を見た際にPTSとの表記が邪魔をするため）`,
             reportNote: `note記事を3000文字程度で作成してください\n・１行目にタイトルを記載してください。\n・資料として使用するため、引用やカッコつきの番号は記載しないでください`,
             // notebookLM画像・プレゼン資料ルール
             notebookLMPresen1: `\n【出力スタイル指定】\n1. レイアウト（余白）:\n   - 画面の端ギリギリまで文字や図形を配置せず、周囲に余白（マージン）を確保すること\n2. テキスト（文字）\n   - フォント: ゴシック体（サンセリフ）\n3. 背景色:   - 白 (#FFFFFF)`,
@@ -483,10 +483,42 @@ const App = {
             market_stock: {
                 label: '個別銘柄',
                 intro: () => {
+                    const direction = App.dom.stockDirection?.value || '';
+                    
+                    // 指定なし（空文字）の場合は今後の見通しのみ
+                    if (direction === '') {
+                        return '{{companyName}}の今後の見通し';
+                    }
+                    
                     const period = App.dom.inputPeriod?.value;
                     return (period.trim() !== '')
                         ? "{{companyName}}の株価が{{period}}{{direction}}理由と今後の見通し"
                         : "{{companyName}}の{{today}}の株価が{{afterHours}}{{direction}}理由と今後の見通し";
+                },
+                reportdirection: () => {
+                    const direction = App.dom.stockDirection?.value || '';
+                    
+                    // 指定なし（空文字）の場合は空欄を返す
+                    if (direction === '') {
+                        return '';
+                    }
+                    
+                    const period = App.dom.inputPeriod?.value;
+                    return (period.trim() !== '')
+                        ? "\n・株価が{{period}}{{direction}}理由を、1スライドにまとめてください。\n・株価が{{period}}{{direction}}理由をまとめた1スライド以外のスライドでは、タイトルに「{{direction}}理由」のような文言を付けないでください。"
+                        : "\n・株価が{{afterHours}}{{direction}}理由、1スライドにまとめてください。\n・株価が{{period}}{{direction}}理由をまとめた1スライド以外のスライドでは、タイトルに「{{direction}}理由」のような文言を付けないでください。";
+                },
+                reportKkDirection: () => {
+                    const direction = App.dom.stockDirection?.value || '';
+                    
+                    if (direction === '') {
+                        return '';
+                    }
+                    
+                    const period = App.dom.inputPeriod?.value;
+                    return (period.trim() !== '')
+                        ? "\n・株価が{{period}}{{direction}}理由を記載してください。"
+                        : "\n・株価が{{afterHours}}{{direction}}理由を記載してください。";
                 },
                 audioLength: "8分から10分",
                 checkboxDefaults: {'movie_info_report': true, 'movie_info_kabutan': true},
@@ -503,11 +535,11 @@ const App = {
                     urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/kabuka?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
                     analysis: "{{intro}}を分析して{{CommonNote_source}}",
                     voice: "{{intro}}を分析してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください。",
-                    reportKk: `{{intro}}についての{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
+                    reportKk: `{{intro}}についての{{reportKk}}{{reportKkDirection}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
                     summaryImage: `{{intro}}{{reportKk}}`,
                     slideDocument: `各ランキングや指数動向を総合して、今日の東証相場を振り返り、特徴や投資家心理、市場の注目ポイントをまとめてください\n{{notebookLMPresen1}}`,
                     reportKkEarningsOnly: `{{companyName}}の決算内容を分析する{{reportKk}}{{reportKkks}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
-                    presentation: "{{intro}}についての{{reportSs}}{{reportGc}}",
+                    presentation: "{{intro}}についての{{reportSs}}{{reportGc}}{{reportdirection}}",
                     presentationEarningsOnly: "{{companyName}}の決算内容を分析する{{reportSs}}{{reportGc}}",
                     thumbnail: "{{intro}}についての{{thumbnail}}",
                     //titleBf: "{{intro}}についての{{titleBf}}{{companyNamePrefix}}後ろに「｜AI市場分析」をつけてください。{{CommonNote_source}}",
@@ -1930,6 +1962,12 @@ Slide 1:
         const introFn = settings.intro;
         const introText = (typeof introFn === 'function') ? introFn() : introFn;
         
+        const reportdirectionFn = settings.reportdirection;
+        const reportdirectionText = (typeof reportdirectionFn === 'function') ? reportdirectionFn() : (reportdirectionFn || '');
+        
+        const reportKkDirectionFn = settings.reportKkDirection;
+        const reportKkDirectionText = (typeof reportKkDirectionFn === 'function') ? reportKkDirectionFn() : (reportKkDirectionFn || '');
+        
         const audioLength = settings.audioLength || '5分から7分';
         
         const readingNote = (form.reading.trim() !== '') ?
@@ -1980,6 +2018,8 @@ Slide 1:
             thumbnailType: thumbnailTypeText,
             ...this.CONFIG.commonTemplates,
             intro: introText,
+            reportdirection: reportdirectionText,
+            reportKkDirection: reportKkDirectionText,
             readingNote,
             audioLength,
             formattedEarningsDate,
@@ -2011,6 +2051,8 @@ Slide 1:
         }
         
         baseVars.intro = this.replaceVariables(baseVars.intro, baseVars);
+        baseVars.reportdirection = this.replaceVariables(baseVars.reportdirection, baseVars);
+        baseVars.reportKkDirection = this.replaceVariables(baseVars.reportKkDirection, baseVars);
         
         // 動的銘柄の場合の特別処理
         if (analysisKey === 'dynamic_stocks') {
