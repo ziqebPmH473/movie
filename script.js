@@ -284,7 +284,7 @@ const App = {
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [ { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
                     //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [ { label: "特典画像", copyId: "menberinfografic" },{ label: "note記事", copyId: "noteArticle" }, { label: "まとめ画像", copyId: "summaryImage" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "生成(ショート)", copyId: "presenShort" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [ { label: "note記事", copyId: "noteArticle" }] }] }
+                    //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [ { label: "note記事", copyId: "noteArticle" }] }] }
                     
                 ],
                 copyTexts: {
@@ -349,9 +349,9 @@ const App = {
                 buttonData: [
                     { category: "【ランキング作成】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "ランキング生成", copyId: "rank" }] }] },
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "*銘柄分析(ランクNG)", copyId: "analysisRankNg" }] }] },
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }] }] },
                     { category: "【プレゼン資料】（スライド：6+銘柄数）", services: [{ service: "gamma", buttons: [{ label: "*プレゼン生成", copyId: "presentation" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "*特典画像", copyId: "summaryImage" },{ label: "note記事", copyId: "noteArticle" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "*特典画像", copyId: "summaryImage" }, { label: "根拠資料生成", copyId: "reportKk" },{ label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     urls: `{{weeklyRankUrl}}\n{{monthlyRankUrl}}`,
@@ -456,7 +456,8 @@ const App = {
                 buttonData: [
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成", copyId: "reportKk" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
+                    //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: { label: "スライド資料", copyId: "slideDocument" },[{ label: "特典画像", copyId: "menberinfografic" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] }
                 ],
                 copyTexts: {
@@ -476,6 +477,7 @@ const App = {
                     shortTitle: "2分で{{intro}}する{{titleSBf}}{{companyNamePrefix}}後ろに「｜2分でニュース分析」をつけてください。{{CommonNote_source}}",
                     shortGaiyo: `2分で{{intro}}する{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}する{{reportNote}}`,
+                    menberinfografic: `注目企業の銘柄のみをまとめてください。説明など注目の理由は一切書かないでください\nカテゴリごとに区切り、銘柄を記載してください。\n* 情報過多を防ぐため、「簡潔」にまとめること。\n・背景は白、シンプルにまとめること。`,
                 }
             },
             market_stock: {
@@ -492,7 +494,8 @@ const App = {
                 buttonData: [
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【特典画像生成】", services: [{ service: "notebookLM", buttons: [{ label: "汎用", copyId: "menberinfografic" },{ label: "資金調達", copyId: "funding" }] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
                     //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] }
                 ],
@@ -518,6 +521,7 @@ const App = {
                     shortGaiyo: `2分で{{intro}}についての{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}についての{{reportNote}}`,
                     menberinfografic: `あなたはプロの株式投資アナリストです。\n入力された情報に基づき、投資家がスマホで瞬時に確認するための「実戦用データリスト」の原稿を作成してください。\n\n# 目的\nこのリストは、投資家が「なぜこの株が急騰/急落したのか？」を一目で判断し、記憶するためのツールです。\n\n# 【形式の指定】（厳守）\n1. **レイアウト:** スマホ画面で見やすい「縦長リスト形式」を前提としてください。\n2. **情報の密度:** 「読み物」は禁止です。文章、解説、接続詞（～のため、等）は全て削除し、**「体言止め」と「キーワード」のみ**で構成してください。\n3. **数値の統一:** 株価や変動率は、表記揺れがないように統一してください。\n\n# 【記載項目】\n以下のフォーマットに情報を埋めて出力してください。\n\n--------------------------------------------------\n{{companyName}}\n\n■株価データ\n・終値：(終値) 円\n・変動：(前日比 +xx円 / +xx.x%)\n・出来高：(株数) 株（※普段より急増している場合のみ「急増」と追記）\n\n■材料（株価変動のトリガー）\n※以下の条件分岐で記載すること\n・ニュースがある場合：(キーワードで簡潔に)\n・明確な材料がない場合：「需給主導」「思惑買い」「仕手化」などと記載\n\n■関連テーマ（連想されるセクター）\n・(単語)\n・(単語)\n--------------------------------------------------`,
+                    funding: `アップロードされたソースに基づき、投資家が「資金調達による売り圧力」を一目で判断できる「実戦用データカード」の画像を作成してください。\n\n【画像形式の絶対ルール】\n1. スタイル：白背景、リスト形式。シンプルにする。\n2. 文字：日本語で大きく、明瞭に配置すること。スマホでも読める可読性。\n3. **記載情報の限定:** 以下の「指定項目」以外の文字（挨拶、説明文、注釈など）は絶対に書かないでください。\n\n【指定項目】\nタイトル：「銘柄名(証券コード) 資金調達・希薄化データ」\n1. 調達手法（公募増資 / 第三者割当 / 新株予約権 など）\n2. 希薄化率（％表示。最も重要な数値として強調）\n3. 調達金額（億円）\n4. 資金使途（設備投資 / 借金返済 / M&A など簡潔に）\n5. 重要スケジュール（発行価格決定日 または 払込期日）`,
                 }
             },
             market_buy_analysis: {
@@ -545,9 +549,11 @@ const App = {
                 buttonData: [
                      { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
-                    { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] },
-                    { category: "【メンバーシップ投稿】", services: [{ service: "notebookLM", buttons: [{ label: "出力", copyId: "memberpresen" }, { label: "作成", copyId: "menberpresenmade" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
+                    { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
+                    //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成", copyId: "reportKk" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    //{ category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "プレゼン生成(決算のみ)", copyId: "presentationEarningsOnly" }] }] },
+                    //{ category: "【メンバーシップ投稿】", services: [{ service: "notebookLM", buttons: [{ label: "出力", copyId: "memberpresen" }, { label: "作成", copyId: "menberpresenmade" }] }] }
                 ],
                 copyTexts: {
                     corePromptTemplate: `# 命令書\n\n## あなたの役割\nあなたは、分析対象の企業ごとに、最も合理的で重要な分析項目や指標を自ら選定できる、トップクラスの株式アナリストです。あなたの仕事は、短期的な株価の動きを追うだけでなく、その背景にある企業の永続的な競争力や経営の質といった、本質的な価値を見抜くことです。\n\n## 私の目的\n株価が {{period}}{現在のトレンド} している {{companyName}} について、12ヶ月（1年）程度の時間軸を基本とし、投資家が「{投資家のゴール}」を自己判断するための、客観的で深い洞察に満ちた分析レポートを作成すること。\n\n## 分析における重要な視点\nレポート全体の分析は、以下のマクロな視点を必ず考慮に入れてください。\n* マクロ経済環境: 現在の金利、景気動向、金融政策などが、この企業にどう影響するか。\n* 業界トレンド: 当該銘柄が属する業界全体の成長性、技術革新、規制の変更などの追い風・向かい風。\n* 競合他社の動向: 競合他社と比較して、この企業の業績や株価パフォーマンスはどのような位置づけにあるか。\n\n## 分析における「3つの必須回答項目」\n分析のアプローチや構成は全てあなたに一任しますが、レポートには以下の 3つの問いに対する明確な答え を必ず含めてください。\n\n1.  なぜ{現在のトレンド}しているのか？（企業の永続的な強さ、あるいは弱さはあるか？）\n    * 現在の株価{現在のトレンド}を牽引している要因を特定するだけでなく、その背景にある「企業の永続的な強さ・弱さ」についても分析してください。具体的には、競合他社に対する競争優位性（事業のMoat）と、経営陣の能力や信頼性についても評価に含めてください。\n\n2.  どこまで{現在のトレンド}する可能性があるのか？\n    * 今後の{将来のポテンシャル}について、具体的な目標株価を複数のシナリオとして提示してください。\n\n3.  トレンドの転換点（{転換点の意味}）を判断するための「株価以外のモノサシ」は何か？\n    * 多くの投資家がトレンドの転換点を判断する際に使うであろう、この銘柄に特有の、株価以外の定量的な判断材料を複数特定してください。そして、その指標が「どのくらいの数値」になったら転換の可能性が高まるか、具体的な目安を示してください。\n\n## レポートの構成\n・上記の「3つの必須回答項目」に対する答えを、以下の大きな枠組みの中で、あなたが最適と判断する構成（小見出しなど）で記述してください。\n・レポートに出典番号は記載しないでください。\n\n---\n\n### {{companyName}}株価分析レポート：{分析タイトル}\n\n#### 1. 企業の基本情報\n（分析の前提となる、客観的な現在のデータを共有します。現在の株価、時価総額、PER、PBR、配当利回りなどを、簡潔な表や箇条書きで提示してください。）\n\n#### 2. 現状分析：{現在のトレンド}の要因と企業の本質的価値\n（このセクションでは、必須回答項目1「なぜ{現在のトレンド}しているのか？」に対する答えを、詳細かつ論理的に記述してください。株価が動く短期的な要因だけでなく、その背景にある事業の質（競争優位性）や経営陣の評価といった、企業の長期的・本質的な価値についても深く掘り下げてください。）\n\n#### 3. 将来予測：市場コンセンサスと独自のポテンシャル分析\n（このセクションでは、必須回答項目2と3に対する答えを記述します。\nまず、市場のコンセンサスとしてアナリストのレーティングや目標株価平均を提示してください。\nその上で、あなた独自の分析による「どこまで{現在のトレンド}する可能性があるのか？」と「トレンドの転換点を判断するための『株価以外のモノサシ』は何か？」に対する答えを、市場コンセンサスとの比較も交えながら具体的かつ分かりやすく記述してください。）\n\n#### 4. シナリオとリスク\n（分析の前提となるシナリオと、投資家が注意すべき最大のリスク、つまり「{リスクシナリオ}」について具体的に記述してください。）`,
@@ -572,6 +578,7 @@ const App = {
                     shortTitle: "{{intro}}する{{titleBf}}{{companyNamePrefix}}後ろに「｜AI株価分析」をつけてください。{{CommonNote_source}}",
                     shortGaiyo: `{{intro}}する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}する{{reportNote}}`,
+                    menberinfografic: `以下の内容をまとめた画像を1枚作成してください。\nデザインは「表形式」または「箇条書きリスト」とし、装飾的な背景は不要です。背景色は白、スマホでも見えるように文字を見やすく配置してください。\n\n【タイトル】\n{{companyName}}投資判断・監視用データシート\n\n【表示項目】\n1. シナリオ別 株価メド（弱気、ベース、強気の3段階で記載）\n ※レポート内の「上値目処」または「下値目処」の数値を記載。\n2. トレンド転換のサイン（株価以外の監視指標）\n ※レポート内の「株価以外のモノサシ」の条件と数値を記載。\n3. アナリスト評価（目標株価平均）\n\n【重要】\n「3. アナリスト評価」には、レポート内に記載された「アナリストコンセンサス」や「会社四季報等の外部目標株価」のみを記載してください。\nもし外部データがない場合は、項目ごと削除し、上段の「シナリオ別 株価メド」と中段の「トレンド転換サイン」の2段構成にレイアウト変更してください。\n「レポート内のシナリオ」を「アナリスト評価」として再掲することは禁止します。\n\n※解説文は省き、数値と条件のみをシンプルに記載すること。`,
                     menberpresenmade: "目的：\n「株価分析」動画の“メンバー向け画像1枚”に載せる要点の【根拠テキスト】を日本語で生成する。助言は行わず、事実と条件のみを簡潔に要約する。\n\n出力スタイル：\n・常体。短文・箇条書き中心。1行は短く。\n・主語は会社名やテーマ名で明示。推測語（〜だろう等）は禁止。\n・末尾に「取得日」と「情報提供のみ（投資助言ではない）」を記載。\n\n想定インプット（プレースホルダ）：\n《会社名》《コード》《取得日》《終値》《前日比》《高値／安値からの変動率》《主要イベント（例：決算・材料・制度変更）》など\n\n出力ブロック（順序固定／各3〜5行以内）：\n# 現況スナップ\n- 《終値》《前日比》《高値/安値からの変動率》を1行ずつ\n- 出来高やボラの変化（平常比・移動平均比）\n\n# 変動要因（需給・ファンダ・イベント）\n- 需給：信用残/貸借倍率/大口フロー/指数採用・除外 等\n- ファンダ：業績修正/見通し/セグメント動向 等\n- イベント：決算反応/規制・政策/大量保有・ロックアップ 等\n\n# 現在の水準（バリュエーション）\n- 予想PER・PBR・時価総額（入手可能なら）\n- 同社/同業の平常レンジや直近の変化（事実ベース）\n\n# 価格レンジ（シナリオ）\n- Bull：前提（例：需給正常化＋成長維持）→ 目安レンジ（数値 or 言い回し）\n- Base：前提（例：期待修正後の平常評価）→ 目安レンジ\n- Bear：前提（例：マクロ悪化・期待剝落）→ 目安レンジ\n※数値がなければ言い回しのみ（「直近高値近辺／直近安値圏」など）\n\n# 株価以外のモノサシ\n\n# リスクと留意点\n- 例：高バリュエーションの縮小、テーマ冷却、信用整理長期化 等\n\n# 取得日・免責\n- 取得日：YYYY/MM/DD\n- 情報提供のみ（投資助言ではない）",
                     memberpresen: "目的：\n「株価分析」動画の“メンバー向け要点画像（1枚）”を自動生成する。スマホで一瞥して「何が起きた・今どの水準か・次に何を見るか」が分かること。\n\nページ仕様：\n・スライド1枚のみ。横長（16:9）。余白広め。テキスト短く。\n・上→下の一方向で読ませる。アイコンや区切りで視認性を上げる。\n・助言・推奨は含めない。事実と条件のみ。\n\nコンテンツの並び（順序固定）：\nA) タイトル帯（1行）\n　【株価分析】《会社名（コード）》\n\nB) 現況スナップ（KPIチップ3〜4個）\n　・終値、前日比、52週高値/安値からの変動率、出来高（平常比）\n　・数値は最小限。矢印や±で方向を示す\n\nC) 変動要因（3ブロックカード）\n　・見出し固定：「需給」「ファンダ」「イベント」\n　・各1〜2行で端的に（例：貸借倍率の偏り、上方修正、決算反応 など）\n\nD) 現在の水準（ミニ表）\n　・予想PER／PBR／時価総額／同業平均や自社平常レンジの注記\n　・不明項目は省略\n\nE) 価格レンジ（Bull / Base / Bear）\n　・3カラムの短文。各カラムに「前提→目安レンジ（数値または言い回し）」\n　・数値が無ければ「直近高値圏／平常帯／直近安値圏」の表現で代替\n\nF) 株価以外のモノサシ\n　・「条件→シグナル」形式（例：信用買残▲30%→戻りの持続性）\n　・チェックボックス風の記号で視認性UP\n\nG) フッター（1行）\n　・《取得日 YYYY/MM/DD》・《情報提供のみ（投資助言ではない）》を右下に\n\n図・表の使い分けルール：\n・Bは“KPIチップ”、Dは“ミニ表”、Eは“3カラム”、Fは“チェックリスト”。棒グラフ等は使わない（情報過多回避）。\n・未入手データは丸ごと省略し、余白で整える。推測で補完しない。\n\n入力データの受け取り方：\n・NotebookLMで作成した「根拠テキスト」の見出し（現況スナップ／変動要因／現在の水準／価格レンジ／転換シグナル）を差し込む。\n・会社名・コード・取得日はプレースホルダで受け取る前提。\n\n出力ゴール：\n・“要点だけの保存用1枚”。メンバー投稿の画像としてそのまま使える。",
                 }
@@ -615,8 +622,8 @@ const App = {
                     directionOptions: { default: '' }
                 },
                 buttonData: [
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" },{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"},{ label: "根拠資料生成", copyId: "reportKk" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "特典画像", copyId: "menberinfografic" }, { label: "スライド資料", copyId: "slideDocument" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" },{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" } ,{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
                     //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "特典画像", copyId: "menberinfografic" }, { label: "スライド資料", copyId: "slideDocument" }, { label: "根拠資料生成(決算のみ)", copyId: "reportKkEarningsOnly" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] }
                 ],
@@ -746,7 +753,8 @@ const App = {
                 buttonData: [
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
+                    //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] }
                 ],
                 copyTexts: {
@@ -783,7 +791,7 @@ const App = {
                     shortTitle: "2分で{{intro}}する{{titleSBf}}{{companyNamePrefix}}後ろに「｜AIテーマ分析」をつけてください。{{CommonNote_source}}",
                     shortGaiyo: `2分で{{intro}}する{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
                     noteArticle: `{{intro}}する{{reportNote}}`,
-                    menberinfografic: `注目企業の銘柄のみをまとめてください。説明など注目の理由は一切書かないでください\nカテゴリごとに区切り、数銘柄ずつ記載してください。(全銘柄を記載しなくてよい)\n* 情報過多を防ぐため、「簡潔」にまとめること。`
+                    menberinfografic: `注目企業の銘柄のみをまとめてください。説明など注目の理由は一切書かないでください\nカテゴリごとに区切り、銘柄を記載してください。\n* 情報過多を防ぐため、「簡潔」にまとめること。\n・背景は白、シンプルにまとめること。`
                 }
             },
             content_creation: {
