@@ -351,9 +351,9 @@ const App = {
                 buttonData: [
                     { category: "【ランキング作成】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "ランキング生成", copyId: "rank" }] }] },
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "*銘柄分析(ランクNG)", copyId: "analysisRankNg" }] }] },
-                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】（スライド：6+銘柄数）", services: [{ service: "gamma", buttons: [{ label: "*プレゼン生成", copyId: "presentation" }] }] },
-                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "*特典画像", copyId: "summaryImage" }, { label: "根拠資料生成", copyId: "reportKk" },{ label: "note記事", copyId: "noteArticle" }] }] }
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "*特典画像", copyId: "summaryImage" },{ label: "note記事", copyId: "noteArticle" }] }] }
                 ],
                 copyTexts: {
                     urls: `{{weeklyRankUrl}}\n{{monthlyRankUrl}}`,
@@ -369,7 +369,7 @@ const App = {
                     //titleBf: `{{intro}}{{titleBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
                     titleBf: `{{intro}}{{titleBf}}後ろに「【{{strategy_title_suffix}}】」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
                     videoContent: `東証プライム市場の週間・月間{{termDirectionLabel}}率ランキングから１週間の相場を振り返り、{{strategy}}で注目すべき銘柄を分析`,
-                    gaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}\n・各ランキングの上位5位までの銘柄名と{{textbox}}もハッシュタグにして\n・個別銘柄に焦点を当てた文章にしないでください。`,
+                    gaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}\n・各ランキングの上位5位までの銘柄名もハッシュタグにして\n・個別銘柄に焦点を当てた文章にしないでください。`,
                     xNotify: `{{intro}}する{{xNotifyText}}`,
                     //shortTitle: `{{intro}}{{titleSBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
                     shortTitle: `{{intro}}{{titleSBf}}後ろに「【{{strategy_title_suffix}}】」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
