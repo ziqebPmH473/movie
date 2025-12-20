@@ -367,7 +367,7 @@ const App = {
                     presentation: `以下の構成で、YouTube動画用の投影資料を作成してください。\n1.表紙（1ページ）\n2.株式指数: 日経平均、TOPIXの動きを記載（1ページ）\n・大きな数字で指数（指数は小数点以下2桁まで記載してください）を表示、説明に前週比（変動率）を表記\n3.今週の主な経済ニュース:重要なニュースを数点、簡潔にまとめる（1ページ）\n4.{{termDirectionLabel}}率ランキング（週間上位10銘柄を1ページ、月間上位10銘柄を1ページ）\n・必ず表形式で作成してください。\n・表のヘッダー（列の項目名）は、左から順に必ず「コード」「銘柄名」「変動率」「{{termDirectionLabel}}理由」の4つとしてください。・銘柄名は銘柄分析から取得してください\n・{{termDirectionLabel}}理由は要約し、30字以内で記述してください）\n5.注目銘柄:注目銘柄を1ページに1銘柄ずつ以下の内容を記載（注目銘柄：{{textbox}}）\n・銘柄名と証券コード\n・月間、週間ランキング（ランクと変動率）\n・{{termDirectionLabel}}理由\n・ポイント（投資を判断する材料、注目する理由）\n6.まとめ（1ページ）\n・表紙は、表題と、概要を4行程度の文章でまとめてください。\nただし、「この資料は」などとプレゼン資料自体の事を書かないでください\nまた、資料・動画の視聴意欲がなくならないように、結論や最も重要な内容は書かないでください。`,
                     thumbnail: "{{intro}}についての{{thumbnail}}",
                     //titleBf: `{{intro}}{{titleBf}}後ろに「【{{strategy_title_suffix}}】｜AI市場分析」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
-                    titleBf: `{{intro}}{{titleBf}}後ろに「【{{strategy_title_suffix}}】」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。`,
+                    titleBf: `{{intro}}{{titleBf}}後ろに「【{{strategy_title_suffix}}】」をつけてください。{{CommonNote_source}}\n・個別銘柄に焦点を当てたタイトルにはしないでください。\nただし、個別材料を一切考慮しないと毎回同じようなタイトルになるため、個別材料を総合的にまとめて記載することは問題ありません。`,
                     videoContent: `東証プライム市場の週間・月間{{termDirectionLabel}}率ランキングから１週間の相場を振り返り、{{strategy}}で注目すべき銘柄を分析`,
                     gaiyo: `{{intro}}。{{strategy_gaiyo_intro}}。{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}\n・各ランキングの上位5位までの銘柄名もハッシュタグにして\n・個別銘柄に焦点を当てた文章にしないでください。`,
                     xNotify: `{{intro}}する{{xNotifyText}}`,
