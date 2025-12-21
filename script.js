@@ -811,7 +811,7 @@ const App = {
                             ? codes.map(code => `https://kabutan.jp/stock/kabuka?code=${code}\nhttps://kabutan.jp/stock/finance?code=${code}`).join('\n')
                             : codes.map(code => `https://us.kabutan.jp/stocks/${code}/\nhttps://us.kabutan.jp/stocks/${code}/finance`).join('\n');
                     },
-                    analysis: "{{intro}}する11分の動画の根拠資料をレポート形式で作成してください。\n動画の構成は一切考える必要はありません。{{CommonNote_source}}",
+                    analysis: "{{intro}}する動画の根拠資料をレポート形式で作成してください。\n動画の長さは11分なので、その長さに相応の文章量にしてください。\n動画の構成は一切考える必要はありません。{{CommonNote_source}}",
                     voice: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}",
                     reportKk: `{{intro}}する{{reportKk}}`,
                     presentation: "{{intro}}する{{reportSs}}",
