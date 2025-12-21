@@ -27,7 +27,8 @@ const App = {
         commonTemplates: {
             //// 共通ルール
             movieType: ``,
-            CommonNote_source: "\n・出典のリンク・カッコ・番号などは削除してください。",
+            //CommonNote_source: "\n・出典のリンク・カッコ・番号などは削除してください。",//chatGPT分析
+            CommonNote_source: "\n・出典のリンク・カッコ・番号などは削除してください。",//chatGPT分析
             nameConvert: `\n・銘柄名は銘柄名一覧表の「銘柄名（正式）」を使用してください。ただし、銘柄名一覧表にない場合は、ソースの名称もしくはレポートの名称を使用してください。`,
             //// 音声ルール
             VoiceNote_Principle: `\n【ルールの原則】\n以下の個別ルールを適用するにあたり、下記の3つの原則を応答の最初から最後まで、常に厳守してください。
@@ -810,7 +811,7 @@ const App = {
                             ? codes.map(code => `https://kabutan.jp/stock/kabuka?code=${code}\nhttps://kabutan.jp/stock/finance?code=${code}`).join('\n')
                             : codes.map(code => `https://us.kabutan.jp/stocks/${code}/\nhttps://us.kabutan.jp/stocks/${code}/finance`).join('\n');
                     },
-                    analysis: "{{intro}}してください。{{CommonNote_source}}",
+                    analysis: "{{intro}}する11分の動画の根拠資料をレポート形式で作成してください。\n動画の構成は一切考える必要はありません。{{CommonNote_source}}",
                     voice: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}",
                     reportKk: `{{intro}}する{{reportKk}}`,
                     presentation: "{{intro}}する{{reportSs}}",
