@@ -465,7 +465,7 @@ const App = {
                 ],
                 copyTexts: {
                     urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/kabuka?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
-                    analysis: "{{intro}}して{{CommonNote_source}}",
+                    analysis: "{{intro}}する動画の根拠資料をレポート形式で作成してください。\n動画の長さは11分なので、その長さに相応の文章量にしてください。\n動画の構成は一切考える必要はありません。{{CommonNote_source}}",
                     voice: `{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}`,
                     reportKk: `{{intro}}する{{reportKk}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
                     presentation: "{{intro}}する{{reportSs}}{{reportGc}}",
@@ -536,7 +536,7 @@ const App = {
                 ],
                 copyTexts: {
                     urls: (vars) => vars.emarket === 'jp' ? `https://kabutan.jp/stock/kabuka?code=${vars.ticker}\nhttps://kabutan.jp/stock/finance?code=${vars.ticker}` : `https://us.kabutan.jp/stocks/${vars.ticker}/\nhttps://us.kabutan.jp/stocks/${vars.ticker}/finance`,
-                    analysis: "{{intro}}を分析して{{CommonNote_source}}",
+                    analysis: "{{intro}}を分析する動画の根拠資料をレポート形式で作成してください。\n動画の長さは11分なので、その長さに相応の文章量にしてください。\n動画の構成は一切考える必要はありません。{{CommonNote_source}}",
                     voice: "{{intro}}を分析してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください。",
                     reportKk: `{{intro}}についての{{reportKk}}{{reportKkDirection}}\n・レポートと株探や資料で情報が異なる場合は、株探、会社発表の資料の情報を正としてください`,
                     summaryImage: `{{intro}}{{reportKk}}`,
