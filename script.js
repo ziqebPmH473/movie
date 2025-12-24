@@ -786,6 +786,7 @@ const App = {
                     searchBtns: []
                 },
                 buttonData: [
+                    { category: "【プロンプト生成用】", services: [{ service: "gemini", buttons: [{ label: "テーマ変換", copyId: "prompt" }] }] },
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
@@ -811,6 +812,7 @@ const App = {
                             ? codes.map(code => `https://kabutan.jp/stock/kabuka?code=${code}\nhttps://kabutan.jp/stock/finance?code=${code}`).join('\n')
                             : codes.map(code => `https://us.kabutan.jp/stocks/${code}/\nhttps://us.kabutan.jp/stocks/${code}/finance`).join('\n');
                     },
+                    prompt: "{{theme}}\nの動画内容を以下の文章の形式で100文字以内でまとめてください。形式に沿わない文章、文章以外の説明は一切記載しないこと。作成した文章を基にchatGPTで根拠資料を作成します。構成などはあなたが考える必要はありませんが、動画内で説明が必要な内容があれば、文章内に組み込んでください。なお、修正していいのは「〇〇」の箇所のみです。\n形式：\n〇〇をテーマに、〇〇に焦点を当て、〇〇について解説",
                     analysis: "{{intro}}する動画の根拠資料をレポート形式で作成してください。\n動画の長さは11分なので、その長さに相応の文章量にしてください。\n動画の構成は一切考える必要はありません。{{CommonNote_source}}",
                     voice: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}",
                     reportKk: `{{intro}}する{{reportKk}}`,
