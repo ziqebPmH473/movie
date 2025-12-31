@@ -888,7 +888,7 @@ const App = {
                     }
                 ],
                 copyTexts: {
-                    factCheck: "以下のレポートは、以下の指示でAIが生成したものです。\nレポートのファクトチェックを行い、誤っている個所と指示に沿っていない箇所のみを指摘してください。\n指摘がある場合には、指摘箇所、指摘内容、修正後内容を記載してください。\n\n--指示--\n{{textbox2}}\n\n--レポート--\n{{textbox3}}",
+                    factCheck: "以下のレポートは、以下の指示でAIが生成したものです。\nレポートのファクトチェックを行い、誤っている個所と指示に沿っていない箇所のみを指摘してください。\n指摘件数に上限はありませんので、必要な箇所はすべて指摘してください。\n指摘がある場合には、指摘箇所、指摘内容、修正後内容を記載してください。\n\n--指示--\n{{textbox2}}\n\n--レポート--\n{{textbox3}}",
                     correction: "指摘箇所を指示の内容に沿って修正し、全文出力してください。\nただし、指摘していない箇所は一切変更しないでください。",
                     delistingCheck: "以下の内容に記載されている個別銘柄について、上場廃止もしくは上場廃止になることがほぼ確定している銘柄がないかチェックしてください。\n該当する銘柄がある場合は、銘柄名・証券コード・上場廃止の理由・時期を具体的に指摘してください。\n該当する銘柄がない場合は「該当なし」と回答してください。\n\n--チェック対象--\n{{textbox2}}",
                     delistingCorrection: "指摘した上場廃止銘柄に関する記述を削除し、関係する箇所についても修正し、全文出力してください。\nただし、指摘していない箇所は一切変更しないでください。",
@@ -913,7 +913,7 @@ const App = {
                     { 
                         category: "【チェック】", 
                         services: [{ 
-                            service: "chatGPT", 
+                            service: "gemini", 
                             buttons: [
                                 { label: "チェック", copyId: "check" },
                                 { label: "登録", copyId: "register" }
@@ -1849,6 +1849,10 @@ Slide 1:
                                 const youtubeNewTitle = document.getElementById('youtube-new-title')?.value || '';
                                 if (youtubeUrl) sessionStorage.setItem('video-title', youtubeNewTitle);
                                 if (youtubeNewTitle) sessionStorage.setItem('video-url', youtubeUrl);
+                            }
+                            // chatGPTボタンの場合、コンテンツ作成以外ならtextbox2に貼り付け
+                            if (service.service === 'chatGPT' && analysis !== 'content_creation') {
+                                sessionStorage.setItem('large-textbox2', copyText);
                             }
                             navigator.clipboard.writeText(copyText);
                         }
