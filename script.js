@@ -1078,7 +1078,7 @@ Slide 1:
                     description: `\nこの動画は決算の要点を約2分で整理しています。\n詳しい解説はこちら {{url8min}}\n`,
                     comment: `詳しい解説はこちら {{url8min}}`,
                     priority: `\nこの動画は「すみっこマネー大学」メンバーシップで先行公開された内容です。\nメンバー限定で一般公開よりも早く視聴できたり、一部動画で要点サマリ画像を確認できます。\n\n▶ メンバーシップ登録はこちら  \nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n`,
-                    postText: `【特典｜保存版】動画内の分析データ\nこの画像は、本日解説した内容を実戦で使えるように1枚にまとめたものです。ご活用ください。\n\n■ 動画の内容\n{{videoTitle}}\n■ 本編動画はこちら\n{{videoUrl}}\n\n— 情報提供のみ（数値は公開時点）`,
+                    postText: `【特典｜保存版({{actualToday}})】動画内の分析データ\n■ 動画の内容：{{videoTitle}}\n■ 本編： {{videoUrl}}\nこの画像は上記動画の要点まとめです。\n— 情報提供のみ（数値は公開時点）`,
                     postDescription: `---\n✅ 【メンバー限定特典】本日の実戦用データ配布中！\n▼ データリスト（画像/スマホ保存可）をダウンロード ： {{postUrl}}\n\n※ メンバー登録をされていない方で、上記リンクが機能しない場合はこちらからご登録ください。\n👉 メンバーシップに登録して特典を入手：https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n---`,
                     postComment: `【メンバー限定】本日の実戦用データはこちら！\n動画の最後で流れたデータリスト（画像）を保存用として配布中です。\n\n👉 データダウンロード（メンバー限定記事）\n{{postUrl}}\n\n非メンバーの方はこちらからご登録ください\nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join`
                 }
@@ -1096,6 +1096,7 @@ Slide 1:
     // ---------------------------------------------------------------------------
     state: {
         today: '',
+        actualToday: '',
         prevBizDay: '',
         thisWeekFriday: '',
         lastWeekFriday: '',
@@ -2123,6 +2124,9 @@ Slide 1:
         const baseDate = baseDateStr ? new Date(baseDateStr + 'T00:00:00') : new Date();
         const todayDate = this.getMostRecentBusinessDay(baseDate);
         const prevBizDate = this.getPreviousBusinessDay(todayDate);
+        
+        // 実際の今日の日付（営業日を考慮しない）
+        const actualTodayDate = baseDateStr ? new Date(baseDateStr + 'T00:00:00') : new Date();
 
         let thisWeekFridayDate = new Date(todayDate);
         thisWeekFridayDate.setDate(thisWeekFridayDate.getDate() + (5 - thisWeekFridayDate.getDay()));
@@ -2133,6 +2137,7 @@ Slide 1:
         lastWeekFridayDate = this.getMostRecentBusinessDay(lastWeekFridayDate);
 
         this.state.today = this.formatDate(todayDate);
+        this.state.actualToday = this.formatDate(actualTodayDate);
         this.state.prevBizDay = this.formatDate(prevBizDate);
         this.state.thisWeekFriday = this.formatDate(thisWeekFridayDate);
         this.state.lastWeekFriday = this.formatDate(lastWeekFridayDate);
