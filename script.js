@@ -1079,9 +1079,9 @@ Slide 1:
                     comment: `詳しい解説はこちら {{url8min}}`,
                     priority: `\nこの動画は「すみっこマネー大学」メンバーシップで先行公開された内容です。\nメンバー限定で一般公開よりも早く視聴できたり、一部動画で要点サマリ画像を確認できます。\n\n▶ メンバーシップ登録はこちら  \nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n`,
                     postText: `【特典｜保存版({{actualToday}})】動画内の分析データ\n■ 動画の内容：{{videoTitle}}\n■ 本編： {{videoUrl}}\nこの画像は上記動画の要点まとめです。\n— 情報提供のみ（数値は公開時点）`,
-                    noteTitle: `【{{actualToday}})】{{videoTitle}}`,
+                    noteTitle: `【{{actualToday}}】{{videoTitle}}`,
                     notePost: `【特典｜保存版({{actualToday}})】動画内の分析データ\n\n■ 動画の内容：{{videoTitle}}\n■ 動画本編： {{videoUrl}}\n\n👇 動画で使用した特典画像はこちら\n\n— ※数値は動画公開時点のものです。 ※投資助言ではありません。`,
-                    postDescription: `---\n✅ 【メンバー限定特典】本日の実戦用データ配布中！\n▼ データリスト（画像/スマホ保存可）をダウンロード ： {{postUrl}}\n\n※ メンバー登録をされていない方で、上記リンクが機能しない場合はこちらからご登録ください。\n👉 メンバーシップに登録して特典を入手：https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n\n▼ YouTubeで登録できない方\nnoteのメンバーシップでも同じ特典画像を配布しています（同額・同内容）。\n👉 note資料室： https://note.com/sumikko_money/membership\n---\n`,
+                    postDescription: `---\n✅ 【メンバー限定特典】本日の実戦用データ配布中！\n▼ データリスト（画像/スマホ保存可）をダウンロード ： {{postUrl}}\n\n※ メンバー登録をされていない方で、上記リンクが機能しない場合はこちらからご登録ください。\n👉 メンバーシップに登録して特典を入手：https://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n\n▼ YouTubeで登録できない方\nnoteのメンバーシップでも同じ特典画像を配布しています（同額・同内容）。\n👉 note資料室： https://note.com/sumikko_money/membership\n---`,
                     postComment: `【メンバー限定】本日の実戦用データはこちら！\n動画の最後で流れたデータリスト（画像）を保存用として配布中です。\n\n👉 データダウンロード（メンバー限定記事）\n{{postUrl}}\n\n非メンバーの方はこちらからご登録ください\nhttps://www.youtube.com/channel/UC3J_rH2w3GCG6lR_D8Tvv6A/join\n\n※ エラー等でYouTube登録ができない方\nnoteでも同じ画像を受け取れます（同額・同内容）\n👉 https://note.com/sumikko_money/membership`
                 }
             },
