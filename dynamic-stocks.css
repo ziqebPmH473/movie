@@ -372,7 +372,7 @@ button:active {
 }
 
 /* -------------------------------------------------------------------------
-   動的銘柄入力の固定グリッドレイアウト
+   動的銘柄入力の縦並びレイアウト（決算まとめページ専用）
    ------------------------------------------------------------------------- */
 #dynamic-stocks-container {
     display: flex;
@@ -415,19 +415,15 @@ button:active {
     white-space: nowrap;
 }
 
-/* タブレット対応: 2列表示 */
+/* タブレット対応 */
 @media (max-width: 1024px) {
-    #dynamic-stocks-container {
-        grid-template-columns: 1fr 1fr;
+    .stock-item {
+        flex-wrap: wrap;
     }
 }
 
-/* スマホ対応: 1列表示 */
+/* スマホ対応 */
 @media (max-width: 768px) {
-    #dynamic-stocks-container {
-        grid-template-columns: 1fr;
-    }
-    
     .stock-item {
         flex-wrap: wrap;
     }

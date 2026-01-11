@@ -94,7 +94,8 @@ const App = {
                 <label><input type="radio" name="analysis" value="youtube_posting"><span>Youtube投稿内容</span></label>
                 <label style="display:none"><input type="radio" name="analysis" value="ipo"><span>IPO</span></label>
                 <label><input type="radio" name="analysis" value="ai_education"><span>AI教養ラボ</span></label>
-                <label><input type="radio" name="analysis" value="dynamic_stocks"><span>注目決算</span></label>
+                <label><input type="radio" name="analysis" value="dynamic_stocks"><span>決算まとめ</span></label>
+                <label><input type="radio" name="analysis" value="earnings_summary"><span>注目決算</span></label>
             `,
             'ticker-name-area': `
                 <div class="ticker-name-row">
@@ -928,6 +929,49 @@ const App = {
                     registerNew: "この内容でアップします。\nタイトル：{{newTitle}}\nURL：{{url}}\nこの表に追加して"
                 }
             },
+            earnings_summary: {
+                label: '注目決算',
+                intro: "入力した銘柄数に応じて動的に決算内容を分析し、決算結果をまとめて分析",
+                audioLength: "8分から12分",
+                checkboxDefaults: {'movie_info_financial': true, 'movie_info_kabutan': true},
+                ui: { 
+                    dynamicInputs: ['dynamic-stocks-area'],
+                    searchBtns: [],
+                    directionOptions: { default: '' }
+                },
+                buttonData: [
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" },{ label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" } ,{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
+                    { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] }
+                ],
+                copyTexts: {
+                    urls: (vars) => {
+                        const codes = [];
+                        if (vars.textbox) {
+                            const lines = vars.textbox.split('\n').map(line => line.trim()).filter(line => line !== '');
+                            codes.push(...lines);
+                        }
+                        if (vars.ticker) {
+                            codes.push(vars.ticker);
+                        }
+                        if (codes.length === 0) return '';
+                        return vars.emarket === 'jp'
+                            ? codes.map(code => `https://kabutan.jp/stock/kabuka?code=${code}\nhttps://kabutan.jp/stock/finance?code=${code}`).join('\n')
+                            : codes.map(code => `https://us.kabutan.jp/stocks/${code}/\nhttps://us.kabutan.jp/stocks/${code}/finance`).join('\n');
+                    },
+                    voice: "複数銘柄の決算内容をまとめて分析してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}",
+                    reportKk: `複数銘柄の決算内容を分析する{{reportKk}}{{reportKkks}}`,
+                    presentation: "複数銘柄の決算内容を分析する{{reportSs}}{{reportGc}}",
+                    menberinfografic: "複数銘柄の**【累積の業績】**に関する決算短信データに基づき、以下の条件を満たす予実対比表を作成してください。\n\n**【形式の指定】**\n* レイアウトは**表形式**とし、**縦長になるよう**に設計してください。\n* 情報過多を防ぐため、「簡潔」にまとめ、**通期予想と実績の比較に特化**すること。\n\n【データ抽出の優先順位】\n1. **実績値:** 最新の四半期累計実績を使用。\n2. **比較対象（通期予想）:**\n   * 資料内に「業績予想の修正」に関する記載がある場合は、必ず**【修正後の数値】**を使用すること。\n   * 修正がない場合は、通常の【通期予想】を使用すること。\n   * 通期予想自体が非開示の場合は、前年同期実績を使用すること。\n\n【タイトル】\n「複数銘柄 決算まとめ 業績進捗レポート」の形式で記述すること。\n\n**【記載項目】**\n以下の4つのデータ項目を記載し、数値は**〇〇億円**など単位を統一して分かりやすくすること。\n1.  **項目名**（売上高、営業利益、経常利益、純利益の4項目を優先）\n2.  **通期予想**（会社が発表した**通期予想値**）\n3.  **今回実績**（今回発表された**最新の実績値**）\n4.  **進捗率または成長率**\n    * ケースA（通期予想がある場合）：\n      * 進捗率の計算式：【今回実績 ÷ 通期予想】の計算結果を**パーセンテージ**にする\n      * 表示：右端に数値に対応した長さの「緑色の横棒グラフ（プログレスバー）」と進捗率を描画する。\n    * ケースB（通期予想がなく、前年同期比を使う場合）：\n      * 「前年同期実績」と比較して「前年比（％）」＝成長率を算出する。\n      * プログレスバーは描画せず、成長率の数値（％）のみを大きく表示する。\n\n【視覚化の条件分岐】\n* ケースA（通期予想がある場合）：\n  右列の進捗率（％）の背景または横に、数値に応じた長さの「横棒グラフ（プログレスバー）」を描画する。バーの色は緑色。\n* ケースB（通期予想がなく、前年同期比を使う場合）：\n  プログレスバーは描画せず、数値（％）のみを大きく表示する。\n\n**【目的】**\nこの表は、通期予想に対する実績の進捗度合いを一目で判断するための**実戦用ツール**として機能させること。",
+                    titleBf: "複数銘柄の決算内容をまとめて分析し、今後の見通しを考察する{{titleBf}}後ろに「｜決算まとめ分析」をつけてください。{{CommonNote_source}}",
+                    videoContent: "複数銘柄の決算内容をまとめて分析し、今後の見通しを考察",
+                    gaiyo: `複数銘柄の決算内容をまとめて分析し、今後の見通しを考察する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
+                    summaryImage: `複数銘柄の決算内容をまとめた内容をまとめてください\n{{notebookLMPresen1}}`,
+                    slideDocument: `複数銘柄の決算内容をまとめて分析する{{notebookLMPresenSs}}\n{{notebookLMPresen1}}{{notebookLMPresen2}}`,
+                    xNotify: "複数銘柄の決算内容をまとめて分析する{{xNotifyText}}",
+                    noteArticle: `複数銘柄の決算内容をまとめて分析する{{reportNote}}`
+                }
+            },
             ai_education: {
                 label: 'AI教養ラボ',
                 intro: "AI教養ラボ",
@@ -1336,18 +1380,35 @@ Slide 1:
         // コンテナをクリア
         container.innerHTML = '';
         
-        // 新しい入力フィールドを生成（固定グリッドレイアウト）
+        // 新しい入力フィールドを生成（1銘柄1行レイアウト）
         for (let i = 1; i <= count; i++) {
             const stockDiv = document.createElement('div');
             stockDiv.className = 'stock-input-row';
-            stockDiv.innerHTML = `
-                <div class="stock-item">
-                    <label>銘柄${i}:</label>
-                    <input type="text" id="stock-name-${i}" placeholder="銘柄名">
-                    <input type="text" id="stock-reading-${i}" placeholder="読みがな">
-                    <button type="button" onclick="App.searchStockIR('${i}')">株探</button>
-                </div>
+            stockDiv.style.cssText = 'display: block; width: 100%; margin-bottom: 10px; clear: both; float: none;';
+            
+            const innerDiv = document.createElement('div');
+            innerDiv.style.cssText = 'display: flex; align-items: center; gap: 3px;';
+            innerDiv.innerHTML = `
+                <label style="min-width: 50px; font-size: 0.9em;">銘柄${i}:</label>
+                <input type="text" id="stock-ticker-${i}" placeholder="コード" style="width: 60px; font-size: 0.8em;">
+                <input type="text" id="stock-name-${i}" placeholder="銘柄名" style="width: 100px; font-size: 0.8em;">
+                <input type="text" id="stock-reading-${i}" placeholder="読み" style="width: 100px; font-size: 0.8em;">
+                <input type="date" id="stock-earnings-date-${i}" style="width: 110px; font-size: 0.8em;">
+                <label style="font-size: 0.7em; white-space: nowrap;"><input type="radio" name="stock-timing-${i}" value="の引け後"> 引け後</label>
+                <label style="font-size: 0.7em; white-space: nowrap;"><input type="radio" name="stock-timing-${i}" value="の場中"> 場中</label>
+                <label style="font-size: 0.7em; white-space: nowrap;"><input type="radio" name="stock-timing-${i}" value="" checked> 指定なし</label>
+                <label style="font-size: 0.7em; white-space: nowrap;"><input type="radio" name="stock-direction-${i}" value="上昇した"> 上昇</label>
+                <label style="font-size: 0.7em; white-space: nowrap;"><input type="radio" name="stock-direction-${i}" value="下落した"> 下落</label>
+                <label style="font-size: 0.7em; white-space: nowrap;"><input type="radio" name="stock-direction-${i}" value="ストップ高となった"> S高</label>
+                <label style="font-size: 0.7em; white-space: nowrap;"><input type="radio" name="stock-direction-${i}" value="ストップ安となった"> S安</label>
+                <label style="font-size: 0.7em; white-space: nowrap;"><input type="checkbox" id="stock-after-hours-${i}"> 時間外</label>
+                <label style="font-size: 0.7em; white-space: nowrap;"><input type="checkbox" id="stock-no-price-${i}"> 株価なし</label>
+                <label style="font-size: 0.7em; white-space: nowrap;"><input type="radio" name="stock-direction-${i}" value="" checked> 指定なし</label>
+                <button type="button" onclick="App.searchStockIR('${i}')" style="font-size: 0.7em; padding: 2px 4px;">IR情報</button>
+                <button type="button" onclick="App.searchStockKabutan('${i}')" style="font-size: 0.7em; padding: 2px 4px;">株探</button>
             `;
+            
+            stockDiv.appendChild(innerDiv);
             container.appendChild(stockDiv);
         }
         
@@ -1378,9 +1439,17 @@ Slide 1:
 
     restoreStockValues: function(count) {
         for (let i = 1; i <= count; i++) {
+            const tickerInput = document.getElementById(`stock-ticker-${i}`);
             const nameInput = document.getElementById(`stock-name-${i}`);
             const readingInput = document.getElementById(`stock-reading-${i}`);
+            const earningsDateInput = document.getElementById(`stock-earnings-date-${i}`);
+            const afterHoursCheck = document.getElementById(`stock-after-hours-${i}`);
+            const noPriceCheck = document.getElementById(`stock-no-price-${i}`);
             
+            if (tickerInput) {
+                const savedTicker = sessionStorage.getItem(`stock-ticker-${i}`) || this.stockData[`stock-ticker-${i}`] || '';
+                tickerInput.value = savedTicker;
+            }
             if (nameInput) {
                 const savedName = sessionStorage.getItem(`stock-name-${i}`) || this.stockData[`stock-name-${i}`] || '';
                 nameInput.value = savedName;
@@ -1389,18 +1458,58 @@ Slide 1:
                 const savedReading = sessionStorage.getItem(`stock-reading-${i}`) || this.stockData[`stock-reading-${i}`] || '';
                 readingInput.value = savedReading;
             }
+            if (earningsDateInput) {
+                const savedDate = sessionStorage.getItem(`stock-earnings-date-${i}`) || this.stockData[`stock-earnings-date-${i}`] || '';
+                earningsDateInput.value = savedDate;
+            }
+            if (afterHoursCheck) {
+                const savedAfterHours = sessionStorage.getItem(`stock-after-hours-${i}`) === 'true';
+                afterHoursCheck.checked = savedAfterHours;
+            }
+            if (noPriceCheck) {
+                const savedNoPrice = sessionStorage.getItem(`stock-no-price-${i}`) === 'true';
+                noPriceCheck.checked = savedNoPrice;
+            }
+            
+            // タイミングの復元
+            const savedTiming = sessionStorage.getItem(`stock-timing-${i}`) || this.stockData[`stock-timing-${i}`] || '';
+            const timingRadio = document.querySelector(`input[name="stock-timing-${i}"][value="${savedTiming}"]`);
+            if (timingRadio) {
+                timingRadio.checked = true;
+            }
+            
+            // 株価方向の復元
+            const savedDirection = sessionStorage.getItem(`stock-direction-${i}`) || this.stockData[`stock-direction-${i}`] || '';
+            const directionRadio = document.querySelector(`input[name="stock-direction-${i}"][value="${savedDirection}"]`);
+            if (directionRadio) {
+                directionRadio.checked = true;
+            }
         }
     },
 
     searchStockIR: function(stockIndex) {
         const stockName = document.getElementById(`stock-name-${stockIndex}`)?.value;
-        if (!stockName) {
+        if (stockName) {
+            const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(stockName + ' IR情報')}`;
+            window.open(searchUrl, '_blank');
+        } else {
             alert('銘柄名を入力してください');
-            return;
         }
+    },
+
+    searchStockKabutan: function(stockIndex) {
+        const stockTicker = document.getElementById(`stock-ticker-${stockIndex}`)?.value;
+        const stockName = document.getElementById(`stock-name-${stockIndex}`)?.value;
         
-        const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(stockName + ' IR情報')}`;
-        window.open(searchUrl, '_blank');
+        if (stockTicker) {
+            const searchUrl = `https://kabutan.jp/stock/kabuka?code=${stockTicker}`;
+            window.open(searchUrl, '_blank');
+        } else if (stockName) {
+            const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(stockName + ' 株探')}`;
+            window.open(searchUrl, '_blank');
+        } else {
+            alert('証券コードまたは銘柄名を入力してください');
+        }
     },
 
     setupDynamicStocksEvents: function() {
@@ -1466,9 +1575,24 @@ Slide 1:
         // 動的銘柄の入力フィールドにイベントリスナーを追加
         const stockInputs = document.querySelectorAll('[id^="stock-"]');
         stockInputs.forEach(input => {
-            input.addEventListener('input', () => {
-                this.saveStockValues();
-            });
+            if (input.type === 'radio') {
+                input.addEventListener('change', () => {
+                    if (input.checked) {
+                        sessionStorage.setItem(input.name, input.value);
+                        this.stockData[input.name] = input.value;
+                    }
+                });
+            } else if (input.type === 'checkbox') {
+                input.addEventListener('change', () => {
+                    sessionStorage.setItem(input.id, input.checked.toString());
+                    this.stockData[input.id] = input.checked;
+                });
+            } else {
+                input.addEventListener('input', () => {
+                    sessionStorage.setItem(input.id, input.value);
+                    this.stockData[input.id] = input.value;
+                });
+            }
         });
     },
 
