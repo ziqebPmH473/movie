@@ -89,13 +89,14 @@ const App = {
                 <label><input type="radio" name="analysis" value="news"><span>ニュース</span></label>
                 <label><input type="radio" name="analysis" value="market_earnings"><span>決算</span></label>
                 <label><input type="radio" name="analysis" value="theme_analysis"><span>テーマ</span></label>
+                <label><input type="radio" name="analysis" value="job_analysis"><span>就職分析</span></label>
                 <label><input type="radio" name="analysis" value="content_creation"><span>コンテンツ作成</span></label>
                 <label><input type="radio" name="analysis" value="video_completion"><span>動画補完</span></label>
                 <label><input type="radio" name="analysis" value="youtube_posting"><span>Youtube投稿内容</span></label>
+                <label style="display:none"><input type="radio" name="analysis" value="ai_education"><span>AI教養ラボ</span></label>
+                <label style="display:none"><input type="radio" name="analysis" value="dynamic_stocks"><span>決算まとめ</span></label>
+                <label style="display:none"><input type="radio" name="analysis" value="earnings_summary"><span>注目決算</span></label>
                 <label style="display:none"><input type="radio" name="analysis" value="ipo"><span>IPO</span></label>
-                <label><input type="radio" name="analysis" value="ai_education"><span>AI教養ラボ</span></label>
-                <label><input type="radio" name="analysis" value="dynamic_stocks"><span>決算まとめ</span></label>
-                <label><input type="radio" name="analysis" value="earnings_summary"><span>注目決算</span></label>
             `,
             'ticker-name-area': `
                 <div class="ticker-name-row">
@@ -271,7 +272,7 @@ const App = {
                 ],
                 copyTexts: {
                     urls: `https://quote.nomura.co.jp/nomura/cgi-bin/quote.cgi?template=nomura_tp_index_01\nhttps://www.nikkei.com/marketdata/ranking-jp/price-rise/?market=G_TP\nhttps://www.nikkei.com/marketdata/ranking-jp/price-drop/?market=G_TP\nhttps://s.kabutan.jp/warnings/sector_stocks_ranking/\nhttps://s.kabutan.jp/warnings/sector_stocks_ranking/?direction=asc&order=prev_price_ratio`,
-                    rank: `【出力内容】に記述の内容のみを、【出力形式】に記載の形式で出力してください。\n【出力内容】\n1.日経平均、TOPIXの現在値、変動幅、変動率\n2.上昇率TOP5の銘柄の銘柄名、株価、株価変動幅、株価変動率\n3.下落率TOP5の銘柄の銘柄名、株価、株価変動幅、株価変動率\n4.業種別上昇率TOP5（変動率がマイナスでも上位5業種）の業種、変動率、PER\n5.業種別下落率TOP5（変動率がプラスでも上位5業種）の業種、変動率、PER\n\n【出力形式】\n指数の値動き\n|指数|現在値|変動幅|変動率|\n|:---|:---|:---|:---|\n|日経平均| | | |\n|TOPIX| | | |\n---\n\n上昇率TOP5\n|銘柄名|株価|変動幅（変動率）|\n|:---|:---|:---|\n| | | |\n| | | |\n| | | |\n| | | |\n| | | |\n---\n\n下落率TOP5\n|銘柄名|株価|変動幅（変動率）|\n|:---|:---|:---|\n| | | |\n| | | |\n| | | |\n| | | |\n| | | |\n---\n\n業種別上昇率TOP5\n|業種|変動率|PER|\n|:---|:---|:---|\n| | | |\n| | | |\n| | | |\n| | | |\n| | | |\n---\n\n業種別下落率TOP5\n|業種|変動率|PER|\n|:---|:---|:---|\n| | | |\n| | | |\n| | | |\n| | | |\n| | | |`,
+                    rank: `東証プライム市場の上昇率・下落率ランキングTOP5の銘柄の証券コード、銘柄名を以下の形式で出力してください。\n一覧のタイトル・一覧以外の内容は一切記述しないでください。\n\n上昇率TOP5\n（上昇率上位の表）\n下落率TOP5\n（下落率上位の表）`,
                     //title: `タイトルと概要欄を以下の形式で作成してください。\n日付、日経平均、TOPIXの値だけ書き換えて、以下の形式で出力すること。\n以下の形式に記載のない内容（説明や返答）は一切記載しないこと。\n改行位置も以下の通りに記載すること\n\n\nタイトル：\n【30秒で前場速報｜M月D日】今日の値動きサクッと確認 #日本株 #速報 #東証\n\n概要欄：\n今日の東証マーケット前場の振り返り速報！\n日経平均：XX,XXX.XX円（+XXX.XX円） TOPIX：X,XXX.XX（+XX.XX）\n\n▼１日の総まとめは、今夜の動画で解説します！ \n（チャンネル登録してお待ちください）\n\n#日本株 #日経平均 #株式投資 #急騰銘柄 #東証`,
                     Notify: `SNSへの投稿内容を以下の形式で作成してください。\n日付、日経平均、TOPIXの値だけ書き換えて、以下の形式で出力すること。\n以下の形式に記載のない内容（説明や返答）は一切記載しないこと。\n改行位置も以下の通りに記載すること\n\n今日の東証マーケット前場の振り返り速報！\nM月Dの値動きサクッと確認👇\n\n📉日経平均：XX,XXX.XX円（+XXX.XX円）\n📉TOPIX：X,XXX.XX（+XX.XX）\n\n▼1日の総まとめと明日の戦略は、今夜の動画で解説します！ \nチャンネル登録してお待ちください\n👉 https://www.youtube.com/@sumikko-money?sub_confirmation=1 \n\n#日本株 #日経平均 #株式投資 #急騰銘柄`,
                     presentation: `表紙、まとめのスライドは不要\n以下に記載の内容以外を出力しないこと（以下に記載のない、説明なども一切不要）\n\n【出力内容】\n以下のスライドを作成\n・指数の値動き（大きな数字のレイアウト）\n・上昇率TOP5（表形式）\n・下落率TOP5（表形式）\n・業種別騰落率上位（表形式）\n・業種率騰落率下位（表形式）\n\n【出力形式の注意点】\n・全スライド\n順位の記載は不要\n画像は不要\n表内の文字はすべて黒字\n表の背景色は白のみ（交互に色を変えない）\n・指数\n小数点以下2桁まで記載\n・上昇率TOP5、下落率TOP5\n銘柄名、株価、前日比の列を出力\n株価は半角6文字、前日比は半角10文字が収まるぎりぎりの列幅にすること\n前日比は、変動幅(変動率)の形式で出力し、変動幅と変動率の間で改行する\n・業種別騰落率上位、業種率騰落率下位\n業種、変動率、PERの列を出力\n変動率は半角10文字、PERは半角10文字がギリギリ収まる列幅にすること`,
@@ -824,6 +825,50 @@ const App = {
                     },
                     prompt: "{{theme}}\nの動画内容を以下の文章の形式で100文字以内でまとめてください。形式に沿わない文章、文章以外の説明は一切記載しないこと。作成した文章を基にchatGPTで根拠資料を作成します。構成などはあなたが考える必要はありませんが、動画内で説明が必要な内容があれば、文章内に組み込んでください。なお、修正していいのは「〇〇」の箇所のみです。\n形式：\n〇〇をテーマに、〇〇に焦点を当て、〇〇について解説",
                     analysis: "{{intro}}する動画の根拠資料をレポート形式で作成してください。\n動画の長さは11分なので、その長さに相応の文章量にしてください。\n動画の構成は一切考える必要はありません。{{CommonNote_source}}",
+                    menberPrompt: "{{theme}}\nの動画について、以下の内容から作成しようと思いますが、問題ないですか？\n問題ない場合は、特典画像（正方形、背景白）をgeminiで作成するためのプロンプトを作成してください。geminiには以下の内容を読み込まないので、特典画像に記述する内容はすべてプロンプトに記載してください。geminiは日本語を正確に記述できるのでpythonを経由するような処理はプロンプトに記載しないでください。\n\n{{textbox}}",
+                    voice: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}",
+                    reportKk: `{{intro}}する{{reportKk}}`,
+                    presentation: "{{intro}}する{{reportSs}}",
+                    thumbnail: "{{intro}}する{{thumbnail}}",
+                    //titleBf: "{{intro}}する{{titleBf}}{{companyNamePrefix}}後ろに「｜AIテーマ分析」をつけてください。{{CommonNote_source}}",
+                    titleBf: "{{intro}}する{{titleBf}}{{companyNamePrefix}}後ろに「｜テーマ分析」をつけてください。{{CommonNote_source}}",
+                    videoContent: `{{intro}}`,
+                    summaryImage: `{{intro}}した内容をまとめてください\n{{notebookLMPresen1}}`,
+                    slideDocument: `{{intro}}する{{notebookLMPresenSs}}\n{{notebookLMPresen1}}{{notebookLMPresen2}}`,
+                    gaiyo: `{{intro}}する{{gaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
+                    xNotify: "{{intro}}する{{xNotifyText}}",
+                    shortTitle: "2分で{{intro}}する{{titleSBf}}{{companyNamePrefix}}後ろに「｜AIテーマ分析」をつけてください。{{CommonNote_source}}",
+                    shortGaiyo: `2分で{{intro}}する{{SgaiyoNote1}}{{gaiyoNote2}}{{priorityText}}{{gaiyoNote3}}{{gaiyoNote4}}{{gaiyoNote9}}`,
+                    noteArticle: `{{intro}}する{{reportNote}}`,
+                    menberinfografic: `注目企業の銘柄のみをまとめてください。説明など注目の理由は一切書かないでください\nカテゴリごとに区切り、銘柄を記載してください。\n* 情報過多を防ぐため、「簡潔」にまとめること。\n・背景は白、シンプルにまとめること。`
+                }
+            },
+            job_analysis: {
+                label: '就職分析',
+                intro: "{{theme}}",
+                checkboxDefaults: {'movie_info_report': true},
+                audioLength: "6分から10分",
+                ui: {
+                    dynamicInputs: [
+                        //'movie-information',
+                        'ticker-name-area',
+                        'ir-kabutan-buttons',
+                        'earnings-market-area',
+                        //'theme-input-section',
+                        //'textbox-area'
+                    ],
+                    searchBtns: []
+                },
+                buttonData: [
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                    { category: "【特典画像生成用】", services: [{ service: "gemini", buttons: [{ label: "原稿CK・特典画像プロンプト生成", copyId: "menberPrompt" }] }] },
+                    { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
+                    { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
+                    //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "まとめ画像", copyId: "summaryImage" }, { label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" },{ label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
+                    { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] }
+                ],
+                copyTexts: {
+                    analysis: "あなたは個人投資家の視点で企業分析を行うリサーチャーです。\n視聴者は投資家ではなく、就活生・転職者（ビジネス初心者を含む）です。\n\nアップロードされた資料（有価証券報告書／決算短信／決算説明資料・中期経営計画／統合報告書や人的資本開示があればそれも）をすべて読み込み、\n就活・転職の意思決定に役立つ「企業分析動画」の台本を作成してください。\n\n■ 絶対ルール（必ず守る）\n\n- 断定・煽り・誇張をしない（「数字上はこう読める」「〜の可能性が高まる」など条件付きで表現）\n- 面接対策・志望動機・自己PR・口コミ紹介・現場の愚痴は扱わない（範囲外）\n\n- 根拠が資料内にないことは書かない。ない場合は「資料上は確認できない／非開示」と明記する\n\n- 専門用語は必ず一言で噛み砕く（長い解説は禁止）\n\n- 各章で強調する指標は最大2つまで（間延び防止）\n\n- 視聴者が「自分で情報を拾える」ように、決算書や表は“全体→注目点ズーム→短いテロップ”で説明する前提で書く\n\n\n\n■ 範囲の宣言（重要）\n\nあなたは投資家の視点で「公開情報（決算書・IR）」を読む役割です。キャリアアドバイザーではありません。\n\nしたがって、次の内容は一切書かないでください（禁止）：\n\n\n\n- 面接のコツ、ES/履歴書、志望動機の作り方、自己PR、企業研究の一般論\n\n- 転職テクニック（年収交渉、職務経歴書、エージェント活用法、退職手続き）\n\n- 求人の選び方、職種適性診断、働き方の価値観の説教、口コミサイトの紹介\n\n- 「この会社に入るべき／入らないべき」といった個人の意思決定の代行\n\n\n\nこの動画で行うのは次の2つだけです：\n\n\n\n1. 決算書・IRから「会社の体力」「稼ぐ力」「人への投資と還元」「今後の戦略」を読み取る\n\n2. それが働く上でのリスク/メリットとして“どう見えるか”を、短い言葉に翻訳する\n\n（※最終判断は視聴者自身、という立場を守る）\n\n\n\n■ 出力する台本の口調（ここだけ必ず適用）\n\n\n\n- 台本のセリフは「ずんだもん口調」（語尾：〜なのだ／〜だね）\n\n- 視聴者への呼びかけは「あなた」\n\n- 「教える」は使わず、「見る／確認する／判断材料にする」を使う\n\n\n\n■ 台本の長さとテンポ\n\n\n\n- 全体：8〜10分想定\n\n- 各章の冒頭は必ず「この資料は何が見えるか／就活・転職で何に使えるか」を1〜2文で述べる（長くしない）\n\n\n\n■ 出力フォーマット（必ずこの見出しで）\n\n【0:00 フック】\n\n【0:10 OP定型（就職・転職＝投資）】\n\n【0:35 今日のゴール（持ち帰り3点）】\n\n【0:55 暫定結論（先出し）】\n\n【1:10 ビジネスモデル（稼ぎ頭）】\n\n【2:00 安全性（B/S＋CF：潰れないか）】\n\n【3:20 稼ぐ力（P/L：給料原資が増えるか）】\n\n【4:40 従業員（待遇の見え方と罠）】\n\n【6:00 人への投資と還元（人的資本＋財務の裏取り）】\n\n【7:10 未来（中計：伸びる領域）】\n\n【8:10 レッドフラッグ3つ（条件付き警告）】\n\n【9:10 最終結論（向いてる人／向かない人／勝ち筋／見送り条件）】\n\n【9:40 持ち帰りチェックリスト（次に自分で確認する項目）】\n\n\n\n■ 各章の書き方（必ずこの順番）\n\n各章は必ず次の順で書いてください。\n\n\n\n1. 今から見る資料は何か\n\n2. その資料で何が見えるか（就活・転職で何に使えるか）※1〜2文\n\n3. 全体像として読み上げる基礎データ（スライドに使う）\n\n4. 注目ポイントの選定（最大2つ）\n\n5. 数字上の読み（条件付き）\n\n6. 翻訳（就活向け1行＋転職向け1行）\n\n\n\n■ 読み上げ必須の基礎データ（資料にある範囲で必ず入れる）\n\n\n\n- ビジネスモデル：主要セグメント／稼ぎ頭（売上or利益が大きい部門）\n\n- 安全性（B/S＋CF）：\n\n・現金・預金\n\n・有利子負債\n\n・営業キャッシュフロー（直近と前年差が分かるなら両方）\n\n・自己資本比率\n\n- 稼ぐ力（P/L）：\n\n・売上高\n\n・営業利益\n\n・営業利益率\n\n・直近四半期の増減（短信で確認できる範囲）\n\n- 従業員：\n\n・平均年齢\n\n・平均勤続年数\n\n・平均年収\n\n- 人への投資と還元（出ているものだけ）：\n\n・賃上げ/処遇改善の方針（記述の要約）\n\n・教育/研修/リスキリング等の施策（要約）\n\n・KPI（研修時間、離職率、エンゲージメント等）※あれば数値\n\n- 未来（中計）：\n\n・重点投資領域（1つ）\n\n・投資額や目標（1つだけ。出ていれば）\n\n\n\n■ テンプレ臭を消す（必須）\n\n\n\n- 「企業固有の論点」を必ず1つ選び、【1:10】の章で提示してください。\n\n例：装置産業→設備投資と稼働率、SaaS→解約率、建設→受注残、金融→金利感応度 など\n\n- その論点は「就活・転職で何が変わるか」を1〜2文で言い切ってください。\n\n\n\n■ 最後に必ず入れること\n\n\n\n- 「この動画は企業選びの物差しで、最終判断はあなた」という一文\n\n- 次に見るべき“資料の場所”（例：有報の◯◯、中計の◯◯）を具体的に示す\n\n\n\n以上の条件に従い、アップロード資料の内容だけを根拠に台本を作成してください。",
                     menberPrompt: "{{theme}}\nの動画について、以下の内容から作成しようと思いますが、問題ないですか？\n問題ない場合は、特典画像（正方形、背景白）をgeminiで作成するためのプロンプトを作成してください。geminiには以下の内容を読み込まないので、特典画像に記述する内容はすべてプロンプトに記載してください。geminiは日本語を正確に記述できるのでpythonを経由するような処理はプロンプトに記載しないでください。\n\n{{textbox}}",
                     voice: "{{intro}}してください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}",
                     reportKk: `{{intro}}する{{reportKk}}`,
