@@ -1345,60 +1345,62 @@ Slide 1:
     },
 
     saveFormValues: function() {
-        const inputs = document.querySelectorAll('input[type="text"], input[type="date"], textarea');
+        const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="number"], textarea, select');
         const checkboxes = document.querySelectorAll('input[type="checkbox"]:not([id^="movie_info"])');
         const radios = document.querySelectorAll('input[type="radio"]:checked');
         
         inputs.forEach(input => {
             if (input.id) {
-                if (input.id === 'large-textbox1' || input.id === 'large-textbox2' || input.id === 'large-textbox3' || input.id === 'news-performance-text' || input.id === 'youtube-memo') {
-                    sessionStorage.setItem(input.id, input.value);
-                } else {
-                    this.state.savedFormValues[input.id] = input.value;
-                }
+                sessionStorage.setItem(input.id, input.value);
+                this.state.savedFormValues[input.id] = input.value;
             }
         });
         
         checkboxes.forEach(checkbox => {
+            sessionStorage.setItem(checkbox.id, checkbox.checked.toString());
             this.state.savedFormValues[checkbox.id] = checkbox.checked;
         });
         
         radios.forEach(radio => {
+            sessionStorage.setItem(radio.name, radio.value);
             this.state.savedFormValues[radio.name] = radio.value;
         });
     },
 
     restoreFormValues: function() {
-        Object.keys(this.state.savedFormValues).forEach(key => {
-            const element = document.getElementById(key) || document.querySelector(`input[name="${key}"][value="${this.state.savedFormValues[key]}"]`);
-            if (element) {
-                if (element.type === 'checkbox') {
-                    element.checked = this.state.savedFormValues[key];
-                } else if (element.type === 'radio') {
-                    element.checked = true;
-                } else {
-                    element.value = this.state.savedFormValues[key] || '';
-                }
+        const inputs = document.querySelectorAll('input[type="text"], input[type="date"], input[type="number"], textarea, select');
+        inputs.forEach(input => {
+            if (!input.id) return;
+            const stored = sessionStorage.getItem(input.id);
+            if (stored !== null) {
+                input.value = stored;
+            } else if (this.state.savedFormValues[input.id] !== undefined) {
+                input.value = this.state.savedFormValues[input.id] || '';
             }
         });
         
-        // textbox1、2、3、news-performance-text、youtube-memoはsessionStorageから復元
-        const textbox1 = document.getElementById('large-textbox1');
-        const textbox2 = document.getElementById('large-textbox2');
-        const textbox3 = document.getElementById('large-textbox3');
-        const newsPerformanceText = document.getElementById('news-performance-text');
-        const youtubeMemo = document.getElementById('youtube-memo');
-        const youtubeContent = document.getElementById('youtube-content');
-        const videoTitle = document.getElementById('video-title');
-        const videoUrl = document.getElementById('video-url');
-        if (textbox1) textbox1.value = sessionStorage.getItem('large-textbox1') || '';
-        if (textbox2) textbox2.value = sessionStorage.getItem('large-textbox2') || '';
-        if (textbox3) textbox3.value = sessionStorage.getItem('large-textbox3') || '';
-        if (newsPerformanceText) newsPerformanceText.value = sessionStorage.getItem('news-performance-text') || '';
-        if (youtubeMemo) youtubeMemo.value = sessionStorage.getItem('youtube-memo') || '';
-        if (youtubeContent) youtubeContent.value = sessionStorage.getItem('youtube-content') || '';
-        if (videoTitle) videoTitle.value = sessionStorage.getItem('video-title') || '';
-        if (videoUrl) videoUrl.value = sessionStorage.getItem('video-url') || '';
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            if (!checkbox.id) return;
+            const stored = sessionStorage.getItem(checkbox.id);
+            if (stored !== null) {
+                checkbox.checked = stored === 'true';
+            } else if (this.state.savedFormValues[checkbox.id] !== undefined) {
+                checkbox.checked = !!this.state.savedFormValues[checkbox.id];
+            }
+        });
+        
+        const radios = document.querySelectorAll('input[type="radio"]');
+        const radioNames = new Set();
+        radios.forEach(radio => radio.name && radioNames.add(radio.name));
+        radioNames.forEach(name => {
+            const stored = sessionStorage.getItem(name);
+            const fallback = this.state.savedFormValues[name];
+            const valueToSet = stored !== null ? stored : fallback;
+            if (valueToSet === undefined || valueToSet === null) return;
+            const radio = document.querySelector(`input[name="${name}"][value="${valueToSet}"]`);
+            if (radio) radio.checked = true;
+        });
     },
 
     // 銘柄データを保存するオブジェクト
@@ -2042,8 +2044,8 @@ Slide 1:
                             if (analysis === 'youtube_posting' && (btn.copyId === 'register' || btn.copyId === 'registerNew')) {
                                 const youtubeUrl = document.getElementById('youtube-url')?.value || '';
                                 const youtubeNewTitle = document.getElementById('youtube-new-title')?.value || '';
-                                if (youtubeUrl) sessionStorage.setItem('video-title', youtubeNewTitle);
-                                if (youtubeNewTitle) sessionStorage.setItem('video-url', youtubeUrl);
+                                if (youtubeNewTitle) sessionStorage.setItem('video-title', youtubeNewTitle);
+                                if (youtubeUrl) sessionStorage.setItem('video-url', youtubeUrl);
                             }
                             // chatGPTボタンの場合、コンテンツ作成以外ならtextbox2に貼り付け
                             if (service.service === 'chatGPT' && analysis !== 'content_creation') {
