@@ -828,7 +828,7 @@ const App = {
                             : codes.map(code => `https://us.kabutan.jp/stocks/${code}/\nhttps://us.kabutan.jp/stocks/${code}/finance`).join('\n');
                     },
                     prompt: "{{theme}}\nの動画内容を以下の文章の形式で100文字以内でまとめてください。形式に沿わない文章、文章以外の説明は一切記載しないこと。作成した文章を基にchatGPTで根拠資料を作成します。構成などはあなたが考える必要はありませんが、動画内で説明が必要な内容があれば、文章内に組み込んでください。なお、修正していいのは「〇〇」の箇所のみです。\n形式：\n〇〇をテーマに、〇〇に焦点を当て、〇〇について解説",
-                    analysis: "{{intro}}する動画の根拠資料をレポート形式で作成してください。\n動画の長さは11分なので、その長さに相応の文章量にしてください。\n動画の構成は一切考える必要はありません。{{CommonNote_source}}",
+                    analysis: "{{intro}}する動画の根拠資料をレポート形式で作成してください。\n動画の長さは11分なので、その長さに相応の文章量にしてください。\n動画の構成は一切考える必要はありません。\n視聴者は個人投資家です。技術面ではなく、投資に関する内容をメインにしてください。{{CommonNote_source}}",
                     menberPrompt: "{{theme}}\nの動画について、以下の内容から作成しようと思いますが、問題ないですか？\n問題ない場合は、特典画像（正方形、背景白）をgeminiで作成するためのプロンプトを作成してください。geminiには以下の内容を読み込まないので、特典画像に記述する内容はすべてプロンプトに記載してください。geminiは日本語を正確に記述できるのでpythonを経由するような処理はプロンプトに記載しないでください。\n\n{{textbox}}",
                     voice: "{{intro}}してください。\n視聴者は個人投資家です。技術面ではなく、投資に関する内容をメインにしてください。{{VoiceNote_Principle}}{{VoiceNote_Read}}{{readingNote}}{{VoiceNote_Basic}}{{VoiceNote_Ks}}{{VoiceNote_Size}}{{VoiceNote_tatoe}}{{VoiceNote_kaihi}}",
                     reportKk: `{{intro}}する{{reportKk}}\n視聴者は個人投資家です。技術面ではなく、投資に関する内容をメインにしてください。`,
