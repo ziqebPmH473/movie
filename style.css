@@ -1,439 +1,567 @@
-/* -------------------------------------------------------------------------
+/* =========================================================================
    グローバル・設定
-   ------------------------------------------------------------------------- */
+   ========================================================================= */
 :root {
-    --color-primary: #4f46e5;
-    --color-primary-dark: #4338ca;
-    --color-text-dark: #1f2937;
+    /* カラーパレット */
+    --color-primary:       #3b4fff;
+    --color-primary-dark:  #2a3ae0;
+    --color-primary-light: #eef0ff;
+    --color-accent:        #0ea5e9;
+
+    --color-text-dark:  #111827;
+    --color-text-mid:   #374151;
     --color-text-muted: #6b7280;
-    --color-border: #e5e7eb;
-    --color-bg-light: #f9fafb;
-    --color-bg-card: #ffffff;
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --color-border:     #e2e8f0;
+    --color-bg-page:    #f1f5f9;
+    --color-bg-card:    #ffffff;
 
-    --spacing-xs: 0.25rem;
-    --spacing-sm: 0.5rem;
-    --spacing-md: 0.75rem;
-    --spacing-lg: 1rem;
+    /* ボタンカテゴリ別カラー */
+    --btn-rank-bg:    #0f766e;   /* ランキング作成 / 分析 */
+    --btn-rank-hover: #0d6460;
+    --btn-pre-bg:     #4338ca;   /* 音声生成前 */
+    --btn-pre-hover:  #3730a3;
+    --btn-presen-bg:  #b45309;   /* プレゼン資料 */
+    --btn-presen-hover:#92400e;
+    --btn-post-bg:    #be185d;   /* 音声生成後 */
+    --btn-post-hover: #9d174d;
+    --btn-default-bg: #475569;
+    --btn-default-hover:#334155;
 
-    --border-radius-sm: 0.25rem;
-    --border-radius-md: 0.375rem;
-    --border-radius-lg: 0.5rem;
+    /* シャドウ */
+    --shadow-xs: 0 1px 2px rgba(0,0,0,.04);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+    --shadow-md: 0 4px 8px -2px rgba(0,0,0,.10), 0 2px 4px -2px rgba(0,0,0,.06);
+
+    /* スペーシング */
+    --sp-xs: 0.25rem;
+    --sp-sm: 0.5rem;
+    --sp-md: 0.75rem;
+    --sp-lg: 1rem;
+    --sp-xl: 1.25rem;
+
+    /* 角丸 */
+    --r-sm:  4px;
+    --r-md:  8px;
+    --r-lg: 12px;
+    --r-pill: 999px;
 }
 
+/* =========================================================================
+   リセット & ベース
+   ========================================================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans JP', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                 'Helvetica Neue', Arial, 'Noto Sans JP', sans-serif;
     color: var(--color-text-dark);
     line-height: 1.5;
-    background-color: var(--color-bg-light);
-    padding: var(--spacing-md);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    background: var(--color-bg-page);
+    padding: var(--sp-md);
     min-height: 100vh;
 }
 
 .container {
-    max-width: none;
-    width: 100%;
-    margin: 0;
-    padding: var(--spacing-md);
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--sp-sm);
 }
 
-/* -------------------------------------------------------------------------
-   カードスタイル
-   ------------------------------------------------------------------------- */
-.card {
-    background-color: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-lg);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
-    box-shadow: var(--shadow-sm);
-    transition: all 0.2s ease-in-out;
-}
-
-.card:hover {
-    box-shadow: var(--shadow-md);
-}
-
-.date-control-area,
-.select-area,
-#dynamic-input-container,
-#button-area {
-    margin-bottom: var(--spacing-md);
-    padding: var(--spacing-md);
-    background-color: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-md);
-}
+/* =========================================================================
+   日付バー
+   ========================================================================= */
 .date-control-area {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--spacing-md);
+    gap: var(--sp-md);
+    margin-bottom: var(--sp-md);
+    padding: var(--sp-sm) var(--sp-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-xs);
 }
 
-/* -------------------------------------------------------------------------
+.date-control-area label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+#date-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-sm);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
+
+#date-area span {
+    padding: 2px var(--sp-sm);
+    background: var(--color-bg-page);
+    border-radius: var(--r-pill);
+}
+
+/* =========================================================================
+   カテゴリ選択（ラジオボタン → ピルボタン）
+   ========================================================================= */
+.select-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--sp-md);
+    padding: var(--sp-sm) var(--sp-md);
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-xs);
+}
+
+/* ラジオは非表示 */
+.select-area input[type="radio"] {
+    display: none;
+}
+
+/* label → ピルボタン */
+.select-area label {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--r-pill);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-mid);
+    background: var(--color-bg-page);
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s, box-shadow .15s;
+    white-space: nowrap;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.select-area label:hover {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary-dark);
+}
+
+.select-area input[type="radio"]:checked + span,
+.select-area input[type="radio"]:checked ~ * {
+    /* ← CSSだけでは兄弟ラベルを選択できないため JS で .active を付与 */
+}
+
+/* JS で label に .active クラスを付ける想定 */
+.select-area label.active {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+    box-shadow: 0 2px 6px rgba(59,79,255,.35);
+}
+
+/* ラジオが checked のとき直後の span（従来の span 構造用） */
+.select-area input[type="radio"]:checked + span {
+    /* 未使用だが念のため */
+}
+
+/* =========================================================================
+   動的入力コンテナ
+   ========================================================================= */
+#dynamic-input-container {
+    margin-bottom: var(--sp-md);
+}
+
+/* =========================================================================
+   カード（入力グループの枠）
+   ========================================================================= */
+.card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--r-md);
+    padding: var(--sp-md) var(--sp-lg);
+    margin-bottom: var(--sp-sm);
+    box-shadow: var(--shadow-xs);
+}
+
+.card:hover { box-shadow: var(--shadow-sm); }
+
+/* input-group 系 */
+.input-group-block,
+.input-group-inline,
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-sm);
+    align-items: center;
+    margin-bottom: var(--sp-sm);
+}
+
+.input-group-block { flex-direction: column; align-items: flex-start; }
+
+/* 動的入力コンテナ内の各セクション */
+#dynamic-input-container > div,
+#dynamic-input-container > #ticker-name-area,
+#dynamic-input-container .input-group-block {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--r-md);
+    padding: var(--sp-sm) var(--sp-md);
+    margin-bottom: var(--sp-sm);
+    box-shadow: var(--shadow-xs);
+}
+
+/* =========================================================================
    フォーム要素
-   ------------------------------------------------------------------------- */
+   ========================================================================= */
 label {
+    font-size: 0.74rem;
     font-weight: 600;
     color: var(--color-text-muted);
-    font-size: 0.75rem;
 }
 
 input[type="date"],
 input[type="text"],
 input[type="number"],
-textarea {
-    width: 100%;
-    padding: 0.25rem 0.5rem;
+textarea,
+select {
+    padding: 4px 8px;
     border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-sm);
-    background-color: #fff;
-    font-size: 0.75rem;
+    border-radius: var(--r-sm);
+    background: #fff;
+    font-size: 0.8rem;
+    font-family: inherit;
     color: var(--color-text-dark);
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-/* 短い入力フィールド（日付、ティッカー、時間） */
-input[type="date"],
-#input-ticker,
-#news-time {
-    width: 120px;
-    flex: none;
-}
-
-/* 中程度の入力フィールド */
-#input-name,
-#input-reading,
-#input-theme,
-#news-source {
-    width: 200px;
-    flex: none;
-}
-
-/* 長い入力フィールド */
-#input-period,
-#news-content {
-    width: 300px;
-    flex: none;
-}
-
-/* 横幅いっぱいの入力フィールド */
-#input-theme,
-#large-textbox1,
-#large-textbox2,
-#large-textbox3 {
-    width: 100%;
-    flex: 1;
-}
-
-/* デュアルテキストボックスエリア */
-#dual-textbox-area {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-}
-
-#dual-textbox-area textarea {
-    min-height: 120px;
+    transition: border-color .15s, box-shadow .15s;
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+    box-shadow: 0 0 0 3px rgba(59,79,255,.15);
 }
+
+/* 幅指定 */
+input[type="date"],
+#input-ticker,
+#news-time { width: 120px; flex: none; }
+
+#input-name,
+#input-reading,
+#news-source { width: 180px; flex: none; }
+
+#input-period,
+#news-content { width: 280px; flex: none; }
+
+#input-theme,
+#large-textbox1,
+#large-textbox2,
+#large-textbox3 { width: 100%; flex: 1; }
 
 textarea {
     resize: vertical;
-    min-height: 60px;
+    min-height: 64px;
     box-sizing: border-box;
+    line-height: 1.5;
 }
 
-/* -------------------------------------------------------------------------
-   ラジオボタンとチェックボックス
-   ------------------------------------------------------------------------- */
-.select-area {
+/* 参考データチェックボックス */
+#dynamic-input-container label input[type="checkbox"] {
+    accent-color: var(--color-primary);
+    margin-right: 3px;
+}
+
+/* ラジオボタン（インライン） */
+#dynamic-input-container input[type="radio"] {
+    accent-color: var(--color-primary);
+    margin-right: 3px;
+}
+
+/* =========================================================================
+   ティッカー・銘柄名 行
+   ========================================================================= */
+.ticker-name-row {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-sm);
+    gap: var(--sp-sm);
+    align-items: center;
+    width: 100%;
 }
 
-.select-area button {
-    background-color: #ffffff;
-    color: var(--color-text-dark);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-md);
-    padding: 0.25rem 0.5rem;
+.ticker-name-row #input-ticker  { width: 80px; }
+.ticker-name-row #input-name    { width: 170px; }
+.ticker-name-row #input-reading { width: 150px; }
+.ticker-name-row input          { flex: none; }
+
+.search-buttons {
+    display: flex;
+    gap: var(--sp-sm);
+    flex-shrink: 0;
+}
+
+.search-buttons button {
+    padding: 4px 10px;
     font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
-    flex-grow: 1;
-    min-width: calc(50% - var(--spacing-sm) / 2);
+    white-space: nowrap;
+    background: var(--color-accent);
+}
+.search-buttons button:hover {
+    background: #0284c7;
 }
 
-.select-area button.active,
-.select-area button:hover {
-    background-color: var(--color-primary);
-    color: #ffffff;
-    border-color: var(--color-primary);
-    box-shadow: var(--shadow-sm);
-}
-
-/* -------------------------------------------------------------------------
-   ボタン
-   ------------------------------------------------------------------------- */
+/* =========================================================================
+   ボタンエリア全体
+   ========================================================================= */
 #button-area {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: var(--sp-sm);
+    margin-bottom: var(--sp-md);
 }
 
+/* =========================================================================
+   service-group（カテゴリ単位の枠）
+   ========================================================================= */
 .service-group {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    border-radius: var(--border-radius-md);
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px;
+    padding: var(--sp-sm) var(--sp-md);
+    background: var(--color-bg-card);
     border: 1px solid var(--color-border);
+    border-left: 4px solid var(--color-border);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-xs);
 }
 
-.category-title,
-.service-name {
-    font-weight: 600;
-    font-size: 0.7rem;
+/* カテゴリ左ボーダーカラーを文字で分岐 */
+.service-group:has(.category-title:empty)                              { border-left-color: var(--btn-default-bg); }
+
+/* JS が category-title テキストに応じてクラスを付与できる場合は使う */
+.service-group.cat-rank   { border-left-color: var(--btn-rank-bg); }
+.service-group.cat-pre    { border-left-color: var(--btn-pre-bg); }
+.service-group.cat-presen { border-left-color: var(--btn-presen-bg); }
+.service-group.cat-post   { border-left-color: var(--btn-post-bg); }
+
+/* カテゴリタイトル */
+.category-title {
+    flex: 0 0 100%;
+    font-size: 0.68rem;
+    font-weight: 700;
     color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin-bottom: 2px;
+}
+
+/* サービス名 */
+.service-name {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    padding-right: var(--sp-sm);
+    white-space: nowrap;
+    align-self: center;
+}
+
+.service-name a {
+    color: inherit;
+    text-decoration: none;
+}
+.service-name a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* ボタン行 */
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    width: 100%;
+    align-items: center;
+}
+
+/* =========================================================================
+   ボタン 基本スタイル
+   ========================================================================= */
+button {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--btn-default-bg);
+    color: #fff;
+    border: none;
+    border-radius: var(--r-sm);
+    padding: 5px 10px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background .15s, transform .1s, box-shadow .15s;
     white-space: nowrap;
 }
 
-.service-name {
-    padding-right: var(--spacing-sm);
-}
-
-.service-group .button-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    width: 100%;
-}
-
-/* buttons-areaを横並びにする修正 */
-#button-area .service-group > div {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-    width: 100%;
-}
-
-button {
-    background-color: #6b7280;
-    color: #ffffff;
-    border: none;
-    border-radius: var(--border-radius-md);
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
-}
-
 button:hover {
-    background-color: #4b5563;
+    background: var(--btn-default-hover);
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-sm);
 }
 
 button:active {
     transform: translateY(0);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
 }
 
-/* -------------------------------------------------------------------------
-   特定のレイアウト調整
-   ------------------------------------------------------------------------- */
-.input-group-block {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
+/* =========================================================================
+   カテゴリ別ボタンカラー（service-group の cat- クラスで継承）
+   ========================================================================= */
+.service-group.cat-rank   .button-row button { background: var(--btn-rank-bg); }
+.service-group.cat-rank   .button-row button:hover { background: var(--btn-rank-hover); }
+
+.service-group.cat-pre    .button-row button { background: var(--btn-pre-bg); }
+.service-group.cat-pre    .button-row button:hover { background: var(--btn-pre-hover); }
+
+.service-group.cat-presen .button-row button { background: var(--btn-presen-bg); }
+.service-group.cat-presen .button-row button:hover { background: var(--btn-presen-hover); }
+
+.service-group.cat-post   .button-row button { background: var(--btn-post-bg); }
+.service-group.cat-post   .button-row button:hover { background: var(--btn-post-hover); }
+
+/* =========================================================================
+   select-area 内のボタン（カテゴリタブ用、上書き）
+   ========================================================================= */
+.select-area button {
+    background: var(--color-bg-page);
+    color: var(--color-text-mid);
+    border: 1px solid var(--color-border);
+    border-radius: var(--r-pill);
+    padding: 4px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    box-shadow: none;
 }
 
-.input-group-inline {
-    justify-content: flex-start;
+.select-area button.active,
+.select-area button:hover {
+    background: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+    box-shadow: 0 2px 6px rgba(59,79,255,.3);
+    transform: none;
 }
 
-.input-group-inline > * {
-    flex: 0 0 auto;
-}
-
-.input-group-inline label,
-.input-group-inline input {
-    flex: 1 1 auto;
-    min-width: 120px;
-}
-
-.input-group-flex {
-    flex-grow: 1;
-    min-width: 100px;
-}
-
-
-.service-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5em;
-}
-.service-group .category-title,
-.service-group .service-name {
-  flex: 0 0 100%;
-}
-
-
-/* ラジオは非表示 */
-.select-area input[type="radio"] {
-  display: none;
-}
-
-/* label 全体をボタンに */
-.select-area label {
-  display: inline-block;
-  padding: 0.25em 0.5em;
-  margin: 0.1em;
-  border-radius: 15px;
-  font-size: 12px;
-  color: #333;
-  background: #f1f3f4;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-/* 選択時（label 自体を対象にする） */
-.select-area input[type="radio"]:checked + span {
-  background: #6200ee;
-  color: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  border-radius: 20px;
-  padding: 0.4em 0.8em;
-}
-
-.hidden {
-  display: none !important;
-}
-
-/* ティッカー・銘柄名・読みがなの横並びレイアウト */
-.ticker-name-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-sm);
-  align-items: center;
-  width: 100%;
-}
-
-.ticker-name-row input {
-  flex: none;
-}
-
-.ticker-name-row #input-ticker {
-  width: 80px;
-}
-
-.ticker-name-row #input-name {
-  width: 180px;
-}
-
-.ticker-name-row #input-reading {
-  width: 160px;
-}
-
-.search-buttons {
-  display: flex;
-  gap: var(--spacing-sm);
-  flex-shrink: 0;
-}
-
-.search-buttons button {
-  white-space: nowrap;
-  padding: 0.5rem 0.75rem;
-}
-
-.jpx-button-row {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.jpx-button-row button {
-  padding: 0.5rem 0.75rem;
-}
-
-/* -------------------------------------------------------------------------
-   動的銘柄入力の固定グリッドレイアウト
-   ------------------------------------------------------------------------- */
+/* =========================================================================
+   動的銘柄入力（決算まとめ）
+   ========================================================================= */
 #dynamic-stocks-container {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
-    width: 100%;
+    gap: var(--sp-sm);
 }
 
-.stock-item {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm);
+.stock-input-row {
+    background: var(--color-bg-card);
     border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-sm);
-    background-color: var(--color-bg-card);
+    border-radius: var(--r-md);
+    padding: var(--sp-sm) var(--sp-md);
+    box-shadow: var(--shadow-xs);
 }
 
-.stock-item label {
-    min-width: 60px;
-    flex-shrink: 0;
+.stock-input-row > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
 }
 
-.stock-item input[type="text"] {
-    flex: 1;
-    min-width: 120px;
+/* =========================================================================
+   テキストボックスエリア
+   ========================================================================= */
+#dual-textbox-area {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
 }
 
-.stock-item input[type="text"]:first-of-type {
-    max-width: 140px;
+#dual-textbox-area textarea { min-height: 100px; }
+
+/* =========================================================================
+   その他 ユーティリティ
+   ========================================================================= */
+.hidden { display: none !important; }
+
+.input-group-flex { flex-grow: 1; min-width: 100px; }
+
+/* =========================================================================
+   音声長ラジオ / ショートチェックボックス
+   ========================================================================= */
+.button-row input[type="radio"],
+.button-row input[type="checkbox"] {
+    accent-color: var(--color-primary);
+    cursor: pointer;
+    margin-right: 2px;
 }
 
-.stock-item input[type="text"]:last-of-type {
-    max-width: 120px;
+.button-row label {
+    font-size: 0.72rem;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
 }
 
-.stock-item button {
-    flex-shrink: 0;
-    padding: 0.5rem 0.75rem;
-    white-space: nowrap;
+/* =========================================================================
+   特典・JPX行
+   ========================================================================= */
+.jpx-button-row { display: flex; }
+.jpx-button-row button { padding: 4px 10px; }
+
+/* =========================================================================
+   youtube-posting エリア
+   ========================================================================= */
+#youtube-posting-area .input-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-sm);
+    align-items: center;
+    margin-bottom: var(--sp-sm);
 }
 
-/* タブレット対応: 2列表示 */
-@media (max-width: 1024px) {
-    #dynamic-stocks-container {
-        grid-template-columns: 1fr 1fr;
-    }
+#youtube-posting-area label {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.78rem;
+    color: var(--color-text-mid);
+    cursor: pointer;
 }
 
-/* スマホ対応: 1列表示 */
+/* =========================================================================
+   レスポンシブ
+   ========================================================================= */
 @media (max-width: 768px) {
-    #dynamic-stocks-container {
-        grid-template-columns: 1fr;
-    }
-    
-    .stock-item {
-        flex-wrap: wrap;
-    }
-    
-    .stock-item input[type="text"] {
-        min-width: 100px;
-        max-width: none;
-    }
+    .container { padding: var(--sp-xs); }
+
+    .ticker-name-row #input-name,
+    .ticker-name-row #input-reading { width: 130px; }
+
+    #input-period,
+    #news-content { width: 100%; }
+
+    .stock-input-row > div { flex-wrap: wrap; }
+}
+
+/* =========================================================================
+   カテゴリ別ボーダー自動付与（CSS :has セレクタ対応ブラウザ向け）
+   JS でクラス付与している場合は不要だが念のため残す
+   ========================================================================= */
+.service-group:has(.category-title) {
+    /* デフォルト維持 */
 }

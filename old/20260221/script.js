@@ -1241,7 +1241,6 @@ Slide 1:
                 firstRadio.checked = true;
                 this.handleAnalysisChange();
                 this.forceShowContent();
-                this.activateFirstRadioLabel();
                 console.log('Initialization successful');
                 return;
             }
@@ -1303,22 +1302,6 @@ Slide 1:
 
     renderCategoryRadios: function() {
         this.dom.selectArea.innerHTML = this.CONFIG.uiTemplates['analysis-radios'];
-        // ラジオ変更時に label.active を付け替える
-        this.dom.selectArea.addEventListener('change', (e) => {
-            if (e.target.name === 'analysis') {
-                this.dom.selectArea.querySelectorAll('label').forEach(l => l.classList.remove('active'));
-                const checkedLabel = e.target.closest('label');
-                if (checkedLabel) checkedLabel.classList.add('active');
-            }
-        });
-    },
-
-    activateFirstRadioLabel: function() {
-        const first = this.dom.selectArea.querySelector('input[name="analysis"]:checked');
-        if (first) {
-            const lbl = first.closest('label');
-            if (lbl) lbl.classList.add('active');
-        }
     },
 
     forceShowContent: function() {
@@ -1934,12 +1917,6 @@ Slide 1:
         settings.buttonData.forEach(category => {
             const categoryDiv = document.createElement("div");
             categoryDiv.classList.add("service-group");
-            // カテゴリ別カラークラスを付与
-            const catLabel = category.category || '';
-            if (catLabel.includes('ランキング') || catLabel.includes('分析')) categoryDiv.classList.add('cat-rank');
-            else if (catLabel.includes('音声生成前'))  categoryDiv.classList.add('cat-pre');
-            else if (catLabel.includes('プレゼン'))    categoryDiv.classList.add('cat-presen');
-            else if (catLabel.includes('音声生成後'))  categoryDiv.classList.add('cat-post');
 
             const categoryTitle = document.createElement("div");
             categoryTitle.classList.add("category-title");
