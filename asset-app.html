@@ -10,9 +10,7 @@
 <body>
 <div class="app-wrapper">
   <header class="app-header">
-    <div class="header-title">
-      <h1>資産管理</h1>
-    </div>
+    <div class="header-title"><h1>資産管理</h1></div>
     <nav class="tab-nav">
       <button class="tab-btn active" data-tab="dashboard">ダッシュボード</button>
       <button class="tab-btn" data-tab="portfolio">ポートフォリオ</button>
@@ -20,6 +18,7 @@
       <button class="tab-btn" data-tab="analysis">予実分析</button>
       <button class="tab-btn" data-tab="simulation">シミュレーション</button>
       <button class="tab-btn" data-tab="import">取り込み</button>
+      <button class="tab-btn" data-tab="master">マスタ管理</button>
     </nav>
   </header>
 
@@ -47,7 +46,7 @@
           </div>
         </div>
         <div class="dashboard-hint">
-          <p>データがない場合は「<strong>取り込み</strong>」タブからCSVを読み込むか、「<strong>月次管理</strong>」「<strong>ポートフォリオ</strong>」タブから手動入力してください。</p>
+          <p>データがない場合は「<strong>取り込み</strong>」タブからCSVを読み込むか、各タブから手動入力してください。</p>
           <button class="btn btn-outline btn-sm" id="btn-load-sample">サンプルデータを読み込む</button>
         </div>
       </div>
@@ -63,7 +62,7 @@
       </div>
       <div class="portfolio-charts">
         <div class="chart-card-sm">
-          <h3>資産クラス別</h3>
+          <h3>資産カテゴリ別</h3>
           <div class="chart-wrap-sm"><canvas id="chart-portfolio-category"></canvas></div>
         </div>
         <div class="chart-card-sm">
@@ -135,18 +134,9 @@
         </div>
       </div>
       <div class="analysis-charts">
-        <div class="chart-card-wide">
-          <h3>収入 — 予実比較</h3>
-          <canvas id="chart-analysis-income"></canvas>
-        </div>
-        <div class="chart-card-wide">
-          <h3>支出 — 予実比較</h3>
-          <canvas id="chart-analysis-expense"></canvas>
-        </div>
-        <div class="chart-card-wide">
-          <h3>投資 — 予実比較</h3>
-          <canvas id="chart-analysis-investment"></canvas>
-        </div>
+        <div class="chart-card-wide"><h3>収入 — 予実比較</h3><canvas id="chart-analysis-income"></canvas></div>
+        <div class="chart-card-wide"><h3>支出 — 予実比較</h3><canvas id="chart-analysis-expense"></canvas></div>
+        <div class="chart-card-wide"><h3>投資 — 予実比較</h3><canvas id="chart-analysis-investment"></canvas></div>
       </div>
       <div class="table-wrapper" style="margin-top:20px">
         <table class="data-table analysis-table">
@@ -165,48 +155,18 @@
 
     <!-- ========== SIMULATION ========== -->
     <section id="tab-simulation" class="tab-panel">
-      <div class="section-header">
-        <h2>資産シミュレーション</h2>
-      </div>
+      <div class="section-header"><h2>資産シミュレーション</h2></div>
       <div class="simulation-container">
         <div class="sim-params card">
           <h3>シミュレーション設定</h3>
           <div class="param-grid">
-            <div class="param-row">
-              <label>現在の年齢</label>
-              <input type="number" id="sim-current-age" value="35" min="18" max="80">
-              <span>歳</span>
-            </div>
-            <div class="param-row">
-              <label>引退目標年齢</label>
-              <input type="number" id="sim-retire-age" value="65" min="40" max="100">
-              <span>歳</span>
-            </div>
-            <div class="param-row">
-              <label>現在の総資産</label>
-              <input type="number" id="sim-current-assets" value="10000000" step="100000">
-              <span>円</span>
-            </div>
-            <div class="param-row">
-              <label>月次積立額</label>
-              <input type="number" id="sim-monthly-invest" value="100000" step="10000">
-              <span>円</span>
-            </div>
-            <div class="param-row">
-              <label>期待年利回り</label>
-              <input type="number" id="sim-annual-return" value="5" min="0" max="20" step="0.1">
-              <span>%</span>
-            </div>
-            <div class="param-row">
-              <label>引退後の月支出</label>
-              <input type="number" id="sim-retire-expense" value="250000" step="10000">
-              <span>円</span>
-            </div>
-            <div class="param-row">
-              <label>インフレ率</label>
-              <input type="number" id="sim-inflation" value="2" min="0" max="10" step="0.1">
-              <span>%</span>
-            </div>
+            <div class="param-row"><label>現在の年齢</label><input type="number" id="sim-current-age" value="35" min="18" max="80"><span>歳</span></div>
+            <div class="param-row"><label>引退目標年齢</label><input type="number" id="sim-retire-age" value="65" min="40" max="100"><span>歳</span></div>
+            <div class="param-row"><label>現在の総資産</label><input type="number" id="sim-current-assets" value="10000000" step="100000"><span>円</span></div>
+            <div class="param-row"><label>月次積立額</label><input type="number" id="sim-monthly-invest" value="100000" step="10000"><span>円</span></div>
+            <div class="param-row"><label>期待年利回り</label><input type="number" id="sim-annual-return" value="5" min="0" max="20" step="0.1"><span>%</span></div>
+            <div class="param-row"><label>引退後の月支出</label><input type="number" id="sim-retire-expense" value="250000" step="10000"><span>円</span></div>
+            <div class="param-row"><label>インフレ率</label><input type="number" id="sim-inflation" value="2" min="0" max="10" step="0.1"><span>%</span></div>
             <div class="param-row">
               <label>表示シナリオ</label>
               <select id="sim-scenario" style="width:100%">
@@ -222,9 +182,7 @@
         </div>
         <div class="sim-results">
           <div class="sim-kpis" id="sim-kpis"></div>
-          <div class="chart-card-wide">
-            <canvas id="chart-simulation"></canvas>
-          </div>
+          <div class="chart-card-wide"><canvas id="chart-simulation"></canvas></div>
           <div class="table-wrapper" id="sim-table-wrapper"></div>
         </div>
       </div>
@@ -232,21 +190,13 @@
 
     <!-- ========== IMPORT ========== -->
     <section id="tab-import" class="tab-panel">
-      <div class="section-header">
-        <h2>データ取り込み</h2>
-      </div>
+      <div class="section-header"><h2>データ取り込み</h2></div>
       <div class="import-container">
-        <!-- Securities -->
         <div class="import-card card">
           <h3>証券会社データ</h3>
-          <p class="hint">SBI証券・楽天証券・マネックス証券のCSV（保有残高）</p>
+          <p class="hint">マスタ管理タブで追加した証券会社のCSVを読み込みます</p>
           <div class="import-form">
-            <select id="securities-type">
-              <option value="sbi">SBI証券</option>
-              <option value="rakuten">楽天証券</option>
-              <option value="monex">マネックス証券</option>
-              <option value="generic">汎用（自動マッピング）</option>
-            </select>
+            <select id="securities-type" id="securities-type"></select>
             <label class="file-label" id="lbl-securities-file">
               <input type="file" id="securities-file" accept=".csv,.txt">
               <span>CSVファイルを選択</span>
@@ -255,11 +205,9 @@
           </div>
           <div id="securities-preview" class="import-preview"></div>
         </div>
-
-        <!-- MoneyForward -->
         <div class="import-card card">
           <h3>マネーフォワード ME</h3>
-          <p class="hint">マネーフォワード ME からエクスポートしたCSV</p>
+          <p class="hint">マネーフォワード ME からエクスポートしたCSVを読み込みます<br>カテゴリの分類はマスタ管理で設定できます</p>
           <div class="import-form">
             <select id="mf-type">
               <option value="cashflow">入出金履歴</option>
@@ -273,16 +221,10 @@
           </div>
           <div id="mf-preview" class="import-preview"></div>
         </div>
-
-        <!-- Import History -->
         <div class="import-card card">
           <h3>取り込み履歴</h3>
-          <div id="import-history">
-            <p class="text-secondary">取り込み履歴はありません</p>
-          </div>
+          <div id="import-history"><p class="text-muted" style="font-size:13px">取り込み履歴はありません</p></div>
         </div>
-
-        <!-- Data Management -->
         <div class="import-card card">
           <h3>データ管理</h3>
           <div class="data-actions">
@@ -295,6 +237,93 @@
       </div>
     </section>
 
+    <!-- ========== MASTER ========== -->
+    <section id="tab-master" class="tab-panel">
+      <div class="section-header"><h2>マスタ管理</h2></div>
+      <div class="master-nav" id="master-nav">
+        <button class="master-tab-btn active" data-master="securities">証券会社CSVレイアウト</button>
+        <button class="master-tab-btn" data-master="cashflow">収支カテゴリ</button>
+        <button class="master-tab-btn" data-master="assetcat">資産カテゴリ</button>
+        <button class="master-tab-btn" data-master="account">口座種別</button>
+      </div>
+
+      <!-- 証券会社レイアウト -->
+      <div id="master-securities" class="master-panel active">
+        <div class="master-panel-header">
+          <p class="hint" style="margin:0">各証券会社のCSVファイルで使われている列名を登録します。複数の候補がある場合はカンマ区切りで入力してください。</p>
+          <button class="btn btn-primary btn-sm" id="btn-add-securities-layout">＋ 証券会社を追加</button>
+        </div>
+        <div class="table-wrapper" style="margin-top:12px">
+          <table class="data-table" id="tbl-securities-layouts">
+            <thead>
+              <tr>
+                <th class="col-name">証券会社名</th>
+                <th>銘柄名 列</th>
+                <th>コード 列</th>
+                <th>数量 列</th>
+                <th>取得単価 列</th>
+                <th>現在単価 列</th>
+                <th>既定カテゴリ</th>
+                <th>既定口座</th>
+                <th class="col-actions">操作</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-securities-layouts"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 収支カテゴリ -->
+      <div id="master-cashflow" class="master-panel">
+        <div class="master-panel-header">
+          <p class="hint" style="margin:0">収入・支出・投資の内訳項目を管理します。MFキーワードはマネーフォワードの「大項目」「中項目」に含まれるとき自動分類に使います。</p>
+          <button class="btn btn-primary btn-sm" id="btn-add-cashflow-cat">＋ カテゴリを追加</button>
+        </div>
+        <div id="cashflow-cat-panels"></div>
+      </div>
+
+      <!-- 資産カテゴリ -->
+      <div id="master-assetcat" class="master-panel">
+        <div class="master-panel-header">
+          <p class="hint" style="margin:0">ポートフォリオで使う資産カテゴリを管理します。</p>
+          <button class="btn btn-primary btn-sm" id="btn-add-asset-cat">＋ カテゴリを追加</button>
+        </div>
+        <div class="table-wrapper" style="margin-top:12px">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th class="col-name">カテゴリ名</th>
+                <th>カラー</th>
+                <th>表示順</th>
+                <th class="col-actions">操作</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-asset-cats"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 口座種別 -->
+      <div id="master-account" class="master-panel">
+        <div class="master-panel-header">
+          <p class="hint" style="margin:0">保有資産で使う口座種別を管理します。</p>
+          <button class="btn btn-primary btn-sm" id="btn-add-account-type">＋ 口座種別を追加</button>
+        </div>
+        <div class="table-wrapper" style="margin-top:12px">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th class="col-name">口座種別名</th>
+                <th>表示順</th>
+                <th class="col-actions">操作</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-account-types"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
   </main>
 </div>
 
@@ -330,27 +359,11 @@
         <div class="form-row-2col">
           <div class="form-row">
             <label>カテゴリ <span class="req">*</span></label>
-            <select id="holding-category">
-              <option value="domestic_stock">国内株式</option>
-              <option value="foreign_stock">外国株式</option>
-              <option value="domestic_fund">国内投資信託</option>
-              <option value="foreign_fund">外国投資信託</option>
-              <option value="bond">債券</option>
-              <option value="reit">REIT</option>
-              <option value="cash">現金・預金</option>
-              <option value="crypto">暗号資産</option>
-              <option value="other">その他</option>
-            </select>
+            <select id="holding-category"></select>
           </div>
           <div class="form-row">
             <label>口座種別</label>
-            <select id="holding-account">
-              <option value="taxable">特定口座（課税）</option>
-              <option value="nisa">NISA（成長投資枠）</option>
-              <option value="nisa_tsumitate">NISA（つみたて枠）</option>
-              <option value="ideco">iDeCo</option>
-              <option value="other">その他</option>
-            </select>
+            <select id="holding-account"></select>
           </div>
         </div>
         <div class="form-row-3col">
@@ -409,78 +422,9 @@
             </select>
           </div>
         </div>
-
-        <div class="form-section">
-          <h4>収入</h4>
-          <div class="form-row-3col">
-            <div class="form-row">
-              <label>給与・賞与</label>
-              <input type="number" class="monthly-income-field" id="monthly-income-salary" min="0" step="1000" value="0">
-            </div>
-            <div class="form-row">
-              <label>副業・事業</label>
-              <input type="number" class="monthly-income-field" id="monthly-income-business" min="0" step="1000" value="0">
-            </div>
-            <div class="form-row">
-              <label>その他収入</label>
-              <input type="number" class="monthly-income-field" id="monthly-income-other" min="0" step="1000" value="0">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-section">
-          <h4>支出</h4>
-          <div class="form-row-3col">
-            <div class="form-row">
-              <label>住居費</label>
-              <input type="number" class="monthly-exp-field" id="monthly-exp-housing" min="0" step="1000" value="0">
-            </div>
-            <div class="form-row">
-              <label>食費</label>
-              <input type="number" class="monthly-exp-field" id="monthly-exp-food" min="0" step="1000" value="0">
-            </div>
-            <div class="form-row">
-              <label>光熱・通信費</label>
-              <input type="number" class="monthly-exp-field" id="monthly-exp-utilities" min="0" step="1000" value="0">
-            </div>
-            <div class="form-row">
-              <label>保険料</label>
-              <input type="number" class="monthly-exp-field" id="monthly-exp-insurance" min="0" step="1000" value="0">
-            </div>
-            <div class="form-row">
-              <label>医療費</label>
-              <input type="number" class="monthly-exp-field" id="monthly-exp-medical" min="0" step="1000" value="0">
-            </div>
-            <div class="form-row">
-              <label>交際・娯楽費</label>
-              <input type="number" class="monthly-exp-field" id="monthly-exp-entertainment" min="0" step="1000" value="0">
-            </div>
-            <div class="form-row">
-              <label>その他支出</label>
-              <input type="number" class="monthly-exp-field" id="monthly-exp-other" min="0" step="1000" value="0">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-section">
-          <h4>投資</h4>
-          <div class="form-row-3col">
-            <div class="form-row">
-              <label>株式</label>
-              <input type="number" class="monthly-inv-field" id="monthly-inv-stocks" min="0" step="1000" value="0">
-            </div>
-            <div class="form-row">
-              <label>投資信託</label>
-              <input type="number" class="monthly-inv-field" id="monthly-inv-funds" min="0" step="1000" value="0">
-            </div>
-            <div class="form-row">
-              <label>債券・その他</label>
-              <input type="number" class="monthly-inv-field" id="monthly-inv-other" min="0" step="1000" value="0">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
+        <!-- 動的フィールドはJSで生成 -->
+        <div id="monthly-dynamic-fields"></div>
+        <div class="form-row" style="margin-top:8px">
           <label>月末時点の総資産額</label>
           <input type="number" id="monthly-total-assets" min="0" step="10000" value="0">
         </div>
@@ -493,6 +437,179 @@
     <div class="modal-footer">
       <button class="btn btn-outline" data-modal="modal-monthly">キャンセル</button>
       <button class="btn btn-primary" id="btn-save-monthly">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: SECURITIES LAYOUT ===== -->
+<div class="modal-overlay" id="modal-securities-layout">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <h3 id="modal-sec-title">証券会社CSVレイアウトの追加</h3>
+      <button class="modal-close" data-modal="modal-securities-layout">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-securities-layout" autocomplete="off">
+        <input type="hidden" id="sec-id">
+        <div class="form-row-2col">
+          <div class="form-row">
+            <label>証券会社名 <span class="req">*</span></label>
+            <input type="text" id="sec-name" required placeholder="例: 野村証券">
+          </div>
+          <div class="form-row">
+            <label>文字コード</label>
+            <select id="sec-encoding">
+              <option value="UTF-8">UTF-8</option>
+              <option value="Shift-JIS">Shift-JIS (SJIS)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-section">
+          <h4>列名マッピング（複数候補はカンマ区切り）</h4>
+          <div class="form-row-2col">
+            <div class="form-row">
+              <label>銘柄名 <span class="req">*</span></label>
+              <input type="text" id="sec-col-name" placeholder="銘柄名,銘柄,ファンド名">
+            </div>
+            <div class="form-row">
+              <label>ティッカー / コード</label>
+              <input type="text" id="sec-col-ticker" placeholder="銘柄コード,コード">
+            </div>
+            <div class="form-row">
+              <label>数量 <span class="req">*</span></label>
+              <input type="text" id="sec-col-quantity" placeholder="数量,口数,保有口数">
+            </div>
+            <div class="form-row">
+              <label>取得単価</label>
+              <input type="text" id="sec-col-acq-price" placeholder="取得単価,平均取得単価">
+            </div>
+            <div class="form-row">
+              <label>現在単価 <span class="req">*</span></label>
+              <input type="text" id="sec-col-cur-price" placeholder="現在値,時価,基準価額">
+            </div>
+            <div class="form-row">
+              <label>評価額（列がある場合）</label>
+              <input type="text" id="sec-col-value" placeholder="評価額,時価総額">
+            </div>
+          </div>
+        </div>
+        <div class="form-row-2col">
+          <div class="form-row">
+            <label>既定カテゴリ</label>
+            <select id="sec-default-category"></select>
+          </div>
+          <div class="form-row">
+            <label>既定口座種別</label>
+            <select id="sec-default-account"></select>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>メモ</label>
+          <textarea id="sec-notes" rows="2" placeholder="任意"></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" data-modal="modal-securities-layout">キャンセル</button>
+      <button class="btn btn-primary" id="btn-save-sec-layout">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: CASHFLOW CATEGORY ===== -->
+<div class="modal-overlay" id="modal-cashflow-cat">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-cashflow-title">収支カテゴリの追加</h3>
+      <button class="modal-close" data-modal="modal-cashflow-cat">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-cashflow-cat" autocomplete="off">
+        <input type="hidden" id="cf-id">
+        <div class="form-row">
+          <label>種別 <span class="req">*</span></label>
+          <select id="cf-type">
+            <option value="income">収入</option>
+            <option value="expense">支出</option>
+            <option value="investment">投資</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>カテゴリ名 <span class="req">*</span></label>
+          <input type="text" id="cf-label" required placeholder="例: 配当金">
+        </div>
+        <div class="form-row">
+          <label>MFキーワード（カンマ区切り）</label>
+          <input type="text" id="cf-keywords" placeholder="配当,分配金">
+          <span class="form-hint">マネーフォワードの大項目・中項目にこのキーワードが含まれていれば自動分類します</span>
+        </div>
+        <div class="form-row">
+          <label>表示順</label>
+          <input type="number" id="cf-order" min="1" value="99">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" data-modal="modal-cashflow-cat">キャンセル</button>
+      <button class="btn btn-primary" id="btn-save-cashflow-cat">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: ASSET CATEGORY ===== -->
+<div class="modal-overlay" id="modal-asset-cat">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-asset-cat-title">資産カテゴリの追加</h3>
+      <button class="modal-close" data-modal="modal-asset-cat">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-asset-cat" autocomplete="off">
+        <input type="hidden" id="ac-id">
+        <div class="form-row">
+          <label>カテゴリ名 <span class="req">*</span></label>
+          <input type="text" id="ac-label" required placeholder="例: 不動産">
+        </div>
+        <div class="form-row">
+          <label>カラー</label>
+          <input type="color" id="ac-color" value="#2563eb">
+        </div>
+        <div class="form-row">
+          <label>表示順</label>
+          <input type="number" id="ac-order" min="1" value="99">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" data-modal="modal-asset-cat">キャンセル</button>
+      <button class="btn btn-primary" id="btn-save-asset-cat">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: ACCOUNT TYPE ===== -->
+<div class="modal-overlay" id="modal-account-type">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-account-title">口座種別の追加</h3>
+      <button class="modal-close" data-modal="modal-account-type">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-account-type" autocomplete="off">
+        <input type="hidden" id="at-id">
+        <div class="form-row">
+          <label>口座種別名 <span class="req">*</span></label>
+          <input type="text" id="at-label" required placeholder="例: 財形貯蓄">
+        </div>
+        <div class="form-row">
+          <label>表示順</label>
+          <input type="number" id="at-order" min="1" value="99">
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" data-modal="modal-account-type">キャンセル</button>
+      <button class="btn btn-primary" id="btn-save-account-type">保存</button>
     </div>
   </div>
 </div>
