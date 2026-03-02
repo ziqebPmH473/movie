@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>資産管理アプリ</title>
+  <link rel="stylesheet" href="asset-app.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="app-wrapper">
+  <header class="app-header">
+    <div class="header-title">
+      <h1>資産管理</h1>
+    </div>
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="dashboard">ダッシュボード</button>
+      <button class="tab-btn" data-tab="portfolio">ポートフォリオ</button>
+      <button class="tab-btn" data-tab="monthly">月次管理</button>
+      <button class="tab-btn" data-tab="analysis">予実分析</button>
+      <button class="tab-btn" data-tab="simulation">シミュレーション</button>
+      <button class="tab-btn" data-tab="import">取り込み</button>
+    </nav>
+  </header>
+
+  <main class="app-main">
+
+    <!-- ========== DASHBOARD ========== -->
+    <section id="tab-dashboard" class="tab-panel active">
+      <div class="dashboard-grid">
+        <div class="kpi-row" id="kpi-row">
+          <div class="kpi-card" id="kpi-total-assets"></div>
+          <div class="kpi-card" id="kpi-monthly-income"></div>
+          <div class="kpi-card" id="kpi-monthly-expense"></div>
+          <div class="kpi-card" id="kpi-monthly-investment"></div>
+        </div>
+        <div class="chart-row">
+          <div class="chart-card">
+            <h3>資産配分</h3>
+            <div class="chart-wrap"><canvas id="chart-allocation"></canvas></div>
+            <div id="chart-allocation-empty" class="chart-empty" style="display:none">データなし</div>
+          </div>
+          <div class="chart-card">
+            <h3>資産推移（直近24ヶ月）</h3>
+            <div class="chart-wrap"><canvas id="chart-trend"></canvas></div>
+            <div id="chart-trend-empty" class="chart-empty" style="display:none">データなし</div>
+          </div>
+        </div>
+        <div class="dashboard-hint">
+          <p>データがない場合は「<strong>取り込み</strong>」タブからCSVを読み込むか、「<strong>月次管理</strong>」「<strong>ポートフォリオ</strong>」タブから手動入力してください。</p>
+          <button class="btn btn-outline btn-sm" id="btn-load-sample">サンプルデータを読み込む</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PORTFOLIO ========== -->
+    <section id="tab-portfolio" class="tab-panel">
+      <div class="section-header">
+        <h2>ポートフォリオ</h2>
+        <div class="header-actions">
+          <button class="btn btn-primary" id="btn-add-holding">＋ 保有資産を追加</button>
+        </div>
+      </div>
+      <div class="portfolio-charts">
+        <div class="chart-card-sm">
+          <h3>資産クラス別</h3>
+          <div class="chart-wrap-sm"><canvas id="chart-portfolio-category"></canvas></div>
+        </div>
+        <div class="chart-card-sm">
+          <h3>口座種別</h3>
+          <div class="chart-wrap-sm"><canvas id="chart-portfolio-account"></canvas></div>
+        </div>
+      </div>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="col-name">銘柄名</th>
+              <th>カテゴリ</th>
+              <th>口座</th>
+              <th class="num">数量</th>
+              <th class="num">取得単価</th>
+              <th class="num">現在単価</th>
+              <th class="num">評価額</th>
+              <th class="num">評価損益</th>
+              <th class="num">損益率</th>
+              <th class="col-actions">操作</th>
+            </tr>
+          </thead>
+          <tbody id="portfolio-tbody"></tbody>
+          <tfoot id="portfolio-tfoot"></tfoot>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== MONTHLY ========== -->
+    <section id="tab-monthly" class="tab-panel">
+      <div class="section-header">
+        <h2>月次管理</h2>
+        <div class="header-actions">
+          <button class="btn btn-outline btn-sm" id="btn-prev-year">◀</button>
+          <span class="year-label" id="monthly-year-label">2024年</span>
+          <button class="btn btn-outline btn-sm" id="btn-next-year">▶</button>
+          <button class="btn btn-primary" id="btn-add-monthly">＋ データ追加</button>
+        </div>
+      </div>
+      <div class="monthly-summary" id="monthly-summary"></div>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>年月</th>
+              <th>区分</th>
+              <th class="num">収入</th>
+              <th class="num">支出</th>
+              <th class="num">投資</th>
+              <th class="num">貯蓄率</th>
+              <th class="num">月末資産</th>
+              <th class="col-actions">操作</th>
+            </tr>
+          </thead>
+          <tbody id="monthly-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== ANALYSIS ========== -->
+    <section id="tab-analysis" class="tab-panel">
+      <div class="section-header">
+        <h2>予実分析</h2>
+        <div class="header-actions">
+          <button class="btn btn-outline btn-sm" id="btn-analysis-prev">◀</button>
+          <span class="year-label" id="analysis-year-label">2024年</span>
+          <button class="btn btn-outline btn-sm" id="btn-analysis-next">▶</button>
+        </div>
+      </div>
+      <div class="analysis-charts">
+        <div class="chart-card-wide">
+          <h3>収入 — 予実比較</h3>
+          <canvas id="chart-analysis-income"></canvas>
+        </div>
+        <div class="chart-card-wide">
+          <h3>支出 — 予実比較</h3>
+          <canvas id="chart-analysis-expense"></canvas>
+        </div>
+        <div class="chart-card-wide">
+          <h3>投資 — 予実比較</h3>
+          <canvas id="chart-analysis-investment"></canvas>
+        </div>
+      </div>
+      <div class="table-wrapper" style="margin-top:20px">
+        <table class="data-table analysis-table">
+          <thead>
+            <tr>
+              <th>月</th>
+              <th class="num">収入(予)</th><th class="num">収入(実)</th><th class="num">収入(差)</th>
+              <th class="num">支出(予)</th><th class="num">支出(実)</th><th class="num">支出(差)</th>
+              <th class="num">投資(予)</th><th class="num">投資(実)</th><th class="num">投資(差)</th>
+            </tr>
+          </thead>
+          <tbody id="analysis-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ========== SIMULATION ========== -->
+    <section id="tab-simulation" class="tab-panel">
+      <div class="section-header">
+        <h2>資産シミュレーション</h2>
+      </div>
+      <div class="simulation-container">
+        <div class="sim-params card">
+          <h3>シミュレーション設定</h3>
+          <div class="param-grid">
+            <div class="param-row">
+              <label>現在の年齢</label>
+              <input type="number" id="sim-current-age" value="35" min="18" max="80">
+              <span>歳</span>
+            </div>
+            <div class="param-row">
+              <label>引退目標年齢</label>
+              <input type="number" id="sim-retire-age" value="65" min="40" max="100">
+              <span>歳</span>
+            </div>
+            <div class="param-row">
+              <label>現在の総資産</label>
+              <input type="number" id="sim-current-assets" value="10000000" step="100000">
+              <span>円</span>
+            </div>
+            <div class="param-row">
+              <label>月次積立額</label>
+              <input type="number" id="sim-monthly-invest" value="100000" step="10000">
+              <span>円</span>
+            </div>
+            <div class="param-row">
+              <label>期待年利回り</label>
+              <input type="number" id="sim-annual-return" value="5" min="0" max="20" step="0.1">
+              <span>%</span>
+            </div>
+            <div class="param-row">
+              <label>引退後の月支出</label>
+              <input type="number" id="sim-retire-expense" value="250000" step="10000">
+              <span>円</span>
+            </div>
+            <div class="param-row">
+              <label>インフレ率</label>
+              <input type="number" id="sim-inflation" value="2" min="0" max="10" step="0.1">
+              <span>%</span>
+            </div>
+            <div class="param-row">
+              <label>表示シナリオ</label>
+              <select id="sim-scenario" style="width:100%">
+                <option value="base">基本シナリオ</option>
+                <option value="optimistic">楽観シナリオ</option>
+                <option value="pessimistic">悲観シナリオ</option>
+                <option value="all">全シナリオ比較</option>
+              </select>
+              <span></span>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full" id="btn-run-sim">シミュレーション実行</button>
+        </div>
+        <div class="sim-results">
+          <div class="sim-kpis" id="sim-kpis"></div>
+          <div class="chart-card-wide">
+            <canvas id="chart-simulation"></canvas>
+          </div>
+          <div class="table-wrapper" id="sim-table-wrapper"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== IMPORT ========== -->
+    <section id="tab-import" class="tab-panel">
+      <div class="section-header">
+        <h2>データ取り込み</h2>
+      </div>
+      <div class="import-container">
+        <!-- Securities -->
+        <div class="import-card card">
+          <h3>証券会社データ</h3>
+          <p class="hint">SBI証券・楽天証券・マネックス証券のCSV（保有残高）</p>
+          <div class="import-form">
+            <select id="securities-type">
+              <option value="sbi">SBI証券</option>
+              <option value="rakuten">楽天証券</option>
+              <option value="monex">マネックス証券</option>
+              <option value="generic">汎用（自動マッピング）</option>
+            </select>
+            <label class="file-label" id="lbl-securities-file">
+              <input type="file" id="securities-file" accept=".csv,.txt">
+              <span>CSVファイルを選択</span>
+            </label>
+            <button class="btn btn-secondary" id="btn-import-securities">取り込む</button>
+          </div>
+          <div id="securities-preview" class="import-preview"></div>
+        </div>
+
+        <!-- MoneyForward -->
+        <div class="import-card card">
+          <h3>マネーフォワード ME</h3>
+          <p class="hint">マネーフォワード ME からエクスポートしたCSV</p>
+          <div class="import-form">
+            <select id="mf-type">
+              <option value="cashflow">入出金履歴</option>
+              <option value="assets">資産残高</option>
+            </select>
+            <label class="file-label" id="lbl-mf-file">
+              <input type="file" id="mf-file" accept=".csv,.txt">
+              <span>CSVファイルを選択</span>
+            </label>
+            <button class="btn btn-secondary" id="btn-import-mf">取り込む</button>
+          </div>
+          <div id="mf-preview" class="import-preview"></div>
+        </div>
+
+        <!-- Import History -->
+        <div class="import-card card">
+          <h3>取り込み履歴</h3>
+          <div id="import-history">
+            <p class="text-secondary">取り込み履歴はありません</p>
+          </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="import-card card">
+          <h3>データ管理</h3>
+          <div class="data-actions">
+            <button class="btn btn-outline" id="btn-export-data">データをエクスポート (JSON)</button>
+            <button class="btn btn-outline" id="btn-import-json">データをインポート (JSON)</button>
+            <input type="file" id="import-json-file" accept=".json" style="display:none">
+            <button class="btn btn-danger" id="btn-clear-data">全データを削除</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ===== MODAL: HOLDING ===== -->
+<div class="modal-overlay" id="modal-holding">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modal-holding-title">保有資産の追加</h3>
+      <button class="modal-close" data-modal="modal-holding">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-holding" autocomplete="off">
+        <input type="hidden" id="holding-id">
+        <div class="form-row">
+          <label>銘柄名 <span class="req">*</span></label>
+          <input type="text" id="holding-name" required placeholder="例: eMAXIS Slim 全世界株式">
+        </div>
+        <div class="form-row-2col">
+          <div class="form-row">
+            <label>ティッカー / コード</label>
+            <input type="text" id="holding-ticker" placeholder="例: 7203">
+          </div>
+          <div class="form-row">
+            <label>通貨</label>
+            <select id="holding-currency">
+              <option value="JPY">円 (JPY)</option>
+              <option value="USD">米ドル (USD)</option>
+              <option value="EUR">ユーロ (EUR)</option>
+              <option value="GBP">ポンド (GBP)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2col">
+          <div class="form-row">
+            <label>カテゴリ <span class="req">*</span></label>
+            <select id="holding-category">
+              <option value="domestic_stock">国内株式</option>
+              <option value="foreign_stock">外国株式</option>
+              <option value="domestic_fund">国内投資信託</option>
+              <option value="foreign_fund">外国投資信託</option>
+              <option value="bond">債券</option>
+              <option value="reit">REIT</option>
+              <option value="cash">現金・預金</option>
+              <option value="crypto">暗号資産</option>
+              <option value="other">その他</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>口座種別</label>
+            <select id="holding-account">
+              <option value="taxable">特定口座（課税）</option>
+              <option value="nisa">NISA（成長投資枠）</option>
+              <option value="nisa_tsumitate">NISA（つみたて枠）</option>
+              <option value="ideco">iDeCo</option>
+              <option value="other">その他</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-3col">
+          <div class="form-row">
+            <label>数量 <span class="req">*</span></label>
+            <input type="number" id="holding-quantity" required min="0" step="any" placeholder="0">
+          </div>
+          <div class="form-row">
+            <label>取得単価</label>
+            <input type="number" id="holding-acq-price" min="0" step="any" placeholder="0">
+          </div>
+          <div class="form-row">
+            <label>現在単価 <span class="req">*</span></label>
+            <input type="number" id="holding-cur-price" required min="0" step="any" placeholder="0">
+          </div>
+        </div>
+        <div class="form-row-2col">
+          <div class="form-row">
+            <label>基準日</label>
+            <input type="date" id="holding-date">
+          </div>
+          <div class="form-row">
+            <label>メモ</label>
+            <input type="text" id="holding-memo" placeholder="任意">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" data-modal="modal-holding">キャンセル</button>
+      <button class="btn btn-primary" id="btn-save-holding">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: MONTHLY ===== -->
+<div class="modal-overlay" id="modal-monthly">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <h3 id="modal-monthly-title">月次データの追加</h3>
+      <button class="modal-close" data-modal="modal-monthly">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="form-monthly" autocomplete="off">
+        <input type="hidden" id="monthly-id">
+        <div class="form-row-2col">
+          <div class="form-row">
+            <label>年月 <span class="req">*</span></label>
+            <input type="month" id="monthly-yearmonth" required>
+          </div>
+          <div class="form-row">
+            <label>区分 <span class="req">*</span></label>
+            <select id="monthly-type">
+              <option value="actual">実績</option>
+              <option value="planned">予定</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h4>収入</h4>
+          <div class="form-row-3col">
+            <div class="form-row">
+              <label>給与・賞与</label>
+              <input type="number" class="monthly-income-field" id="monthly-income-salary" min="0" step="1000" value="0">
+            </div>
+            <div class="form-row">
+              <label>副業・事業</label>
+              <input type="number" class="monthly-income-field" id="monthly-income-business" min="0" step="1000" value="0">
+            </div>
+            <div class="form-row">
+              <label>その他収入</label>
+              <input type="number" class="monthly-income-field" id="monthly-income-other" min="0" step="1000" value="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h4>支出</h4>
+          <div class="form-row-3col">
+            <div class="form-row">
+              <label>住居費</label>
+              <input type="number" class="monthly-exp-field" id="monthly-exp-housing" min="0" step="1000" value="0">
+            </div>
+            <div class="form-row">
+              <label>食費</label>
+              <input type="number" class="monthly-exp-field" id="monthly-exp-food" min="0" step="1000" value="0">
+            </div>
+            <div class="form-row">
+              <label>光熱・通信費</label>
+              <input type="number" class="monthly-exp-field" id="monthly-exp-utilities" min="0" step="1000" value="0">
+            </div>
+            <div class="form-row">
+              <label>保険料</label>
+              <input type="number" class="monthly-exp-field" id="monthly-exp-insurance" min="0" step="1000" value="0">
+            </div>
+            <div class="form-row">
+              <label>医療費</label>
+              <input type="number" class="monthly-exp-field" id="monthly-exp-medical" min="0" step="1000" value="0">
+            </div>
+            <div class="form-row">
+              <label>交際・娯楽費</label>
+              <input type="number" class="monthly-exp-field" id="monthly-exp-entertainment" min="0" step="1000" value="0">
+            </div>
+            <div class="form-row">
+              <label>その他支出</label>
+              <input type="number" class="monthly-exp-field" id="monthly-exp-other" min="0" step="1000" value="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h4>投資</h4>
+          <div class="form-row-3col">
+            <div class="form-row">
+              <label>株式</label>
+              <input type="number" class="monthly-inv-field" id="monthly-inv-stocks" min="0" step="1000" value="0">
+            </div>
+            <div class="form-row">
+              <label>投資信託</label>
+              <input type="number" class="monthly-inv-field" id="monthly-inv-funds" min="0" step="1000" value="0">
+            </div>
+            <div class="form-row">
+              <label>債券・その他</label>
+              <input type="number" class="monthly-inv-field" id="monthly-inv-other" min="0" step="1000" value="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>月末時点の総資産額</label>
+          <input type="number" id="monthly-total-assets" min="0" step="10000" value="0">
+        </div>
+        <div class="form-row">
+          <label>メモ</label>
+          <textarea id="monthly-memo" rows="2" placeholder="任意"></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" data-modal="modal-monthly">キャンセル</button>
+      <button class="btn btn-primary" id="btn-save-monthly">保存</button>
+    </div>
+  </div>
+</div>
+
+<script src="asset-app.js"></script>
+</body>
+</html>
