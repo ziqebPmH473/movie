@@ -292,7 +292,7 @@ const App = {
                     { category: "【ランキング作成】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "分析用RANK", copyId: "rank" }, { label: "名称変換RANK", copyId: "namerank" }] }] },
                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "*理由ニュース(NG)", copyId: "top10ReasonNewsNG" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [ { label: "音声生成", copyId: "voiceNew" },{ label: "画像（まとめ）", copyId: "infografic" }, { label: "*X・サムネ", copyId: "xNotify" },{ label: "ツール文章", copyId: "presen1" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
-                    { category: "【資料用画像作成】", services: [{ service: "gemini", buttons: [ { label: "*画像(表紙)", copyId: "photoTop" },{ label: "*画像(ニュース)", copyId: "photoNews" }] }] },
+                    { category: "【資料用画像作成】", services: [{ service: "gemini", buttons: [ { label: "画像(表紙)", copyId: "photoTop" },{ label: "*画像(ニュース)", copyId: "photoNews" }] }] },
                     //{ category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [ { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, { label: "動画内容", copyId: "videoContent" },{ label: "画像", copyId: "grafic" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
                     //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [ { label: "特典画像", copyId: "menberinfografic" },{ label: "note記事", copyId: "noteArticle" }, { label: "まとめ画像", copyId: "summaryImage" }] }] },
                     //{ category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }, { label: "生成(ショート)", copyId: "presenShort" }] }] },
