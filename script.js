@@ -64,9 +64,10 @@ const App = {
             titleSBf: `ショート動画を作成します。\n見たくなるようなYouTubeタイトル案を5パターン考えてください。\n※「株価下落の真相は？」「今後どうなる？」「意外な理由が…」など、視聴者に疑問や興味を持たせる内容にしてください。\n・タイトル5パターン以外の余計な説明は不要です。`,
             reportKk: `資料を10000文字以上で作成してください\n・根拠資料として使用するため、引用やカッコつきの番号は記載しないでください\n・企業概要は記載しないでください。`,
             reportKkks: `\n・以下の内容は必ず記載してください。（以下は最低限の情報です。他に決算分析・解説に必要な情報は記載してください）\n　業績：実績（単体、累計）、通期予想\n　業績好調、もしくは不調となった理由\n　・セグメントごとの業績\n　・株主還元\n　・財務状況、キャッシュフローの状況`,
+            reportNote: `note記事に使用するスライド資料を、以下の構成で作成してください。\n\n`,
             reportSs: `YouTube動画を作成するので、動画内で使用する投影資料を作成してください。\n・表紙は、表題と、概要を4行程度の文章でまとめてください。\nただし、「この資料は」などとプレゼン資料自体の事を書かないでください\nまた、資料・動画の視聴意欲がなくならないように、結論や最も重要な内容は書かないでください。\n・最後のページは「まとめ」のページにしてください\n・目次、企業概要のスライドは作成しないでください\n・ラベルは使用しないでください。`,
             reportGc: `\n・決算の結果、業績予想は大きな数字のレイアウトで作成してください\n・数字の単位（百万円など）は数字の後ろに付けず、見出し（売上高、営業利益など）の後ろに付加し「売上高(百万円)」などの形式で表示してください\n・業績予想の修正をした場合は、表で前回発表、今回修正、増減額、増減率をまとめてください\n・「PTSで下落」という書き方はせず、「株価下落」と記載してください（取引後に資料を見た際にPTSとの表記が邪魔をするため）`,
-            reportNote: `note記事を3000文字程度で作成してください\n・１行目にタイトルを記載してください。\n・資料として使用するため、引用やカッコつきの番号は記載しないでください`,
+            //reportNote: `note記事を3000文字程度で作成してください\n・１行目にタイトルを記載してください。\n・資料として使用するため、引用やカッコつきの番号は記載しないでください`,
             // notebookLM画像・プレゼン資料ルール
             notebookLMPresen1: `\n【出力スタイル指定】\n1. レイアウト（余白）:\n   - 見出しは左揃えで配置すること（中央揃えや右揃えにしない）\n   - 画面の端ギリギリまで文字や図形を配置せず、周囲に余白（マージン）を確保すること\n   - 画面右上には文字や画像、グラフなどを配置しないこと（コーナータイトルのテロップを記載するためですが、白抜きや囲いなどは不要です）\n2. テキスト（文字）\n   - フォント: ゴシック体（サンセリフ）\n3. 背景色:   - 白 (#FFFFFF)`,
             notebookLMPresen2: `\n4. 禁止\n   - 見出し番号や章番号を振らないこと\n   - 見出しやタイトルに①②などの番号を使用しないこと\n   - 出典を記載しないこと\n   - 見出しや強調の表現に「##」を使用しないこと。\n   - 見出しなどに英語の文言を併記せず、日本語で記載すること\n   - 見出し、タイトルに「見出し」「タイトル」などと記載しないこと`,
@@ -478,7 +479,7 @@ const App = {
                     searchBtns: ['ir', 'kabutan']
                 },
                 buttonData: [
-                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }, { label: "note用", copyId: "reportNote" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" }, { label: "根拠資料生成", copyId: "reportKk" }] }] },
                     //{ category: "【音声生成後】", services: [{ service: "notebookLM", buttons: { label: "スライド資料", copyId: "slideDocument" },[{ label: "特典画像", copyId: "menberinfografic" }, { label: "根拠資料生成", copyId: "reportKk" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] },
@@ -548,7 +549,7 @@ const App = {
                 checkboxDefaults: {'movie_info_report': true, 'movie_info_kabutan': true},
                 ui: { dynamicInputs: ['movie-information','ticker-name-area', 'ir-kabutan-buttons', 'earnings-market-area', 'stock-direction-area'], searchBtns: ['ir', 'kabutan'], directionOptions: { default: '' } },
                 buttonData: [
-                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }, { label: "note用", copyId: "reportNote" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
                     { category: "【特典画像生成】", services: [{ service: "notebookLM", buttons: [{ label: "汎用", copyId: "menberinfografic" },{ label: "資金調達", copyId: "funding" }] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
@@ -603,7 +604,7 @@ const App = {
                     directionOptions: { hide: ['s-high', 's-low', 'after-hours', 'no-price', 'none'], default: '下落した' }
                 },
                 buttonData: [
-                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                     { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }, { label: "note用", copyId: "reportNote" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
                     { category: "【プレゼン資料】", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
@@ -811,7 +812,7 @@ const App = {
                 checkboxDefaults: {'movie_info_report': true, 'movie_info_kabutan': true},
                 ui: { dynamicInputs: ['movie-information','ticker-name-area', 'ir-kabutan-buttons', 'jpx-button', 'earnings-market-area'], searchBtns: ['jpx'], directionOptions: { default: '' } },
                 buttonData: [
-                    { category: "【分析】（上場時資料から4ファイル+企業ページの業績予想を読み込む）", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                    { category: "【分析】（上場時資料から4ファイル+企業ページの業績予想を読み込む）", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }, { label: "note用", copyId: "reportNote" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "音声生成", copyId: "voice" }] }] },
                     { category: "【プレゼン資料】(レポートを使用/スライド：20)", services: [{ service: "gamma", buttons: [{ label: "プレゼン生成", copyId: "presentation" }] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"},{ label: "概要欄", copyId: "gaiyo" }, { label: "X告知", copyId: "xNotify" }, { label: "note記事", copyId: "noteArticle" }] }] }
@@ -888,7 +889,7 @@ const App = {
                 },
                 buttonData: [
                     { category: "【プロンプト生成用】", services: [{ service: "gemini", buttons: [{ label: "テーマ変換", copyId: "prompt" }] }] },
-                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }, { label: "note用", copyId: "reportNote" }] }] },
                     { category: "【特典画像生成用】", services: [{ service: "gemini", buttons: [{ label: "原稿CK・特典画像プロンプト生成", copyId: "menberPrompt" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
@@ -951,7 +952,7 @@ const App = {
                     searchBtns: []
                 },
                 buttonData: [
-                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }] }] },
+                    { category: "【分析】", services: [{ service: "chatGPT", buttons: [{ label: "分析用", copyId: "analysis" }, { label: "note用", copyId: "reportNote" }] }] },
                     { category: "【特典画像生成用】", services: [{ service: "gemini", buttons: [{ label: "原稿CK・特典画像プロンプト生成", copyId: "menberPrompt" }] }] },
                     { category: "【音声生成前】", services: [{ service: "notebookLM", buttons: [{ label: "URLコピー", copyId: "urls" }, { label: "音声生成", copyId: "voice" }, { label: "概要欄", copyId: "gaiyo" }, { label: "動画タイトル", copyId: "titleBf" }, {label: "動画内容", copyId: "videoContent"}] }] },
                     { category: "【音声生成後】", services: [{ service: "notebookLM", buttons: [{ label: "スライド資料", copyId: "slideDocument" },{ label: "特典画像", copyId: "menberinfografic" },{ label: "根拠資料生成", copyId: "reportKk" }] }] },
