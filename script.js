@@ -233,6 +233,7 @@ const App = {
                 <div id="textbox-area">
                     <textarea id="large-textbox1" class="large-textbox" placeholder="ここにテキストを入力してください"></textarea>
                     <button type="button" onclick="App.clearTextbox('large-textbox1')" style="margin-top: 5px; font-size: 0.8em;">クリア</button>
+                    <button type="button" onclick="App.pasteToTextbox('large-textbox1')" style="margin-top: 5px; font-size: 0.8em; margin-left: 5px;">貼付け</button>
                 </div>
             `,
             'dual-textbox-area': `
@@ -240,10 +241,12 @@ const App = {
                     <div style="position: relative;">
                         <textarea id="large-textbox2" class="large-textbox" placeholder="テキストボックス2"></textarea>
                         <button type="button" onclick="App.clearTextbox('large-textbox2')" style="margin-top: 5px; font-size: 0.8em;">クリア</button>
+                        <button type="button" onclick="App.pasteToTextbox('large-textbox2')" style="margin-top: 5px; font-size: 0.8em; margin-left: 5px;">貼付け</button>
                     </div>
                     <div style="position: relative;">
                         <textarea id="large-textbox3" class="large-textbox" placeholder="テキストボックス3"></textarea>
                         <button type="button" onclick="App.clearTextbox('large-textbox3')" style="margin-top: 5px; font-size: 0.8em;">クリア</button>
+                        <button type="button" onclick="App.pasteToTextbox('large-textbox3')" style="margin-top: 5px; font-size: 0.8em; margin-left: 5px;">貼付け</button>
                     </div>
                 </div>
             `,
@@ -2649,6 +2652,22 @@ Slide 1:
         if (textbox) {
             textbox.value = '';
             sessionStorage.removeItem(textboxId);
+        }
+    },
+
+
+    pasteToTextbox: async function(textboxId) {
+        const textbox = document.getElementById(textboxId);
+        if (!textbox || !navigator.clipboard || !navigator.clipboard.readText) {
+            return;
+        }
+
+        try {
+            const clipText = await navigator.clipboard.readText();
+            textbox.value = clipText;
+            sessionStorage.setItem(textboxId, clipText);
+        } catch (error) {
+            console.warn('クリップボードの読み取りに失敗しました:', error);
         }
     },
 
