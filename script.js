@@ -233,7 +233,6 @@ const App = {
                 <div id="textbox-area">
                     <textarea id="large-textbox1" class="large-textbox" placeholder="ここにテキストを入力してください"></textarea>
                     <button type="button" onclick="App.clearTextbox('large-textbox1')" style="margin-top: 5px; font-size: 0.8em;">クリア</button>
-                    <button type="button" onclick="App.pasteToTextbox('large-textbox1')" style="margin-top: 5px; font-size: 0.8em; margin-left: 5px;">貼付け</button>
                 </div>
             `,
             'dual-textbox-area': `
@@ -241,12 +240,12 @@ const App = {
                     <div style="position: relative;">
                         <textarea id="large-textbox2" class="large-textbox" placeholder="テキストボックス2"></textarea>
                         <button type="button" onclick="App.clearTextbox('large-textbox2')" style="margin-top: 5px; font-size: 0.8em;">クリア</button>
-                        <button type="button" onclick="App.pasteToTextbox('large-textbox2')" style="margin-top: 5px; font-size: 0.8em; margin-left: 5px;">貼付け</button>
+                        <button type="button" onclick="App.pasteTextbox('large-textbox2')" style="margin-top: 5px; margin-left: 5px; font-size: 0.8em;">貼り付け</button>
                     </div>
                     <div style="position: relative;">
                         <textarea id="large-textbox3" class="large-textbox" placeholder="テキストボックス3"></textarea>
                         <button type="button" onclick="App.clearTextbox('large-textbox3')" style="margin-top: 5px; font-size: 0.8em;">クリア</button>
-                        <button type="button" onclick="App.pasteToTextbox('large-textbox3')" style="margin-top: 5px; font-size: 0.8em; margin-left: 5px;">貼付け</button>
+                        <button type="button" onclick="App.pasteTextbox('large-textbox3')" style="margin-top: 5px; margin-left: 5px; font-size: 0.8em;">貼り付け</button>
                     </div>
                 </div>
             `,
@@ -1339,13 +1338,20 @@ Slide 1:
             attempts++;
             console.log(`Initialization attempt ${attempts}`);
             
-            const firstRadio = document.querySelector('input[name="analysis"]');
-            if (firstRadio) {
-                firstRadio.checked = true;
+            const radios = document.querySelectorAll('input[name="analysis"]');
+            if (radios.length > 0) {
+                const now = new Date();
+                const jstMin = (now.getUTCHours() * 60 + now.getUTCMinutes() + 9 * 60) % 1440;
+                const targetValue = (jstMin >= 690 && jstMin < 780)
+                    ? 'market_morningsession'
+                    : 'market_todayjp';
+                const target = document.querySelector(`input[name="analysis"][value="${targetValue}"]`)
+                            || radios[0];
+                target.checked = true;
                 this.handleAnalysisChange();
                 this.forceShowContent();
                 this.activateFirstRadioLabel();
-                console.log('Initialization successful');
+                console.log('Initialization successful, selected:', target.value);
                 return;
             }
             
@@ -2655,19 +2661,17 @@ Slide 1:
         }
     },
 
-
-    pasteToTextbox: async function(textboxId) {
+    pasteTextbox: async function(textboxId) {
         const textbox = document.getElementById(textboxId);
-        if (!textbox || !navigator.clipboard || !navigator.clipboard.readText) {
-            return;
-        }
-
+        if (!textbox) return;
         try {
-            const clipText = await navigator.clipboard.readText();
-            textbox.value = clipText;
-            sessionStorage.setItem(textboxId, clipText);
-        } catch (error) {
-            console.warn('クリップボードの読み取りに失敗しました:', error);
+            const text = await navigator.clipboard.readText();
+            textbox.value = text;
+            sessionStorage.setItem(textboxId, text);
+            textbox.dispatchEvent(new Event('input', { bubbles: true }));
+        } catch (err) {
+            textbox.focus();
+            alert('クリップボードへのアクセスが拒否されました。テキストエリアで Ctrl+V を押してください。');
         }
     },
 
